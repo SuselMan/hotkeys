@@ -1,0 +1,20 @@
+{
+  "name": "kekkeys",
+  "version": "0.0.1",
+  "private": true,
+  "description": "kekkeys monorepo — phone-controlled hotkeys for desktop",
+  "workspaces": [
+    "apps/desktop",
+    "apps/landing",
+    "packages/*"
+  ],
+  "scripts": {
+    "build:protocol": "npm run build -w @kekkeys/protocol",
+    "dev:desktop": "npm run dev -w @kekkeys/desktop",
+    "dev:mobile": "npm run start -w @kekkeys/mobile",
+    "dev:landing": "npm run dev -w @kekkeys/landing"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

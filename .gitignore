@@ -1,0 +1,32 @@
+node_modules/
+dist/
+build/
+out/
+.next/
+.expo/
+.cache/
+*.tsbuildinfo
+*.log
+
+# Electron
+release/
+**/dist-electron/
+
+# Mobile
+*.apk
+*.aab
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor — keep .idea (project files), exclude only personal
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/shelf/
+
+# Env
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+    <title>kekkeys</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>kekkeys</h1>
+        <span id="status" class="status status-disconnected">Waiting for connection</span>
+      </header>
+
+      <section id="qr-section">
+        <h2>Connect your phone</h2>
+        <div id="qr"><span class="placeholder">Loading…</span></div>
+        <p id="qr-host" class="hint"></p>
+        <p class="hint">
+          Open kekkeys on your phone and scan this code, or pick this PC from
+          the auto-discovered list.
+        </p>
+      </section>
+
+      <section id="paired-section">
+        <h2>Paired phones</h2>
+        <ul id="paired-list">
+          <li class="empty">No phones paired yet</li>
+        </ul>
+      </section>
+
+      <section id="trouble-section">
+        <h2>Phone can't see this PC?</h2>
+        <ul>
+          <li>Make sure the phone and PC are on the same WiFi.</li>
+          <li>Some routers block mDNS — use the QR code as a fallback.</li>
+          <li>Allow kekkeys through the Windows firewall.</li>
+        </ul>
+      </section>
+
+      <footer>
+        <small>kekkeys · v<span id="ver">0.0.1</span></small>
+      </footer>
+    </main>
+    <script src="./renderer.js"></script>
+  </body>
+</html>

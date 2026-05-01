@@ -1,0 +1,11 @@
+{
+  "name": "@kekkeys/icons-meta",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch-meta": "node ./scripts/fetch-meta.mjs",
+    "fetch-svgs": "node ./scripts/fetch-popular-svgs.mjs",
+    "build": "npm run fetch-meta && npm run fetch-svgs"
+  }
+}

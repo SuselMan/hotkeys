@@ -1,0 +1,159 @@
+:root {
+  --bg: #1a1a1a;
+  --fg: #e8e8e8;
+  --accent: #fadc50;
+  --muted: #8a8a8a;
+  --ok: #4caf50;
+  --err: #e57373;
+  --card: #242424;
+  --border: #333;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+}
+
+main {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--accent);
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.status-connected {
+  background: var(--ok);
+  color: #000;
+}
+
+.status-disconnected {
+  background: var(--err);
+  color: #000;
+}
+
+#qr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.placeholder {
+  color: #888;
+  font-size: 12px;
+}
+
+.hint {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+#paired-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#paired-list .empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.paired-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: #1a1a1a;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.paired-left {
+  flex: 1;
+}
+
+.paired-name {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.paired-meta {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.paired-row button {
+  background: #3a3a3a;
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.paired-row button:hover {
+  background: #4a4a4a;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+}
+
+#trouble-section ul {
+  margin: 0;
+  padding-left: 16px;
+  color: var(--muted);
+}
