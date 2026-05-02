@@ -96,22 +96,34 @@ export class WsConnection {
   private openSocket(): void {
     this.setStatus({ kind: "connecting" });
     const url = `ws://${this.params.host}:${this.params.port}/`;
+    console.warn(`[ws] connecting ${url}`);
     let ws: WebSocket;
     try {
       ws = new WebSocket(url);
     } catch (e) {
+      console.warn(`[ws] ctor threw: ${(e as Error).message}`);
       this.scheduleReconnect((e as Error).message);
       return;
     }
     this.ws = ws;
 
-    ws.onopen = () => this.onOpen();
+    ws.onopen = () => {
+      console.warn(`[ws] open ${url}`);
+      this.onOpen();
+    };
     ws.onmessage = (e) => this.onMessage(typeof e.data === "string" ? e.data : "");
-    ws.onerror = () => {
-      // RN does not surface a useful error object on WebSocket errors.
+    ws.onerror = (event: unknown) => {
+      // RN does not surface a useful error object on WebSocket errors —
+      // log readyState + URL so we can at least see whether the socket
+      // ever opened.
+      const message = (event as { message?: string } | null | undefined)?.message ?? "(no message)";
+      console.warn(`[ws] error url=${url} readyState=${ws.readyState} msg=${message}`);
       this.scheduleReconnect("socket error");
     };
-    ws.onclose = (e) => this.scheduleReconnect(`closed (${e.code})`);
+    ws.onclose = (e) => {
+      console.warn(`[ws] close url=${url} code=${e.code} reason=${e.reason ?? ""}`);
+      this.scheduleReconnect(`closed (${e.code})`);
+    };
   }
 
   private async onOpen(): Promise<void> {
@@ -252,9 +264,11 @@ export function staticPair(opts: {
   timeoutMs?: number;
 }): Promise<PairResponse> {
   const url = `ws://${opts.host}:${opts.port}/`;
+  console.warn(`[pair] connecting ${url} token=${opts.pairingToken.slice(0, 8)}…`);
   return new Promise<PairResponse>((resolve, reject) => {
     const ws = new WebSocket(url);
     const timeout = setTimeout(() => {
+      console.warn(`[pair] timeout url=${url} readyState=${ws.readyState}`);
       try {
         ws.close();
       } catch {
@@ -264,6 +278,7 @@ export function staticPair(opts: {
     }, opts.timeoutMs ?? 8000);
 
     ws.onopen = () => {
+      console.warn(`[pair] open ${url}`);
       const msg: ClientToServer = {
         type: "pair",
         pairingToken: opts.pairingToken,
@@ -277,10 +292,12 @@ export function staticPair(opts: {
       try {
         const m = JSON.parse(data) as ServerToClient;
         if (m.type === "paired") {
+          console.warn(`[pair] paired pcDeviceId=${m.pcDeviceId.slice(0, 8)}… pcName=${m.pcName}`);
           clearTimeout(timeout);
           ws.close();
           resolve(m);
         } else if (m.type === "pair_error") {
+          console.warn(`[pair] pair_error reason=${m.reason}`);
           clearTimeout(timeout);
           ws.close();
           reject(new Error(`pair_error: ${m.reason}`));
@@ -289,11 +306,14 @@ export function staticPair(opts: {
         /* ignore */
       }
     };
-    ws.onerror = () => {
+    ws.onerror = (event: unknown) => {
+      const message = (event as { message?: string } | null | undefined)?.message ?? "(no message)";
+      console.warn(`[pair] error url=${url} readyState=${ws.readyState} msg=${message}`);
       clearTimeout(timeout);
       reject(new Error("socket error"));
     };
     ws.onclose = (e) => {
+      console.warn(`[pair] close url=${url} code=${e.code} reason=${e.reason ?? ""}`);
       clearTimeout(timeout);
       reject(new Error(`closed (${e.code})`));
     };

@@ -21,6 +21,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
+      "usesCleartextTraffic": true,
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.INTERNET",
@@ -31,7 +32,12 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kekkeys.app"
+      "bundleIdentifier": "com.kekkeys.app",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -41,10 +47,32 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "kekkeys uses your camera to scan the pairing QR shown by the desktop app."
+          "cameraPermission": "kekkeys uses your camera to scan the pairing QR shown by the desktop app.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
         }
       ],
-      "expo-localization"
-    ]
+      "expo-localization",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d5282942-b0ba-46ab-9f01-fbc72a7a4bf1"
+      }
+    },
+    "owner": "suselman",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d5282942-b0ba-46ab-9f01-fbc72a7a4bf1"
+    }
   }
 }

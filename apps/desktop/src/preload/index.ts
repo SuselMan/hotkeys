@@ -25,6 +25,16 @@ export interface ConnectionStatusFromMain {
   activeClientName?: string;
 }
 
+export interface LanCandidateFromMain {
+  iface: string;
+  address: string;
+}
+
+export interface LanCandidatesPayload {
+  candidates: LanCandidateFromMain[];
+  preferred: string | null;
+}
+
 const api = {
   refreshPairInfo: (): Promise<PairInfoFromMain> => ipcRenderer.invoke("kekkeys:refresh-pair-info"),
   listPaired: (): Promise<PairedItem[]> => ipcRenderer.invoke("kekkeys:list-paired"),
@@ -32,6 +42,10 @@ const api = {
     ipcRenderer.invoke("kekkeys:forget-paired", phoneDeviceId),
   getConnectionStatus: (): Promise<ConnectionStatusFromMain> =>
     ipcRenderer.invoke("kekkeys:connection-status"),
+  listLanCandidates: (): Promise<LanCandidatesPayload> =>
+    ipcRenderer.invoke("kekkeys:list-lan-candidates"),
+  setPreferredHost: (addr: string | null): Promise<void> =>
+    ipcRenderer.invoke("kekkeys:set-preferred-host", addr),
   onConnectionChanged: (cb: (s: ConnectionStatusFromMain) => void): (() => void) => {
     const listener = (_e: unknown, s: ConnectionStatusFromMain): void => cb(s);
     ipcRenderer.on("kekkeys:connection-status", listener);

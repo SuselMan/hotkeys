@@ -9,6 +9,7 @@ const els = {
   qr: document.getElementById("qr"),
   qrHost: document.getElementById("qr-host"),
   pairedList: document.getElementById("paired-list"),
+  lanSelect: document.getElementById("lan-select"),
 };
 
 function setStatus(connected, name) {
@@ -38,6 +39,7 @@ async function refreshQr() {
         ? `${info.host}:${info.port} · ${info.pcName}`
         : `port ${info.port} · ${info.pcName} · LAN IP not detected`;
     }
+    await refreshLanCandidates(info.host);
   } catch (e) {
     if (els.qr) {
       els.qr.innerHTML = "";
@@ -47,6 +49,55 @@ async function refreshQr() {
       els.qr.appendChild(span);
     }
     console.error("refreshPairInfo failed", e);
+  }
+}
+
+async function refreshLanCandidates(currentHost) {
+  if (!api || !els.lanSelect) return;
+  let payload;
+  try {
+    payload = await api.listLanCandidates();
+  } catch (e) {
+    console.error("listLanCandidates failed", e);
+    return;
+  }
+  const { candidates, preferred } = payload;
+  els.lanSelect.innerHTML = "";
+
+  if (candidates.length === 0) {
+    const opt = document.createElement("option");
+    opt.textContent = "no LAN adapters detected";
+    opt.disabled = true;
+    opt.selected = true;
+    els.lanSelect.appendChild(opt);
+    els.lanSelect.disabled = true;
+    return;
+  }
+
+  els.lanSelect.disabled = false;
+
+  // "Auto" — clears preferredLanIp, lets the scoring pick.
+  const autoOpt = document.createElement("option");
+  autoOpt.value = "";
+  autoOpt.textContent = "Auto";
+  els.lanSelect.appendChild(autoOpt);
+
+  for (const c of candidates) {
+    const opt = document.createElement("option");
+    opt.value = c.address;
+    opt.textContent = `${c.iface} · ${c.address}`;
+    els.lanSelect.appendChild(opt);
+  }
+
+  // If user has a saved preference and it's still present in candidates,
+  // show it as selected. If the preferred adapter went away, fall back to
+  // Auto + show the auto-picked address in the option label.
+  const preferredStillPresent = preferred && candidates.some((c) => c.address === preferred);
+  if (preferredStillPresent) {
+    els.lanSelect.value = preferred;
+  } else {
+    els.lanSelect.value = "";
+    if (currentHost) autoOpt.textContent = `Auto (${currentHost})`;
   }
 }
 
@@ -95,6 +146,14 @@ async function init() {
   if (!api) {
     console.warn("[kekkeys] preload API missing");
     return;
+  }
+
+  if (els.lanSelect) {
+    els.lanSelect.addEventListener("change", async () => {
+      const v = els.lanSelect.value;
+      await api.setPreferredHost(v === "" ? null : v);
+      await refreshQr();
+    });
   }
 
   await Promise.all([refreshQr(), refreshPaired()]);

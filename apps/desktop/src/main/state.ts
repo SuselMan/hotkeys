@@ -19,6 +19,12 @@ interface PersistedState {
   pcName: string;
   serverPort: number;
   pairedDevices: PairedDevice[];
+  /**
+   * User-chosen LAN address for the QR. Persisted across restarts so the user
+   * doesn't have to re-pick on every launch (relevant for multi-NIC machines
+   * like Surface — see doc/tasks/todo/15).
+   */
+  preferredLanIp?: string;
 }
 
 const DEFAULT_PORT = 41234;
@@ -65,6 +71,21 @@ export async function getPcIdentity(): Promise<{ pcDeviceId: string; pcName: str
 export async function setServerPort(port: number): Promise<void> {
   const s = await loadState();
   s.serverPort = port;
+  await persist();
+}
+
+export async function getPreferredLanIp(): Promise<string | null> {
+  const s = await loadState();
+  return s.preferredLanIp ?? null;
+}
+
+export async function setPreferredLanIp(addr: string | null): Promise<void> {
+  const s = await loadState();
+  if (addr) {
+    s.preferredLanIp = addr;
+  } else {
+    delete s.preferredLanIp;
+  }
   await persist();
 }
 

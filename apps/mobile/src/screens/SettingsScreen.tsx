@@ -9,9 +9,10 @@ import {
   View,
 } from "react-native";
 import Constants from "expo-constants";
-import { exportBoards, pickAndImport } from "../backup";
+import { exportBoards, exportLogs, pickAndImport } from "../backup";
 import { replaceAllBoards } from "../boards";
 import { getSavedLocale, setAppLocale, type LocaleSetting } from "../i18n";
+import { clearLogs } from "../logger";
 
 export function SettingsScreen() {
   const { t, i18n } = useTranslation();
@@ -32,6 +33,32 @@ export function SettingsScreen() {
     } catch (e) {
       Alert.alert("Export failed", (e as Error).message);
     }
+  }
+
+  async function onExportLogs() {
+    try {
+      await exportLogs();
+    } catch (e) {
+      const msg = (e as Error).message;
+      if (msg === "no logs yet") {
+        Alert.alert(t("settings.logsEmptyTitle"), t("settings.logsEmptyBody"));
+      } else {
+        Alert.alert(t("settings.logsEmptyTitle"), msg);
+      }
+    }
+  }
+
+  async function onClearLogs() {
+    Alert.alert(t("settings.clearLogsConfirmTitle"), t("settings.clearLogsConfirmBody"), [
+      { text: t("common.cancel"), style: "cancel" },
+      {
+        text: t("settings.clearLogsBtn"),
+        style: "destructive",
+        onPress: () => {
+          void clearLogs();
+        },
+      },
+    ]);
   }
 
   async function onImport() {
@@ -76,6 +103,15 @@ export function SettingsScreen() {
         </Pressable>
         <Pressable style={styles.buttonGhost} onPress={onImport}>
           <Text style={styles.buttonGhostText}>{t("settings.importBtn")}</Text>
+        </Pressable>
+      </Section>
+
+      <Section title={t("settings.diagnosticsLabel")}>
+        <Pressable style={styles.button} onPress={onExportLogs}>
+          <Text style={styles.buttonText}>{t("settings.exportLogsBtn")}</Text>
+        </Pressable>
+        <Pressable style={styles.buttonGhost} onPress={onClearLogs}>
+          <Text style={styles.buttonGhostText}>{t("settings.clearLogsBtn")}</Text>
         </Pressable>
       </Section>
 

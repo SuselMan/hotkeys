@@ -1,6 +1,6 @@
 import { ipcMain } from "electron";
-import { buildPairInfo } from "./pair-info.js";
-import { forgetPaired, listPaired } from "./state.js";
+import { buildPairInfo, listLanCandidates } from "./pair-info.js";
+import { forgetPaired, getPreferredLanIp, listPaired, setPreferredLanIp } from "./state.js";
 import { broadcast } from "./window.js";
 
 interface RuntimeStatus {
@@ -21,6 +21,15 @@ export function registerIpcHandlers(): void {
   });
 
   ipcMain.handle("kekkeys:connection-status", (): RuntimeStatus => lastStatus);
+
+  ipcMain.handle("kekkeys:list-lan-candidates", async () => ({
+    candidates: listLanCandidates().map(({ iface, address }) => ({ iface, address })),
+    preferred: await getPreferredLanIp(),
+  }));
+
+  ipcMain.handle("kekkeys:set-preferred-host", async (_e, addr: string | null) => {
+    await setPreferredLanIp(addr);
+  });
 }
 
 export function setConnectionStatus(s: RuntimeStatus): void {

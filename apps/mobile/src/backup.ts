@@ -6,6 +6,7 @@ import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system/legacy";
 import * as Sharing from "expo-sharing";
 import { loadBoards } from "./boards";
+import { getLogPath, getLogSize } from "./logger";
 import type { Board } from "./types";
 
 const FORMAT_TAG = "kekkeys-boards-export";
@@ -40,6 +41,25 @@ export async function exportBoards(): Promise<{ uri: string; shared: boolean }> 
     return { uri, shared: true };
   }
   return { uri, shared: false };
+}
+
+export async function exportLogs(): Promise<{ uri: string; shared: boolean }> {
+  if ((await getLogSize()) === 0) {
+    throw new Error("no logs yet");
+  }
+  const logPath = await getLogPath();
+  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const out = `${FileSystem.cacheDirectory ?? ""}kekkeys-logs-${stamp}.txt`;
+  await FileSystem.copyAsync({ from: logPath, to: out });
+  if (await Sharing.isAvailableAsync()) {
+    await Sharing.shareAsync(out, {
+      mimeType: "text/plain",
+      dialogTitle: "Share kekkeys logs",
+      UTI: "public.plain-text",
+    });
+    return { uri: out, shared: true };
+  }
+  return { uri: out, shared: false };
 }
 
 export async function pickAndImport(): Promise<{ ok: true; boards: Board[] } | { ok: false; reason: string }> {

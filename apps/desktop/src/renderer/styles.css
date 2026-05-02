@@ -94,6 +94,34 @@ section {
   text-align: center;
 }
 
+.lan-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.lan-label {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.lan-row select {
+  flex: 1;
+  background: #1a1a1a;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.lan-row select:focus {
+  outline: 1px solid var(--accent);
+}
+
 #paired-list {
   list-style: none;
   padding: 0;
