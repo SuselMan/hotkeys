@@ -13,15 +13,18 @@ import type { Board } from "../types";
 
 const FREE_TIER_BOARD_LIMIT = 1;
 
+type CreateState = "off" | "choose" | "named";
+
 interface Props {
   onRun: (board: Board) => void;
   onEdit: (board: Board) => void;
+  onPickTemplate: () => void;
 }
 
-export function BoardsScreen({ onRun, onEdit }: Props) {
+export function BoardsScreen({ onRun, onEdit, onPickTemplate }: Props) {
   const { t } = useTranslation();
   const boards = useBoards();
-  const [creating, setCreating] = useState(false);
+  const [creating, setCreating] = useState<CreateState>("off");
   const [newName, setNewName] = useState("");
 
   const canCreate = boards.length < FREE_TIER_BOARD_LIMIT;
@@ -31,8 +34,13 @@ export function BoardsScreen({ onRun, onEdit }: Props) {
     if (!name) return;
     const board = await createBoard(name);
     setNewName("");
-    setCreating(false);
+    setCreating("off");
     onEdit(board);
+  }
+
+  function startFromTemplate() {
+    setCreating("off");
+    onPickTemplate();
   }
 
   function confirmDelete(b: Board) {
@@ -67,7 +75,29 @@ export function BoardsScreen({ onRun, onEdit }: Props) {
         </View>
       ))}
 
-      {creating && (
+      {boards.length === 0 && creating === "off" && canCreate && (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyTitle}>{t("boards.emptyTitle")}</Text>
+          <Text style={styles.emptyBody}>{t("boards.emptyBody")}</Text>
+        </View>
+      )}
+
+      {creating === "choose" && (
+        <View style={styles.createCard}>
+          <Text style={styles.chooserTitle}>{t("boards.chooserTitle")}</Text>
+          <Pressable style={styles.buttonBlock} onPress={startFromTemplate}>
+            <Text style={styles.buttonText}>{t("boards.fromTemplate")}</Text>
+          </Pressable>
+          <Pressable style={styles.buttonGhostBlock} onPress={() => setCreating("named")}>
+            <Text style={styles.buttonGhostText}>{t("boards.emptyBoard")}</Text>
+          </Pressable>
+          <Pressable style={styles.cancelLink} onPress={() => setCreating("off")}>
+            <Text style={styles.cancelLinkText}>{t("common.cancel")}</Text>
+          </Pressable>
+        </View>
+      )}
+
+      {creating === "named" && (
         <View style={styles.createCard}>
           <TextInput
             style={styles.input}
@@ -81,15 +111,15 @@ export function BoardsScreen({ onRun, onEdit }: Props) {
             <Pressable style={styles.button} onPress={onCreate}>
               <Text style={styles.buttonText}>{t("boards.create")}</Text>
             </Pressable>
-            <Pressable style={styles.buttonGhost} onPress={() => { setCreating(false); setNewName(""); }}>
+            <Pressable style={styles.buttonGhost} onPress={() => { setCreating("off"); setNewName(""); }}>
               <Text style={styles.buttonGhostText}>{t("common.cancel")}</Text>
             </Pressable>
           </View>
         </View>
       )}
 
-      {!creating && canCreate && (
-        <Pressable style={styles.button} onPress={() => setCreating(true)}>
+      {creating === "off" && canCreate && (
+        <Pressable style={styles.button} onPress={() => setCreating("choose")}>
           <Text style={styles.buttonText}>{t("boards.newBtn")}</Text>
         </Pressable>
       )}
@@ -134,4 +164,12 @@ const styles = StyleSheet.create({
   proHint: { backgroundColor: "#2d2820", padding: 12, borderRadius: 8, borderWidth: 1, borderColor: "#5a4a20" },
   proHintTitle: { color: "#fadc50", fontWeight: "700", marginBottom: 4 },
   proHintBody: { color: "#bba", fontSize: 13, lineHeight: 18 },
+  emptyState: { backgroundColor: "#242424", borderRadius: 8, padding: 16, borderWidth: 1, borderColor: "#333", gap: 6 },
+  emptyTitle: { color: "#e8e8e8", fontSize: 15, fontWeight: "700" },
+  emptyBody: { color: "#888", fontSize: 13, lineHeight: 18 },
+  chooserTitle: { color: "#888", fontSize: 12, fontWeight: "600", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 },
+  buttonBlock: { backgroundColor: "#fadc50", paddingVertical: 14, paddingHorizontal: 16, borderRadius: 6, alignItems: "center" },
+  buttonGhostBlock: { backgroundColor: "#3a3a3a", paddingVertical: 14, paddingHorizontal: 16, borderRadius: 6, alignItems: "center" },
+  cancelLink: { paddingVertical: 8, alignItems: "center" },
+  cancelLinkText: { color: "#888", fontSize: 13 },
 });

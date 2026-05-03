@@ -5,6 +5,7 @@
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import { loadTemplate } from "./templates";
 import type { Board, BoardButton } from "./types";
 
 const KEY = "kekkeys.boards";
@@ -13,40 +14,12 @@ let cache: Board[] | null = null;
 let hydrated: Promise<Board[]> | null = null;
 const listeners = new Set<() => void>();
 
-const SEED: Board[] = [
-  {
-    id: "seed-animate",
-    name: "Adobe Animate",
-    gridCols: 4,
-    gridRows: 3,
-    buttons: [
-      { id: "save", x: 0, y: 0, label: "Save", keys: ["ControlLeft", "KeyS"] },
-      { id: "undo", x: 1, y: 0, label: "Undo", keys: ["ControlLeft", "KeyZ"] },
-      { id: "redo", x: 2, y: 0, label: "Redo", keys: ["ControlLeft", "KeyY"] },
-      { id: "test", x: 3, y: 0, label: "Test movie", keys: ["ControlLeft", "Enter"] },
-      { id: "frame", x: 0, y: 1, label: "Frame (F5)", keys: ["F5"] },
-      { id: "kf", x: 1, y: 1, label: "Keyframe (F6)", keys: ["F6"] },
-      { id: "blank", x: 2, y: 1, label: "Blank KF (F7)", keys: ["F7"] },
-      { id: "symbol", x: 3, y: 1, label: "Symbol (F8)", keys: ["F8"] },
-      { id: "select", x: 0, y: 2, label: "Select (V)", keys: ["KeyV"] },
-      { id: "brush", x: 1, y: 2, label: "Brush (B)", keys: ["KeyB"] },
-      { id: "pan", x: 2, y: 2, label: "Pan (hold)", keys: ["Space"] },
-      { id: "play", x: 3, y: 2, label: "Play (Enter)", keys: ["Enter"] },
-    ],
-  },
-];
-
 export async function loadBoards(): Promise<Board[]> {
   if (cache) return cache;
   if (!hydrated) {
     hydrated = (async () => {
       const raw = await AsyncStorage.getItem(KEY);
-      if (raw) {
-        cache = JSON.parse(raw) as Board[];
-      } else {
-        cache = SEED;
-        await AsyncStorage.setItem(KEY, JSON.stringify(cache));
-      }
+      cache = raw ? (JSON.parse(raw) as Board[]) : [];
       return cache;
     })();
   }
@@ -72,6 +45,25 @@ export async function createBoard(name: string): Promise<Board> {
     gridCols: 4,
     gridRows: 3,
     buttons: [],
+  };
+  await persist([...all, board]);
+  return board;
+}
+
+/**
+ * Instantiate a bundled template into a real board: fresh IDs (board + every
+ * button) so multiple instantiations of the same template don't collide.
+ */
+export async function instantiateTemplate(templateId: string): Promise<Board | null> {
+  const tpl = await loadTemplate(templateId);
+  if (!tpl) return null;
+  const all = await loadBoards();
+  const board: Board = {
+    id: rid(),
+    name: tpl.name,
+    gridCols: tpl.gridCols,
+    gridRows: tpl.gridRows,
+    buttons: tpl.buttons.map((b) => ({ ...b, id: rid() })),
   };
   await persist([...all, board]);
   return board;
@@ -107,6 +99,39 @@ export async function removeButton(boardId: string, buttonId: string): Promise<v
     all.map((b) =>
       b.id === boardId ? { ...b, buttons: b.buttons.filter((x) => x.id !== buttonId) } : b,
     ),
+  );
+}
+
+/**
+ * Move a button to (toX, toY). If another button already lives there, the two
+ * exchange coordinates (swap). One persist call → no intermediate state where
+ * both sit on the same cell.
+ */
+export async function moveButton(
+  boardId: string,
+  buttonId: string,
+  toX: number,
+  toY: number,
+): Promise<void> {
+  const all = await loadBoards();
+  await persist(
+    all.map((b) => {
+      if (b.id !== boardId) return b;
+      const moving = b.buttons.find((x) => x.id === buttonId);
+      if (!moving) return b;
+      if (moving.x === toX && moving.y === toY) return b;
+      const occupant = b.buttons.find((x) => x.x === toX && x.y === toY && x.id !== buttonId);
+      const fromX = moving.x;
+      const fromY = moving.y;
+      return {
+        ...b,
+        buttons: b.buttons.map((x) => {
+          if (x.id === buttonId) return { ...x, x: toX, y: toY };
+          if (occupant && x.id === occupant.id) return { ...x, x: fromX, y: fromY };
+          return x;
+        }),
+      };
+    }),
   );
 }
 

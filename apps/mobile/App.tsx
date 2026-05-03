@@ -1,14 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { instantiateTemplate } from "./src/boards";
 import { BoardEditorScreen } from "./src/screens/BoardEditorScreen";
 import { BoardsScreen } from "./src/screens/BoardsScreen";
 import { ConnectScreen } from "./src/screens/ConnectScreen";
 import { RunScreen } from "./src/screens/RunScreen";
 import { ScanScreen } from "./src/screens/ScanScreen";
 import { SettingsScreen } from "./src/screens/SettingsScreen";
+import { TemplatePickerScreen } from "./src/screens/TemplatePickerScreen";
 import type { Board } from "./src/types";
 
 type Tab = "connect" | "boards" | "settings";
@@ -20,6 +22,22 @@ export default function App() {
   const [scanning, setScanning] = useState(false);
   const [running, setRunning] = useState<Board | null>(null);
   const [editingBoardId, setEditingBoardId] = useState<string | null>(null);
+  const [pickingTemplate, setPickingTemplate] = useState(false);
+
+  async function onPickTemplate(templateId: string) {
+    try {
+      const board = await instantiateTemplate(templateId);
+      setPickingTemplate(false);
+      if (!board) {
+        Alert.alert(t("templates.errorTitle"), t("templates.notFound"));
+        return;
+      }
+      setEditingBoardId(board.id);
+    } catch (e) {
+      setPickingTemplate(false);
+      Alert.alert(t("templates.errorTitle"), (e as Error).message);
+    }
+  }
 
   if (running) {
     return (
@@ -51,6 +69,18 @@ export default function App() {
     );
   }
 
+  if (pickingTemplate) {
+    return (
+      <View style={styles.root}>
+        <StatusBar style="light" />
+        <TemplatePickerScreen
+          onCancel={() => setPickingTemplate(false)}
+          onPick={onPickTemplate}
+        />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.root}>
       <StatusBar style="light" />
@@ -60,6 +90,7 @@ export default function App() {
           <BoardsScreen
             onRun={setRunning}
             onEdit={(b) => setEditingBoardId(b.id)}
+            onPickTemplate={() => setPickingTemplate(true)}
           />
         )}
         {tab === "settings" && <SettingsScreen />}
