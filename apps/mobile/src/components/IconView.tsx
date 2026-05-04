@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { View, type ViewStyle } from "react-native";
 import { SvgXml } from "react-native-svg";
-import { colorize, getSvg } from "../icons";
+import { colorize, getSvg, getSvgSync } from "../icons";
 
 interface Props {
   name: string;
@@ -11,19 +11,32 @@ interface Props {
 }
 
 export function IconView({ name, size, color = "#e8e8e8", style }: Props) {
-  const [xml, setXml] = useState<string | null>(null);
+  // Initialize synchronously from the in-memory cache so bundled (top-200)
+  // icons paint on the very first render — no `null → svg` flicker.
+  const [rawSvg, setRawSvg] = useState<string | null>(() => getSvgSync(name));
 
   useEffect(() => {
+    const sync = getSvgSync(name);
+    if (sync !== null) {
+      // Cache hit (e.g. an icon resolved earlier in this session) — keep showing
+      // it; no need to flicker through null while we re-resolve.
+      setRawSvg(sync);
+      return;
+    }
     let cancelled = false;
-    setXml(null);
+    setRawSvg(null);
     void getSvg(name).then((svg) => {
       if (cancelled) return;
-      setXml(svg ? colorize(svg, color) : null);
+      setRawSvg(svg);
     });
     return () => {
       cancelled = true;
     };
-  }, [name, color]);
+    // Only re-resolve when the name changes — color changes are handled
+    // synchronously by the colorize memo below, no refetch needed.
+  }, [name]);
+
+  const xml = useMemo(() => (rawSvg ? colorize(rawSvg, color) : null), [rawSvg, color]);
 
   if (!xml) {
     // Skeleton placeholder so the layout doesn't jump while we resolve.

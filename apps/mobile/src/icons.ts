@@ -63,16 +63,35 @@ export function searchIcons(query: string, limit = 100): IconMeta[] {
 
 const CACHE_DIR = `${FileSystem.cacheDirectory ?? ""}icons/`;
 
-async function ensureDir(): Promise<void> {
-  if (!FileSystem.cacheDirectory) return;
-  const info = await FileSystem.getInfoAsync(CACHE_DIR);
-  if (!info.exists) {
-    await FileSystem.makeDirectoryAsync(CACHE_DIR, { intermediates: true });
-  }
+let ensureDirPromise: Promise<void> | null = null;
+function ensureDir(): Promise<void> {
+  if (ensureDirPromise) return ensureDirPromise;
+  ensureDirPromise = (async () => {
+    if (!FileSystem.cacheDirectory) return;
+    const info = await FileSystem.getInfoAsync(CACHE_DIR);
+    if (!info.exists) {
+      await FileSystem.makeDirectoryAsync(CACHE_DIR, { intermediates: true });
+    }
+  })().catch((err) => {
+    // Don't permanently cache the failure — let the next call retry.
+    ensureDirPromise = null;
+    throw err;
+  });
+  return ensureDirPromise;
 }
 
 function cachePath(name: string): string {
   return `${CACHE_DIR}${name}.svg`;
+}
+
+/**
+ * Synchronous fast path for the bundled top-200 (and any icon already
+ * resolved this session). Returns `null` on a miss — caller should fall
+ * back to the async `getSvg`. Letting `IconView` initialize from this
+ * avoids a `null → svg` re-render flash for cached icons.
+ */
+export function getSvgSync(name: string): string | null {
+  return memSvgCache.get(name) ?? null;
 }
 
 /**
@@ -120,7 +139,16 @@ export async function getSvg(name: string): Promise<string | null> {
  * Recolor a Material Symbols SVG by injecting `fill` on its <path>.
  * The raw SVGs ship with no fill attribute, so the OS defaults to black —
  * we override here so icons look right on dark backgrounds.
+ *
+ * Result is memoized by `(svg, color)` so re-renders that only flip the
+ * highlight state of an already-resolved icon don't re-run the regex.
  */
+const colorizeCache = new Map<string, string>();
 export function colorize(svg: string, color: string): string {
-  return svg.replace(/<path(?![^>]*\bfill=)/g, `<path fill="${color}"`);
+  const key = `${color}\0${svg.length}\0${svg}`;
+  const hit = colorizeCache.get(key);
+  if (hit !== undefined) return hit;
+  const out = svg.replace(/<path(?![^>]*\bfill=)/g, `<path fill="${color}"`);
+  colorizeCache.set(key, out);
+  return out;
 }

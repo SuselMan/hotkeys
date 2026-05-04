@@ -65,6 +65,10 @@ export class WsConnection {
   }
 
   start(): void {
+    // Idempotent: if we're already running (or a reconnect is pending),
+    // a redundant start() — e.g. from a flapping AppState listener —
+    // shouldn't open a duplicate socket.
+    if (this.wantConnected && (this.ws || this.reconnectTimer)) return;
     this.wantConnected = true;
     this.openSocket();
   }
@@ -108,21 +112,30 @@ export class WsConnection {
     this.ws = ws;
 
     ws.onopen = () => {
+      if (this.ws !== ws) return;
       console.warn(`[ws] open ${url}`);
       this.onOpen();
     };
-    ws.onmessage = (e) => this.onMessage(typeof e.data === "string" ? e.data : "");
+    ws.onmessage = (e) => {
+      if (this.ws !== ws) return;
+      this.onMessage(typeof e.data === "string" ? e.data : "");
+    };
     ws.onerror = (event: unknown) => {
       // RN does not surface a useful error object on WebSocket errors —
       // log readyState + URL so we can at least see whether the socket
-      // ever opened.
+      // ever opened. Reconnect scheduling is driven from onclose only;
+      // onerror always precedes onclose for failing sockets, and
+      // scheduling here too caused exponential socket fanout on
+      // wake-from-sleep (see task 18).
       const message = (event as { message?: string } | null | undefined)?.message ?? "(no message)";
       console.warn(`[ws] error url=${url} readyState=${ws.readyState} msg=${message}`);
-      this.scheduleReconnect("socket error");
     };
     ws.onclose = (e) => {
       console.warn(`[ws] close url=${url} code=${e.code} reason=${e.reason ?? ""}`);
-      this.scheduleReconnect(`closed (${e.code})`);
+      // Ignore close events from a socket we've already replaced — otherwise
+      // a flood of stale closes on resume would each spawn a fresh reconnect.
+      if (this.ws !== ws) return;
+      this.scheduleReconnect(`closed (${e.code})`, e.code);
     };
   }
 
@@ -223,7 +236,7 @@ export class WsConnection {
     }
   }
 
-  private scheduleReconnect(error: string): void {
+  private scheduleReconnect(error: string, closeCode?: number): void {
     this.clearHeartbeat();
     if (this.ws) {
       try {
@@ -234,9 +247,24 @@ export class WsConnection {
       this.ws = null;
     }
     if (!this.wantConnected) return;
+    // Idempotent: if a reconnect is already pending, do nothing. The
+    // alternative — overwriting reconnectTimer — leaks the prior timeout,
+    // which still fires and opens a second socket. With this guard, repeated
+    // failure callbacks (or a backlog of close events flushed on resume)
+    // collapse to a single reconnect.
+    if (this.reconnectTimer) return;
+    // Server-initiated clean close (1000) usually means our hello was
+    // rejected as a duplicate of an existing connection — back off harder
+    // instead of hot-looping.
+    if (closeCode === 1000 && this.backoffMs < 1000) {
+      this.backoffMs = 1000;
+    }
     const willRetryAt = Date.now() + this.backoffMs;
     this.setStatus({ kind: "offline", error, willRetryAt });
-    this.reconnectTimer = setTimeout(() => this.openSocket(), this.backoffMs);
+    this.reconnectTimer = setTimeout(() => {
+      this.reconnectTimer = null;
+      this.openSocket();
+    }, this.backoffMs);
     this.backoffMs = Math.min(this.backoffMs * 2, MAX_BACKOFF_MS);
   }
 

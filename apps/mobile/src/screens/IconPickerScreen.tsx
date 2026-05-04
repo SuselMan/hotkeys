@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  ActivityIndicator,
+  Alert,
   FlatList,
   Pressable,
   StyleSheet,
@@ -11,7 +13,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconView } from "../components/IconView";
 import { useBackHandler } from "../hooks";
-import { listAllIcons, searchIcons, type IconMeta } from "../icons";
+import { getSvg, getSvgSync, listAllIcons, searchIcons, type IconMeta } from "../icons";
 
 interface Props {
   initial: string | null;
@@ -20,14 +22,21 @@ interface Props {
 }
 
 const COLS = 5;
+const SEARCH_LIMIT = 120;
 
 export function IconPickerScreen({ initial, onCancel, onPick }: Props) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [query, setQuery] = useState("");
-  const results = useMemo(() => searchIcons(query, 240), [query]);
+  // Name of the icon whose SVG we're currently awaiting before closing the
+  // picker. Disables the rest of the grid + shows a spinner on the cell.
+  const [resolving, setResolving] = useState<string | null>(null);
+  const results = useMemo(() => searchIcons(query, SEARCH_LIMIT), [query]);
   const totalIcons = useMemo(() => listAllIcons().length, []);
-  useBackHandler(onCancel);
+  useBackHandler(() => {
+    if (resolving) return;
+    onCancel();
+  });
 
   // Pad results so FlatList rows align in a fixed grid.
   const padded: Array<IconMeta | null> = useMemo(() => {
@@ -36,15 +45,39 @@ export function IconPickerScreen({ initial, onCancel, onPick }: Props) {
     return r;
   }, [results]);
 
+  async function handlePick(name: string) {
+    if (resolving) return;
+    // Bundled icons resolve synchronously — close immediately, no spinner.
+    if (getSvgSync(name) !== null) {
+      onPick(name);
+      return;
+    }
+    setResolving(name);
+    try {
+      const svg = await getSvg(name);
+      if (svg !== null) {
+        onPick(name);
+        return;
+      }
+      Alert.alert(t("iconPicker.loadFailedTitle"), t("iconPicker.loadFailedBody"));
+    } finally {
+      setResolving(null);
+    }
+  }
+
   return (
     <View style={styles.root}>
       <View style={[styles.topbar, { paddingTop: insets.top + 8 }]}>
-        <Pressable onPress={onCancel} style={styles.headerBtn}>
-          <Text style={styles.headerBtnText}>{t("common.cancel")}</Text>
+        <Pressable onPress={onCancel} style={styles.headerBtn} disabled={!!resolving}>
+          <Text style={[styles.headerBtnText, !!resolving && styles.disabled]}>
+            {t("common.cancel")}
+          </Text>
         </Pressable>
         <Text style={styles.title}>{t("iconPicker.title")}</Text>
-        <Pressable onPress={() => onPick(null)} style={styles.headerBtn}>
-          <Text style={styles.headerBtnText}>{t("common.none")}</Text>
+        <Pressable onPress={() => onPick(null)} style={styles.headerBtn} disabled={!!resolving}>
+          <Text style={[styles.headerBtnText, !!resolving && styles.disabled]}>
+            {t("common.none")}
+          </Text>
         </Pressable>
       </View>
 
@@ -57,6 +90,7 @@ export function IconPickerScreen({ initial, onCancel, onPick }: Props) {
           onChangeText={setQuery}
           autoCorrect={false}
           autoCapitalize="none"
+          editable={!resolving}
         />
       </View>
 
@@ -69,10 +103,12 @@ export function IconPickerScreen({ initial, onCancel, onPick }: Props) {
         renderItem={({ item }) => {
           if (!item) return <View style={styles.cell} />;
           const active = item.name === initial;
+          const isResolving = resolving === item.name;
           return (
             <Pressable
               style={[styles.cell, styles.cellTouch, active && styles.cellActive]}
-              onPress={() => onPick(item.name)}
+              onPress={() => void handlePick(item.name)}
+              disabled={!!resolving && !isResolving}
             >
               <IconView name={item.name} size={28} color={active ? "#1a1a1a" : "#e8e8e8"} />
               <Text
@@ -81,6 +117,11 @@ export function IconPickerScreen({ initial, onCancel, onPick }: Props) {
               >
                 {item.name}
               </Text>
+              {isResolving && (
+                <View style={styles.spinnerOverlay}>
+                  <ActivityIndicator size="small" color="#fadc50" />
+                </View>
+              )}
             </Pressable>
           );
         }}
@@ -102,6 +143,7 @@ const styles = StyleSheet.create({
   },
   headerBtn: { paddingHorizontal: 8, paddingVertical: 6, minWidth: 60 },
   headerBtnText: { color: "#fadc50", fontSize: 15, fontWeight: "700" },
+  disabled: { opacity: 0.4 },
   title: { flex: 1, color: "#fadc50", fontSize: 16, fontWeight: "600", textAlign: "center" },
 
   searchRow: { padding: 12, backgroundColor: "#242424", borderBottomWidth: 1, borderBottomColor: "#333" },
@@ -130,4 +172,11 @@ const styles = StyleSheet.create({
   cellActive: { backgroundColor: "#fadc50", borderColor: "#fadc50" },
   cellLabel: { color: "#bbb", fontSize: 9, textAlign: "center" },
   cellLabelActive: { color: "#1a1a1a", fontWeight: "600" },
+  spinnerOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(36,36,36,0.7)",
+    borderRadius: 8,
+  },
 });

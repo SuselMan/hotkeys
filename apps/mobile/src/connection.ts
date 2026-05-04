@@ -3,6 +3,7 @@
  * and exposes a hook for components.
  */
 import { useEffect, useState } from "react";
+import { AppState, type AppStateStatus } from "react-native";
 import { WsConnection, type ConnectionParams, type ConnectionStatus } from "./net";
 import {
   getActivePairingId,
@@ -17,6 +18,28 @@ let current: WsConnection | null = null;
 let currentParams: ConnectionParams | null = null;
 let lastStatus: ConnectionStatus = { kind: "idle" };
 const subs = new Set<(s: ConnectionStatus) => void>();
+
+// Pause the WS while the app is backgrounded. Without this, queued WS events
+// (timeouts, closes) accumulate during OS sleep / Doze and flush all at once
+// on resume — which combined with a flapping connection used to multiply
+// reconnect schedules into a storm. See task 18.
+let pausedFromBackground = false;
+AppState.addEventListener("change", (state: AppStateStatus) => {
+  if (!current) return;
+  if (state === "active") {
+    if (pausedFromBackground) {
+      pausedFromBackground = false;
+      console.warn("[connection] resume from background — restarting WS");
+      current.start();
+    }
+  } else if (state === "background") {
+    if (!pausedFromBackground) {
+      pausedFromBackground = true;
+      console.warn("[connection] backgrounded — pausing WS");
+      current.stop();
+    }
+  }
+});
 
 function emit(s: ConnectionStatus): void {
   lastStatus = s;
@@ -37,6 +60,7 @@ export async function activatePairing(pcDeviceId: string, host: string, port: nu
   if (!secret) throw new Error("no shared secret for this PC — repair needed");
 
   if (current) current.stop();
+  pausedFromBackground = false;
   currentParams = {
     host,
     port,
@@ -64,6 +88,7 @@ export function disconnect(): void {
     current = null;
     currentParams = null;
   }
+  pausedFromBackground = false;
   emit({ kind: "idle" });
 }
 

@@ -120,6 +120,8 @@ export const en = {
   iconPicker: {
     title: "Pick icon",
     searchPlaceholder: "Search {{count}} icons…",
+    loadFailedTitle: "Couldn't load icon",
+    loadFailedBody: "Check your connection and try again.",
   },
   run: {
     offline: "Offline · {{error}}",

@@ -122,6 +122,8 @@ export const ru: Translations = {
   iconPicker: {
     title: "Выбор иконки",
     searchPlaceholder: "Поиск среди {{count}} иконок…",
+    loadFailedTitle: "Не удалось загрузить иконку",
+    loadFailedBody: "Проверь соединение и попробуй ещё раз.",
   },
   run: {
     offline: "Офлайн · {{error}}",
