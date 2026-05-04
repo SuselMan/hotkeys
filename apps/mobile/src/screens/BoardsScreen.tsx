@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { createBoard, deleteBoard, useBoards } from "../boards";
+import { useIsPro } from "../tier";
 import type { Board } from "../types";
 
 const FREE_TIER_BOARD_LIMIT = 1;
@@ -24,10 +25,11 @@ interface Props {
 export function BoardsScreen({ onRun, onEdit, onPickTemplate }: Props) {
   const { t } = useTranslation();
   const boards = useBoards();
+  const isPro = useIsPro();
   const [creating, setCreating] = useState<CreateState>("off");
   const [newName, setNewName] = useState("");
 
-  const canCreate = boards.length < FREE_TIER_BOARD_LIMIT;
+  const canCreate = isPro || boards.length < FREE_TIER_BOARD_LIMIT;
 
   async function onCreate() {
     const name = newName.trim();
@@ -60,14 +62,14 @@ export function BoardsScreen({ onRun, onEdit, onPickTemplate }: Props) {
 
       {boards.map((b) => (
         <View key={b.id} style={styles.card}>
-          <Pressable style={styles.cardLeft} onPress={() => onEdit(b)}>
+          <Pressable style={styles.cardLeft} onPress={() => onRun(b)}>
             <Text style={styles.cardTitle}>{b.name}</Text>
             <Text style={styles.cardMeta}>
               {b.gridCols}×{b.gridRows} · {t("boards.buttonsCount", { count: b.buttons.length })}
             </Text>
           </Pressable>
-          <Pressable style={styles.runBtn} onPress={() => onRun(b)}>
-            <Text style={styles.runBtnText}>{t("boards.runBtn")}</Text>
+          <Pressable style={styles.editBtn} onPress={() => onEdit(b)}>
+            <Text style={styles.editBtnText}>{`✎  ${t("boards.editBtn")}`}</Text>
           </Pressable>
           <Pressable style={styles.iconBtn} onPress={() => confirmDelete(b)}>
             <Text style={styles.iconBtnText}>×</Text>
@@ -108,10 +110,10 @@ export function BoardsScreen({ onRun, onEdit, onPickTemplate }: Props) {
             autoFocus
           />
           <View style={styles.row}>
-            <Pressable style={styles.button} onPress={onCreate}>
+            <Pressable style={[styles.button, styles.flex1]} onPress={onCreate}>
               <Text style={styles.buttonText}>{t("boards.create")}</Text>
             </Pressable>
-            <Pressable style={styles.buttonGhost} onPress={() => { setCreating("off"); setNewName(""); }}>
+            <Pressable style={[styles.buttonGhost, styles.flex1]} onPress={() => { setCreating("off"); setNewName(""); }}>
               <Text style={styles.buttonGhostText}>{t("common.cancel")}</Text>
             </Pressable>
           </View>
@@ -150,16 +152,17 @@ const styles = StyleSheet.create({
   cardLeft: { flex: 1 },
   cardTitle: { color: "#e8e8e8", fontSize: 16, fontWeight: "600" },
   cardMeta: { color: "#888", fontSize: 12, marginTop: 4 },
-  runBtn: { backgroundColor: "#fadc50", paddingHorizontal: 16, paddingVertical: 8, borderRadius: 6 },
-  runBtnText: { color: "#000", fontWeight: "700" },
+  editBtn: { backgroundColor: "#fadc50", paddingHorizontal: 14, paddingVertical: 8, borderRadius: 6 },
+  editBtnText: { color: "#000", fontWeight: "700" },
   iconBtn: { width: 36, height: 36, alignItems: "center", justifyContent: "center", borderRadius: 6, backgroundColor: "#3a3a3a" },
   iconBtnText: { color: "#fff", fontSize: 22, lineHeight: 22 },
   createCard: { backgroundColor: "#242424", borderRadius: 8, padding: 12, gap: 8, borderWidth: 1, borderColor: "#333" },
   input: { backgroundColor: "#1a1a1a", color: "#e8e8e8", borderRadius: 6, padding: 10, borderWidth: 1, borderColor: "#333", fontSize: 14 },
   row: { flexDirection: "row", gap: 8 },
-  button: { backgroundColor: "#fadc50", paddingVertical: 12, paddingHorizontal: 16, borderRadius: 6, alignItems: "center", flex: 1 },
+  button: { backgroundColor: "#fadc50", paddingVertical: 12, paddingHorizontal: 16, borderRadius: 6, alignItems: "center" },
   buttonText: { color: "#000", fontWeight: "700" },
-  buttonGhost: { backgroundColor: "#3a3a3a", paddingVertical: 12, paddingHorizontal: 16, borderRadius: 6, alignItems: "center", flex: 1 },
+  buttonGhost: { backgroundColor: "#3a3a3a", paddingVertical: 12, paddingHorizontal: 16, borderRadius: 6, alignItems: "center" },
+  flex1: { flex: 1 },
   buttonGhostText: { color: "#fff", fontWeight: "600" },
   proHint: { backgroundColor: "#2d2820", padding: 12, borderRadius: 8, borderWidth: 1, borderColor: "#5a4a20" },
   proHintTitle: { color: "#fadc50", fontWeight: "700", marginBottom: 4 },

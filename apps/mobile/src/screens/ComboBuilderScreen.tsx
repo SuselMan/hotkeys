@@ -25,6 +25,11 @@ const MODIFIER_TOGGLES: Array<{ label: string; code: KeyCode }> = [
   { label: "Win", code: "MetaLeft" },
 ];
 
+const RIGHT_MODIFIER_TOGGLES: Array<{ labelKey: string; code: KeyCode }> = [
+  { labelKey: "combo.rCtrl", code: "ControlRight" },
+  { labelKey: "combo.rShift", code: "ShiftRight" },
+];
+
 const LETTERS: KeyCode[] = [
   "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP",
   "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL",
@@ -129,6 +134,22 @@ export function ComboBuilderScreen({ initialKeys, onCancel, onDone }: Props) {
           </View>
         </Section>
 
+        <Section title={t("combo.modifiersRight")}>
+          <View style={styles.modRow}>
+            {RIGHT_MODIFIER_TOGGLES.map((m) => (
+              <Pressable
+                key={m.code}
+                onPress={() => toggleModifier(m.code)}
+                style={[styles.modBtn, modifiers.has(m.code) && styles.modBtnActive]}
+              >
+                <Text style={[styles.modText, modifiers.has(m.code) && styles.modTextActive]}>
+                  {t(m.labelKey)}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        </Section>
+
         <Section title={t("combo.letters")}>
           <KeyGrid keys={LETTERS} mainKey={mainKey} onPick={pickMain} cols={10} />
         </Section>
@@ -202,8 +223,7 @@ function splitInitial(keys: KeyCode[]): { modifiers: Set<KeyCode>; mainKey: KeyC
   let main: KeyCode | null = null;
   for (const k of keys) {
     if (ALL_MODIFIERS.includes(k)) {
-      // Normalize R-side modifiers to L-side for the simplified UI.
-      mods.add(k.replace("Right", "Left") as KeyCode);
+      mods.add(k);
     } else if (!main) {
       main = k;
     }

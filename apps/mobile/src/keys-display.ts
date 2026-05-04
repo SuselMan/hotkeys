@@ -17,9 +17,9 @@ const MODIFIER_ORDER: KeyCode[] = [
 
 const PRETTY: Record<string, string> = {
   ControlLeft: "Ctrl",
-  ControlRight: "Ctrl",
+  ControlRight: "RCtrl",
   ShiftLeft: "Shift",
-  ShiftRight: "Shift",
+  ShiftRight: "RShift",
   AltLeft: "Alt",
   AltRight: "Alt",
   MetaLeft: "Win",

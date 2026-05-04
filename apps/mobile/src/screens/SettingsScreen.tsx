@@ -13,10 +13,12 @@ import { exportBoards, exportLogs, pickAndImport } from "../backup";
 import { replaceAllBoards } from "../boards";
 import { getSavedLocale, setAppLocale, type LocaleSetting } from "../i18n";
 import { clearLogs } from "../logger";
+import { setTier, useTier, type Tier } from "../tier";
 
 export function SettingsScreen() {
   const { t, i18n } = useTranslation();
   const [savedLocale, setSavedLocale] = useState<LocaleSetting>("system");
+  const tier = useTier();
 
   useEffect(() => {
     void getSavedLocale().then(setSavedLocale);
@@ -25,6 +27,10 @@ export function SettingsScreen() {
   async function setLocale(loc: LocaleSetting) {
     await setAppLocale(loc);
     setSavedLocale(loc);
+  }
+
+  async function pickTier(next: Tier) {
+    await setTier(next);
   }
 
   async function onExport() {
@@ -115,6 +121,12 @@ export function SettingsScreen() {
         </Pressable>
       </Section>
 
+      <Section title={t("settings.tierLabel")}>
+        <TierChoice value="free" current={tier} label={t("settings.tierFree")} onPick={pickTier} />
+        <TierChoice value="pro" current={tier} label={t("settings.tierPro")} onPick={pickTier} />
+        <Text style={styles.aboutLine}>{t("settings.tierHint")}</Text>
+      </Section>
+
       <Section title={t("settings.aboutLabel")}>
         <Text style={styles.aboutLine}>{t("settings.aboutVersion", { version })}</Text>
         <Text style={styles.aboutLine}>{t("settings.aboutCredit")}</Text>
@@ -130,6 +142,22 @@ interface LangChoiceProps {
   onPick: (v: LocaleSetting) => void;
 }
 function LangChoice({ value, current, label, onPick }: LangChoiceProps) {
+  const active = current === value;
+  return (
+    <Pressable style={[styles.row, active && styles.rowActive]} onPress={() => onPick(value)}>
+      <Text style={[styles.rowText, active && styles.rowTextActive]}>{label}</Text>
+      {active && <Text style={styles.check}>✓</Text>}
+    </Pressable>
+  );
+}
+
+interface TierChoiceProps {
+  value: Tier;
+  current: Tier;
+  label: string;
+  onPick: (v: Tier) => void;
+}
+function TierChoice({ value, current, label, onPick }: TierChoiceProps) {
   const active = current === value;
   return (
     <Pressable style={[styles.row, active && styles.rowActive]} onPress={() => onPick(value)}>

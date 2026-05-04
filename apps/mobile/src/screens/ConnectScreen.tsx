@@ -106,6 +106,8 @@ export function ConnectScreen({ onScanRequest }: Props) {
         <StatusBadge status={status} />
       </View>
 
+      {pairError && <Text style={styles.error}>{pairError}</Text>}
+
       <View style={styles.section}>
         <Text style={styles.h2}>{t("connect.pairedTitle")}</Text>
         {pairings.length === 0 && (
@@ -137,42 +139,43 @@ export function ConnectScreen({ onScanRequest }: Props) {
         <Text style={styles.muted}>{t("connect.pairScanHint")}</Text>
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.h2}>{t("connect.manualTitle")}</Text>
-        <Text style={styles.muted}>{t("connect.manualHint")}</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={t("connect.hostPlaceholder")}
-          placeholderTextColor="#666"
-          autoCapitalize="none"
-          value={host}
-          onChangeText={setHost}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder={t("connect.portPlaceholder")}
-          placeholderTextColor="#666"
-          keyboardType="numeric"
-          value={port}
-          onChangeText={setPort}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder={t("connect.tokenPlaceholder")}
-          placeholderTextColor="#666"
-          autoCapitalize="none"
-          value={token}
-          onChangeText={setToken}
-        />
-        <Pressable
-          style={[styles.button, pairing && styles.buttonDisabled]}
-          disabled={pairing}
-          onPress={onPair}
-        >
-          {pairing ? <ActivityIndicator /> : <Text style={styles.buttonText}>{t("connect.pair")}</Text>}
-        </Pressable>
-        {pairError && <Text style={styles.error}>{pairError}</Text>}
-      </View>
+      {__DEV__ && (
+        <View style={styles.section}>
+          <Text style={styles.h2}>{t("connect.manualTitle")}</Text>
+          <Text style={styles.muted}>{t("connect.manualHint")}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={t("connect.hostPlaceholder")}
+            placeholderTextColor="#666"
+            autoCapitalize="none"
+            value={host}
+            onChangeText={setHost}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder={t("connect.portPlaceholder")}
+            placeholderTextColor="#666"
+            keyboardType="numeric"
+            value={port}
+            onChangeText={setPort}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder={t("connect.tokenPlaceholder")}
+            placeholderTextColor="#666"
+            autoCapitalize="none"
+            value={token}
+            onChangeText={setToken}
+          />
+          <Pressable
+            style={[styles.button, pairing && styles.buttonDisabled]}
+            disabled={pairing}
+            onPress={onPair}
+          >
+            {pairing ? <ActivityIndicator /> : <Text style={styles.buttonText}>{t("connect.pair")}</Text>}
+          </Pressable>
+        </View>
+      )}
     </ScrollView>
   );
 }

@@ -16,7 +16,9 @@
       "mcp__figma-remote-mcp__get_metadata",
       "mcp__sentry__get_sentry_resource",
       "mcp__sentry__search_issue_events",
-      "PowerShell(Set-Location \"C:\\\\projects\\\\hotkeys\\\\apps\\\\mobile\"; npx tsc --noEmit 2>&1 | Select-Object -First 80; \"exit=$LASTEXITCODE\")"
+      "PowerShell(Set-Location \"C:\\\\projects\\\\hotkeys\\\\apps\\\\mobile\"; npx tsc --noEmit 2>&1 | Select-Object -First 80; \"exit=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\hotkeys\\\\apps\\\\mobile\"; npx tsc --noEmit 2>&1; \"exit=$LASTEXITCODE\")",
+      "PowerShell(Move-Item *)"
     ]
   },
   "enableAllProjectMcpServers": true,
