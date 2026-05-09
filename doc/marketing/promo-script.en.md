@@ -11,7 +11,7 @@ timecodes as guides for the screen capture, not as hard cuts.
 >
 > Build a board on the phone. Drag buttons onto a grid, pick from thousands of icons, assign any key combination. Need a sticky modifier? Toggle Sticky and one tap holds the keys until you tap again. Multiple boards mean one for Photoshop, one for Blender, one for OBS — switch in a tap.
 >
-> Hit Run. Tap or hold any button — the real keystrokes fire on your PC instantly. Two fingers send chords. Combos work exactly like a hardware deck.
+> Tap a board — it opens straight into the live keypad. Tap or hold any button and the real keystrokes fire on your PC instantly. Two fingers send chords. Combos work exactly like a hardware deck.
 >
 > Built for digital artists, animators, video editors, 3D modellers, streamers — anyone whose workflow runs on keyboard shortcuts. Free for one board. PRO unlocks the rest — nine ninety-nine, one-time, no subscription. kekkeys dot online.
 
@@ -37,9 +37,9 @@ timecodes as guides for the screen capture, not as hard cuts.
 
 **[00:35–00:55] Run**
 
-> Hit Run. Tap or hold any button — the real keystrokes fire on your PC
-> instantly. Two fingers send chords. Combos work exactly like a hardware
-> deck.
+> Tap a board — it opens straight into the live keypad. Tap or hold any
+> button and the real keystrokes fire on your PC instantly. Two fingers
+> send chords. Combos work exactly like a hardware deck.
 
 **[00:55–01:10] Audience + CTA**
 

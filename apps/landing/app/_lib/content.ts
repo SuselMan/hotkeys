@@ -50,7 +50,7 @@ export interface LandingContent {
 export const en: LandingContent = {
   nav: { home: "Home", download: "Download", privacy: "Privacy" },
   hero: {
-    headline: "Your phone is your macropad.",
+    headline: "Your phone is your hotkey deck.",
     lead:
       "kekkeys turns your phone into a programmable hotkey deck for the apps you live in. Configure boards on the phone, press buttons, real keystrokes fire on your PC over local WiFi. Built for digital artists, animators, video editors, 3D modellers, streamers — anyone whose workflow runs on keyboard shortcuts.",
     ctaWindows: "Download for Windows",
@@ -60,12 +60,12 @@ export const en: LandingContent = {
   },
   features: {
     eyebrow: "Why kekkeys",
-    title: "A programmable macropad for every app you live in.",
+    title: "A programmable hotkey deck for every app you live in.",
     items: [
       {
         title: "Configured entirely on your phone",
         body:
-          "Drag a 4×3 grid, pick from 3866 Material Symbols icons, set key combos with a visual builder. The desktop just listens and presses.",
+          "Pick any grid size, drag buttons onto the cells, choose from 3866 Material Symbols icons, set key combos with a visual builder. The desktop just listens and presses.",
       },
       {
         title: "Real keystrokes, not text input",
@@ -81,23 +81,19 @@ export const en: LandingContent = {
   },
   steps: {
     eyebrow: "How it works",
-    title: "Pair once, build a board, hit run.",
+    title: "Three steps. No accounts, no cloud.",
     items: [
       {
-        body: "Install the desktop app on your PC, the mobile app on your phone.",
-        sub: "Same WiFi network. Windows installer signed by SmartScreen — see the install guide.",
+        body: "Install kekkeys on your PC and your phone.",
+        sub: "Free, no account. Both devices on the same WiFi network — that's the whole setup.",
       },
       {
-        body: "Open kekkeys on the desktop, scan the QR with the phone.",
-        sub: "Pairing token rotates every two minutes. Stays paired across reboots.",
+        body: "Open kekkeys on the desktop and scan the QR with your phone.",
+        sub: "Pairing happens over your local WiFi. Nothing leaves the LAN.",
       },
       {
-        body: "Build a board on the phone. Set icons, labels, key combinations.",
-        sub: "Visual combo builder with sticky modifiers. Works offline once installed.",
-      },
-      {
-        body: "Hit Run. Tap or hold buttons on the phone, real keys fire on the PC.",
-        sub: "Hold = hold. Release = release. Multi-touch = multi-key.",
+        body: "Build a board on the phone, tap a button — real keystrokes fire on your PC.",
+        sub: "Tap or hold. Multi-touch sends chords. As many boards as you want, one per app.",
       },
     ],
   },
@@ -144,7 +140,7 @@ export const en: LandingContent = {
 export const ru: LandingContent = {
   nav: { home: "Главная", download: "Скачать", privacy: "Приватность" },
   hero: {
-    headline: "Твой телефон — это макропад.",
+    headline: "Твой телефон — это твой хоткей-дек.",
     lead:
       "kekkeys превращает твой телефон в программируемый хоткей-дек для тех приложений, в которых ты живёшь. Настраиваешь доски с телефона, жмёшь кнопки — на ПК фигачат настоящие клавиши через твой WiFi. Сделан для художников, аниматоров, видеомонтажёров, 3D-моделлеров, стримеров — всех у кого работа на хоткеях.",
     ctaWindows: "Скачать для Windows",
@@ -154,12 +150,12 @@ export const ru: LandingContent = {
   },
   features: {
     eyebrow: "Зачем kekkeys",
-    title: "Программируемый макропад для каждого приложения.",
+    title: "Программируемый хоткей-дек для каждого приложения.",
     items: [
       {
         title: "Полностью настраивается с телефона",
         body:
-          "Сетка 4×3, иконки из 3866 Material Symbols, билдер комбинаций с залипающими модификаторами. На ПК — компаньон, который ничего не настраивает.",
+          "Сетка любого размера, кнопки перетаскиваешь куда нужно, 3866 иконок Material Symbols, визуальный билдер комбинаций с залипающими модификаторами. На ПК — компаньон, который ничего не настраивает.",
       },
       {
         title: "Настоящие клавиши, не текст",
@@ -175,23 +171,19 @@ export const ru: LandingContent = {
   },
   steps: {
     eyebrow: "Как это работает",
-    title: "Один раз запейрил, собрал доску, нажал Run.",
+    title: "Три шага. Без аккаунтов и облака.",
     items: [
       {
-        body: "Поставь десктопное приложение на ПК, мобильное — на телефон.",
-        sub: "Одна WiFi-сеть. Windows-инсталлер пока без подписи — см. гайд установки.",
+        body: "Поставь kekkeys на ПК и на телефон.",
+        sub: "Бесплатно, без аккаунтов. Подключи оба устройства к одной WiFi — это всё что нужно для настройки.",
       },
       {
-        body: "Открой kekkeys на ПК, отсканируй QR телефоном.",
-        sub: "Pairing token обновляется каждые две минуты. Пара переживает перезагрузку.",
+        body: "Открой kekkeys на ПК и отсканируй QR с телефона.",
+        sub: "Пейринг идёт через твою локальную WiFi. Ничего не уходит за пределы LAN.",
       },
       {
-        body: "Собери доску на телефоне. Иконки, подписи, комбинации клавиш.",
-        sub: "Визуальный билдер с залипающими модификаторами. После установки работает офлайн.",
-      },
-      {
-        body: "Жми Run. Тапни или удержи кнопку — на ПК поедут настоящие клавиши.",
-        sub: "Удержание = удержание. Отпустил = отпустил. Мульти-тач = мульти-клавиши.",
+        body: "Собери доску на телефоне, тапни кнопку — на ПК срабатывают настоящие клавиши.",
+        sub: "Тап или удержание. Мульти-тач — аккорд. Сколько угодно досок, по одной на приложение.",
       },
     ],
   },

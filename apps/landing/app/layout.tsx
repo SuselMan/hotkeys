@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s · kekkeys",
   },
   description:
-    "Turn your phone into a programmable macropad. Configure boards on the phone, press buttons, real keystrokes fire on Windows. Built for digital artists, animators, video editors, 3D modellers, streamers — any shortcut-heavy workflow.",
+    "Turn your phone into a programmable hotkey deck. Configure boards on the phone, press buttons, real keystrokes fire on Windows. Built for digital artists, animators, video editors, 3D modellers, streamers — any shortcut-heavy workflow.",
   applicationName: "kekkeys",
   authors: [{ name: "kekkeys" }],
   keywords: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "kekkeys — your phone is your macropad",
+    title: "kekkeys — your phone is your hotkey deck",
     description:
       "Programmable hotkey deck for the apps you live in. Press a button on your phone, the same keystroke fires on your PC. Built for shortcut-heavy workflows.",
     siteName: "kekkeys",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "kekkeys — your phone is your macropad",
+    title: "kekkeys — your phone is your hotkey deck",
     description:
       "Programmable hotkey deck for the apps you live in. Real keystrokes on your PC, configured from your phone.",
     images: ["/1200x630.png"],
