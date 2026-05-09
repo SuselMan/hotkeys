@@ -4,7 +4,7 @@ import { content } from "../_lib/content";
 
 export const metadata: Metadata = {
   description:
-    "Phone-controlled hotkey deck for your PC — a free, local Touch Portal / Stream Deck alternative. Configure boards on the phone, real keystrokes fire on Windows.",
+    "Phone-controlled programmable macropad for your PC. A free, local hotkey deck for digital artists, animators, video editors, 3D modellers, streamers — any shortcut-heavy workflow.",
   alternates: {
     canonical: "/en/",
     languages: { "en-US": "/en/", "ru-RU": "/ru/", "x-default": "/en/" },

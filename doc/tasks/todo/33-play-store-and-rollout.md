@@ -11,8 +11,8 @@
    - Tags: keyboard, productivity, remote control.
 
 2. **Listing copy** (per locale):
-   - Short description: 80 chars. Hook + USP — "Phone-controlled hotkey deck for your PC. Touch Portal alternative."
-   - Full description: 4000 chars. Feature list, supported apps (Photoshop, Animate, Blender, Resolve, OBS, …), no-cloud privacy line, pricing.
+   - Short description: 80 chars. Hook + USP — e.g. "Programmable macropad on your phone. Hotkeys for the apps you live in."
+   - Full description: 4000 chars. Position as a phone-based programmable macropad / hotkey deck; audience callout (digital artists, animators, video editors, 3D modellers, streamers, anyone with a shortcut-heavy workflow); supported apps namedrop (Photoshop, Animate, Blender, Resolve, OBS, Figma, Premiere, After Effects); no-cloud privacy line; pricing. **Avoid framing as an alternative to Touch Portal / Stream Deck** — describe what kekkeys *is*, not what it replaces.
    - What's new: stays empty for v1.0.0.
 
 3. **Visuals** (delivered by #26 + #30):

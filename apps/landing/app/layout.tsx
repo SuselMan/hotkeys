@@ -8,24 +8,27 @@ export const metadata: Metadata = {
     template: "%s · kekkeys",
   },
   description:
-    "Turn your phone into a Touch Portal-style hotkey deck. Configure boards on the phone, press buttons, real keys fire on Windows.",
+    "Turn your phone into a programmable macropad. Configure boards on the phone, press buttons, real keystrokes fire on Windows. Built for digital artists, animators, video editors, 3D modellers, streamers — any shortcut-heavy workflow.",
   applicationName: "kekkeys",
   authors: [{ name: "kekkeys" }],
   keywords: [
-    "touch portal alternative",
-    "stream deck alternative",
-    "streamdeck on phone",
-    "phone as streamdeck",
+    "software macropad",
+    "phone macropad",
+    "programmable macropad",
+    "macropad app",
     "phone hotkeys",
+    "phone hotkey deck",
     "tablet hotkey app",
     "tablet hotkey deck",
+    "streamdeck on phone",
+    "phone as streamdeck",
+    "shortcut deck for artists",
     "hotkeys for photoshop",
     "hotkeys for animate",
     "hotkeys for blender",
     "hotkeys for davinci resolve",
     "hotkeys for obs",
     "hotkey deck for windows",
-    "free stream deck software",
   ],
   icons: {
     icon: [
@@ -39,18 +42,18 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "kekkeys — phone-controlled hotkeys",
+    title: "kekkeys — your phone is your macropad",
     description:
-      "Press a button on your phone — the same combination fires on your PC. Boards configured on the phone, real keys on Windows.",
+      "Programmable hotkey deck for the apps you live in. Press a button on your phone, the same keystroke fires on your PC. Built for shortcut-heavy workflows.",
     siteName: "kekkeys",
     type: "website",
     images: [{ url: "/1200x630.png", width: 1200, height: 630, alt: "kekkeys — phone-controlled hotkeys for your desktop" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "kekkeys — phone-controlled hotkeys",
+    title: "kekkeys — your phone is your macropad",
     description:
-      "Press a button on your phone — the same combination fires on your PC.",
+      "Programmable hotkey deck for the apps you live in. Real keystrokes on your PC, configured from your phone.",
     images: ["/1200x630.png"],
   },
 };

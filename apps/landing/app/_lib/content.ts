@@ -50,9 +50,9 @@ export interface LandingContent {
 export const en: LandingContent = {
   nav: { home: "Home", download: "Download", privacy: "Privacy" },
   hero: {
-    headline: "Phone-controlled hotkeys for your desktop.",
+    headline: "Your phone is your macropad.",
     lead:
-      "Press a button on your phone — the same combination fires on your PC. Configure boards on the phone, no extra clicks on Windows.",
+      "kekkeys turns your phone into a programmable hotkey deck for the apps you live in. Configure boards on the phone, press buttons, real keystrokes fire on your PC over local WiFi. Built for digital artists, animators, video editors, 3D modellers, streamers — anyone whose workflow runs on keyboard shortcuts.",
     ctaWindows: "Download for Windows",
     ctaWindowsSub: "Tray app, no install wizard",
     ctaApk: "Download APK",
@@ -60,7 +60,7 @@ export const en: LandingContent = {
   },
   features: {
     eyebrow: "Why kekkeys",
-    title: "Touch Portal energy, on a $0 stack you already own.",
+    title: "A programmable macropad for every app you live in.",
     items: [
       {
         title: "Configured entirely on your phone",
@@ -144,9 +144,9 @@ export const en: LandingContent = {
 export const ru: LandingContent = {
   nav: { home: "Главная", download: "Скачать", privacy: "Приватность" },
   hero: {
-    headline: "Хоткеи на компе с экрана телефона.",
+    headline: "Твой телефон — это макропад.",
     lead:
-      "Жмёшь кнопку на телефоне — та же комбинация срабатывает на ПК. Доски настраиваются с телефона, на компе ничего кликать не надо.",
+      "kekkeys превращает твой телефон в программируемый хоткей-дек для тех приложений, в которых ты живёшь. Настраиваешь доски с телефона, жмёшь кнопки — на ПК фигачат настоящие клавиши через твой WiFi. Сделан для художников, аниматоров, видеомонтажёров, 3D-моделлеров, стримеров — всех у кого работа на хоткеях.",
     ctaWindows: "Скачать для Windows",
     ctaWindowsSub: "Tray-приложение, без визарда",
     ctaApk: "Скачать APK",
@@ -154,7 +154,7 @@ export const ru: LandingContent = {
   },
   features: {
     eyebrow: "Зачем kekkeys",
-    title: "Замена Touch Portal на стеке, который уже у тебя есть.",
+    title: "Программируемый макропад для каждого приложения.",
     items: [
       {
         title: "Полностью настраивается с телефона",
