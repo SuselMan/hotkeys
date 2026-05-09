@@ -8,23 +8,35 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getLocales } from "expo-localization";
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
+import { de } from "./de";
 import { en } from "./en";
+import { es } from "./es";
+import { ja } from "./ja";
 import { ru } from "./ru";
 
-export type AppLocale = "en" | "ru";
+export type AppLocale = "en" | "ru" | "es" | "de" | "ja";
 export type LocaleSetting = AppLocale | "system";
 
 const STORAGE_KEY = "kekkeys.locale";
 
+const SUPPORTED: ReadonlyArray<AppLocale> = ["en", "ru", "es", "de", "ja"];
+
+function isSupported(value: string | null | undefined): value is AppLocale {
+  return value !== null && value !== undefined && (SUPPORTED as ReadonlyArray<string>).includes(value);
+}
+
 function deviceLocale(): AppLocale {
   const sys = getLocales()?.[0]?.languageCode;
-  return sys === "ru" ? "ru" : "en";
+  return isSupported(sys) ? sys : "en";
 }
 
 void i18next.use(initReactI18next).init({
   resources: {
     en: { translation: en },
     ru: { translation: ru },
+    es: { translation: es },
+    de: { translation: de },
+    ja: { translation: ja },
   },
   lng: deviceLocale(),
   fallbackLng: "en",
@@ -37,7 +49,7 @@ void i18next.use(initReactI18next).init({
 void (async () => {
   try {
     const saved = await AsyncStorage.getItem(STORAGE_KEY);
-    if (saved === "en" || saved === "ru") {
+    if (isSupported(saved)) {
       if (i18next.language !== saved) await i18next.changeLanguage(saved);
     }
   } catch {
@@ -58,7 +70,7 @@ export async function setAppLocale(locale: LocaleSetting): Promise<void> {
 export async function getSavedLocale(): Promise<LocaleSetting> {
   try {
     const saved = await AsyncStorage.getItem(STORAGE_KEY);
-    if (saved === "en" || saved === "ru") return saved;
+    if (isSupported(saved)) return saved;
   } catch {
     /* ignore */
   }

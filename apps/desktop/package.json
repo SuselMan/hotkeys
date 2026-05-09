@@ -1,6 +1,6 @@
 {
   "name": "@kekkeys/desktop",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "main": "./dist/main/index.js",
@@ -58,7 +58,7 @@
           "arch": ["x64"]
         }
       ],
-      "artifactName": "${productName}-${version}-setup.${ext}"
+      "artifactName": "${productName}-setup.${ext}"
     },
     "nsis": {
       "oneClick": false,

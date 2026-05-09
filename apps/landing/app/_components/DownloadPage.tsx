@@ -2,8 +2,8 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import type { LandingContent, Locale } from "../_lib/content";
 
-const WINDOWS_URL = "https://github.com/kekkeys/kekkeys/releases/latest/download/kekkeys-setup.exe";
-const ANDROID_URL = "https://github.com/kekkeys/kekkeys/releases/latest/download/kekkeys.apk";
+const WINDOWS_URL = "https://github.com/SuselMan/hotkeys/releases/latest/download/kekkeys-setup.exe";
+const ANDROID_URL = "https://github.com/SuselMan/hotkeys/releases/latest/download/kekkeys.apk";
 
 interface Props {
   locale: Locale;

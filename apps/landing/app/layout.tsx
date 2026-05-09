@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kekkeys.app"),
+  metadataBase: new URL("https://kekkeys.online"),
   title: {
     default: "kekkeys — phone-controlled hotkeys for your desktop",
     template: "%s · kekkeys",

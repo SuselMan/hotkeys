@@ -6,7 +6,7 @@
  */
 import type { Locale } from "../_lib/content";
 
-const SITE_URL = "https://kekkeys.app";
+const SITE_URL = "https://kekkeys.online";
 
 interface Props {
   locale: Locale;

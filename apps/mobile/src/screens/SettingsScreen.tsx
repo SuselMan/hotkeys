@@ -101,6 +101,9 @@ export function SettingsScreen() {
         <LangChoice value="system" current={savedLocale} label={t("settings.languageSystem")} onPick={setLocale} />
         <LangChoice value="en" current={savedLocale} label={t("settings.languageEn")} onPick={setLocale} />
         <LangChoice value="ru" current={savedLocale} label={t("settings.languageRu")} onPick={setLocale} />
+        <LangChoice value="es" current={savedLocale} label={t("settings.languageEs")} onPick={setLocale} />
+        <LangChoice value="de" current={savedLocale} label={t("settings.languageDe")} onPick={setLocale} />
+        <LangChoice value="ja" current={savedLocale} label={t("settings.languageJa")} onPick={setLocale} />
       </Section>
 
       <Section title={t("settings.backupLabel")}>

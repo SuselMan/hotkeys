@@ -1,6 +1,6 @@
 {
   "name": "kekkeys",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "description": "kekkeys monorepo — phone-controlled hotkeys for desktop",
   "workspaces": [
