@@ -3,6 +3,18 @@
 Target length **~70s** at natural speaking cadence (≈150 wpm). Read the
 timecodes as guides for the screen capture, not as hard cuts.
 
+## Plain text (paste into TTS)
+
+> Your phone is now a programmable macropad. A hotkey deck for every app you live in.
+>
+> Open kekkeys on your PC, scan the QR with your phone. Pairing happens over your local WiFi. No account, no cloud, no companion service running in the background.
+>
+> Build a board on the phone. Drag buttons onto a grid, pick from thousands of icons, assign any key combination. Need a sticky modifier? Toggle Sticky and one tap holds the keys until you tap again. Multiple boards mean one for Photoshop, one for Blender, one for OBS — switch in a tap.
+>
+> Hit Run. Tap or hold any button — the real keystrokes fire on your PC instantly. Two fingers send chords. Combos work exactly like a hardware deck.
+>
+> Built for digital artists, animators, video editors, 3D modellers, streamers — anyone whose workflow runs on keyboard shortcuts. Free for one board. PRO unlocks the rest — nine ninety-nine, one-time, no subscription. kekkeys dot online.
+
 ---
 
 **[00:00–00:05] Hook**
@@ -53,11 +65,11 @@ timecodes as guides for the screen capture, not as hard cuts.
 
 ## Beat-to-screen mapping
 
-| Beat | What's on screen |
-|---|---|
-| 00:00–00:05 | Logo wipe / kekkeys mark + tagline overlay |
-| 00:05–00:15 | Desktop QR code → phone scan → "paired" toast |
-| 00:15–00:35 | Phone: drag-drop buttons, icon picker, combo builder, Sticky toggle |
+| Beat        | What's on screen                                                                                          |
+| ----------- | --------------------------------------------------------------------------------------------------------- |
+| 00:00–00:05 | Logo wipe / kekkeys mark + tagline overlay                                                                |
+| 00:05–00:15 | Desktop QR code → phone scan → "paired" toast                                                             |
+| 00:15–00:35 | Phone: drag-drop buttons, icon picker, combo builder, Sticky toggle                                       |
 | 00:35–00:55 | Split-screen: phone Run mode + desktop app receiving keys (Photoshop tool switching, then Blender shortcut) |
 | 00:55–01:10 | Audience montage (Photoshop, Animate, Blender, Resolve, OBS thumbnails) + kekkeys.online URL + price line |
 
