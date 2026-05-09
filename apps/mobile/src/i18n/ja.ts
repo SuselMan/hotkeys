@@ -170,7 +170,12 @@ export const ja: Translations = {
     priceLine: "$9.99 — 買い切り",
     getProBtn: "PROを取得",
     restoreBtn: "購入を復元",
-    debugDisclaimer: "Play Billingは近日対応予定です。今のところ「PROを取得」はデバッグ用のティアを切り替え、テスターが全機能をプレビューできるようにします。",
+    purchaseFailedTitle: "購入に失敗しました",
+    purchaseFailedBody: "購入を完了できませんでした: {{reason}}",
+    restoredTitle: "PROを復元しました",
+    restoredBody: "PRO購入が再びアクティブになりました。",
+    restoreNoneTitle: "PRO購入が見つかりません",
+    restoreNoneBody: "このGoogleアカウントで以前のPRO購入が見つかりませんでした。",
   },
   settings: {
     title: "設定",

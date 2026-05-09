@@ -1,37 +1,90 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconView } from "../components/IconView";
 import { useBackHandler } from "../hooks";
-import { setTier } from "../tier";
+import {
+  getCachedPrice,
+  purchasePro,
+  restorePurchases,
+  subscribePriceUpdates,
+} from "../iap";
 
 interface Props {
   onClose: () => void;
 }
 
 /**
- * The single funnel for every PRO touchpoint in the app. For v1 the Get-PRO
- * button just flips the debug tier so the conversion path can be dogfooded
- * end-to-end; the Play Billing integration replaces only the body of
- * `onGetPro` when it lands. Pricing copy lives only on this screen — never
- * on CTA buttons or lock-block bodies — so we don't re-localize three places
- * every time pricing moves.
+ * The single funnel for every PRO touchpoint in the app. The Get-PRO button
+ * dispatches a Play Billing purchase request; the actual entitlement flip
+ * happens in the global purchaseUpdatedListener registered in `iap.ts`, so
+ * this screen just dismisses on dispatch and trusts the listener to set
+ * tier="pro" before the user navigates to the unlocked surface. The price
+ * line shows whatever Play returned for the current locale (falling back to
+ * the i18n string until Play responds).
  */
 export function UpgradeScreen({ onClose }: Props) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   useBackHandler(onClose);
 
+  const [price, setPrice] = useState<string | null>(getCachedPrice());
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    return subscribePriceUpdates(setPrice);
+  }, []);
+
   async function onGetPro() {
-    // Debug stub. Real Play Billing acknowledge flow replaces this body.
-    await setTier("pro");
+    if (busy) return;
+    setBusy(true);
+    const res = await purchasePro();
+    setBusy(false);
+    if (!res.ok) {
+      Alert.alert(
+        t("upgrade.purchaseFailedTitle"),
+        t("upgrade.purchaseFailedBody", { reason: res.reason }),
+      );
+      return;
+    }
+    // The purchaseUpdatedListener in iap.ts flips the tier when Play confirms;
+    // close the screen so the underlying PRO surface unlocks.
     onClose();
   }
 
-  function onRestore() {
-    // Stub: in production this acknowledges existing Play Billing entitlement.
-    // For now do nothing — the caller still gets a tactile press feedback.
+  async function onRestore() {
+    if (busy) return;
+    setBusy(true);
+    const res = await restorePurchases();
+    setBusy(false);
+    if (!res.ok) {
+      Alert.alert(
+        t("upgrade.purchaseFailedTitle"),
+        t("upgrade.purchaseFailedBody", { reason: res.reason }),
+      );
+      return;
+    }
+    if (res.restored) {
+      Alert.alert(t("upgrade.restoredTitle"), t("upgrade.restoredBody"));
+      onClose();
+    } else {
+      Alert.alert(t("upgrade.restoreNoneTitle"), t("upgrade.restoreNoneBody"));
+    }
   }
+
+  // Fall back to the localized "$9.99 — lifetime" copy until Play returns the
+  // device-locale price (it auto-converts USD to local currency at the user's
+  // Google account settings).
+  const priceLine = price ?? t("upgrade.priceLine");
 
   return (
     <View style={styles.root}>
@@ -53,17 +106,25 @@ export function UpgradeScreen({ onClose }: Props) {
           <FeatureRow icon="devices" label={t("upgrade.featureMultiPc")} />
         </View>
 
-        <Text style={styles.priceLine}>{t("upgrade.priceLine")}</Text>
+        <Text style={styles.priceLine}>{priceLine}</Text>
 
-        <Pressable style={styles.primary} onPress={onGetPro}>
-          <Text style={styles.primaryText}>{t("upgrade.getProBtn")}</Text>
+        <Pressable
+          style={[styles.primary, busy && styles.primaryDisabled]}
+          onPress={onGetPro}
+          disabled={busy}
+        >
+          {busy ? (
+            <ActivityIndicator color="#000" />
+          ) : (
+            <Text style={styles.primaryText}>{t("upgrade.getProBtn")}</Text>
+          )}
         </Pressable>
 
-        <Pressable style={styles.restore} onPress={onRestore}>
-          <Text style={styles.restoreText}>{t("upgrade.restoreBtn")}</Text>
+        <Pressable style={styles.restore} onPress={onRestore} disabled={busy}>
+          <Text style={[styles.restoreText, busy && styles.restoreTextDisabled]}>
+            {t("upgrade.restoreBtn")}
+          </Text>
         </Pressable>
-
-        <Text style={styles.disclaimer}>{t("upgrade.debugDisclaimer")}</Text>
       </ScrollView>
     </View>
   );
@@ -119,10 +180,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
   },
+  primaryDisabled: { opacity: 0.6 },
   primaryText: { color: "#000", fontWeight: "700", fontSize: 16 },
 
   restore: { paddingVertical: 10, alignItems: "center" },
   restoreText: { color: "#bbb", fontSize: 13 },
-
-  disclaimer: { color: "#888", fontSize: 12, lineHeight: 16, textAlign: "center" },
+  restoreTextDisabled: { opacity: 0.5 },
 });

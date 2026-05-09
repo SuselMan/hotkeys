@@ -170,7 +170,12 @@ export const es: Translations = {
     priceLine: "$9.99 — para siempre",
     getProBtn: "Obtener PRO",
     restoreBtn: "Restaurar compras",
-    debugDisclaimer: "Play Billing está en camino. Por ahora Obtener PRO activa el modo debug para probar todas las funciones.",
+    purchaseFailedTitle: "La compra falló",
+    purchaseFailedBody: "No se pudo completar la compra: {{reason}}",
+    restoredTitle: "PRO restaurado",
+    restoredBody: "Tu compra PRO está activa de nuevo.",
+    restoreNoneTitle: "No se encontró compra PRO",
+    restoreNoneBody: "No pudimos encontrar una compra PRO anterior en esta cuenta de Google.",
   },
   settings: {
     title: "Ajustes",

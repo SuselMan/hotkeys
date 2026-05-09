@@ -7,6 +7,11 @@ installLogger();
 // translations.
 import "./src/i18n";
 
+// Open Play Billing connection on boot — fire-and-forget, the module catches
+// its own errors so dev clients without Play services still launch normally.
+import { initIap } from "./src/iap";
+void initIap();
+
 import { registerRootComponent } from "expo";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import App from "./App";

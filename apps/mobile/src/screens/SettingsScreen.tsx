@@ -124,11 +124,13 @@ export function SettingsScreen() {
         </Pressable>
       </Section>
 
-      <Section title={t("settings.tierLabel")}>
-        <TierChoice value="free" current={tier} label={t("settings.tierFree")} onPick={pickTier} />
-        <TierChoice value="pro" current={tier} label={t("settings.tierPro")} onPick={pickTier} />
-        <Text style={styles.aboutLine}>{t("settings.tierHint")}</Text>
-      </Section>
+      {__DEV__ && (
+        <Section title={t("settings.tierLabel")}>
+          <TierChoice value="free" current={tier} label={t("settings.tierFree")} onPick={pickTier} />
+          <TierChoice value="pro" current={tier} label={t("settings.tierPro")} onPick={pickTier} />
+          <Text style={styles.aboutLine}>{t("settings.tierHint")}</Text>
+        </Section>
+      )}
 
       <Section title={t("settings.aboutLabel")}>
         <Text style={styles.aboutLine}>{t("settings.aboutVersion", { version })}</Text>

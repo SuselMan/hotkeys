@@ -170,7 +170,12 @@ export const ru: Translations = {
     priceLine: "$9.99 — навсегда",
     getProBtn: "Получить PRO",
     restoreBtn: "Восстановить покупки",
-    debugDisclaimer: "Play Billing скоро. Пока кнопка переключает debug-тариф, чтобы тестировщики могли посмотреть все фичи.",
+    purchaseFailedTitle: "Покупка не удалась",
+    purchaseFailedBody: "Не удалось завершить покупку: {{reason}}",
+    restoredTitle: "PRO восстановлен",
+    restoredBody: "Покупка PRO снова активна.",
+    restoreNoneTitle: "Покупка PRO не найдена",
+    restoreNoneBody: "На этом Google-аккаунте предыдущая покупка PRO не найдена.",
   },
   settings: {
     title: "Настройки",

@@ -168,7 +168,12 @@ export const en = {
     priceLine: "$9.99 — lifetime",
     getProBtn: "Get PRO",
     restoreBtn: "Restore purchases",
-    debugDisclaimer: "Play Billing is on the way. For now Get PRO toggles the debug tier so testers can preview every feature.",
+    purchaseFailedTitle: "Purchase failed",
+    purchaseFailedBody: "Couldn't complete the purchase: {{reason}}",
+    restoredTitle: "PRO restored",
+    restoredBody: "Your PRO purchase is active again.",
+    restoreNoneTitle: "No PRO purchase found",
+    restoreNoneBody: "We couldn't find a previous PRO purchase on this Google account.",
   },
   settings: {
     title: "Settings",

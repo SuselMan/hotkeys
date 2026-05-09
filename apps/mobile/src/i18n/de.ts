@@ -170,7 +170,12 @@ export const de: Translations = {
     priceLine: "9,99 $ — einmalig, für immer",
     getProBtn: "PRO holen",
     restoreBtn: "Käufe wiederherstellen",
-    debugDisclaimer: "Play Billing kommt bald. Vorerst aktiviert PRO holen den Debug-Tarif, damit Tester alle Funktionen sehen können.",
+    purchaseFailedTitle: "Kauf fehlgeschlagen",
+    purchaseFailedBody: "Der Kauf konnte nicht abgeschlossen werden: {{reason}}",
+    restoredTitle: "PRO wiederhergestellt",
+    restoredBody: "Dein PRO-Kauf ist wieder aktiv.",
+    restoreNoneTitle: "Kein PRO-Kauf gefunden",
+    restoreNoneBody: "Wir konnten keinen früheren PRO-Kauf in diesem Google-Konto finden.",
   },
   settings: {
     title: "Einstellungen",
