@@ -1,25 +1,14 @@
-import { nativeImage, type NativeImage } from "electron";
+import { app, nativeImage, type NativeImage } from "electron";
+import path from "node:path";
 
 /**
- * Build a 32×32 tray icon at runtime — avoids shipping a PNG in the skeleton.
- * Replace with a designed icon later.
+ * Tray icon loaded from the bundled brand PNG. `app.getAppPath()` resolves to
+ * the project root in dev and to the asar root in a packaged build, so the
+ * same `icons/...` lookup works in both. 96×96 is the smallest non-tiny PNG
+ * realfavicongenerator emits — Windows downsamples it to 32×32 for the tray
+ * with reasonable sharpness on both 100% and 200% DPI.
  */
 export function makeTrayIcon(): NativeImage {
-  const size = 32;
-  const buffer = Buffer.alloc(size * size * 4);
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      const i = (y * size + x) * 4;
-      const onBorder = x < 2 || y < 2 || x >= size - 2 || y >= size - 2;
-      const r = onBorder ? 60 : 250;
-      const g = onBorder ? 60 : 220;
-      const b = onBorder ? 60 : 80;
-      // BGRA byte order is what nativeImage.createFromBitmap expects on Windows.
-      buffer[i] = b;
-      buffer[i + 1] = g;
-      buffer[i + 2] = r;
-      buffer[i + 3] = 255;
-    }
-  }
-  return nativeImage.createFromBitmap(buffer, { width: size, height: size });
+  const iconPath = path.join(app.getAppPath(), "icons", "favicon-96x96.png");
+  return nativeImage.createFromPath(iconPath);
 }
