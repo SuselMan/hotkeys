@@ -34,6 +34,7 @@ export const es: Translations = {
     pairTitle: "Emparejar un nuevo PC",
     pairScan: "Escanear QR",
     pairScanHint: "Abre kekkeys en tu PC y escanea el QR que aparece.",
+    getDesktopHint: "¿Aún no tienes la app de escritorio? Descargar para Windows →",
     manualTitle: "Emparejar manual (dev)",
     manualHint: "El emparejamiento por QR llega en el próximo hito. Por ahora, copia host, puerto y un token nuevo desde la ventana del escritorio.",
     hostPlaceholder: "host (p. ej. 192.168.1.42)",

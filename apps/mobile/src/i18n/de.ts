@@ -34,6 +34,7 @@ export const de: Translations = {
     pairTitle: "Neuen PC koppeln",
     pairScan: "QR scannen",
     pairScanHint: "Öffne kekkeys auf deinem PC und scanne den dort angezeigten QR-Code.",
+    getDesktopHint: "Noch keine Desktop-App? Für Windows herunterladen →",
     manualTitle: "Manuelle Kopplung (dev)",
     manualHint: "QR-Kopplung kommt im nächsten Meilenstein. Bis dahin Host, Port und einen frischen Token aus dem Desktop-Fenster kopieren.",
     hostPlaceholder: "Host (z. B. 192.168.1.42)",

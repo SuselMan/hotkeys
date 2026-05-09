@@ -34,6 +34,7 @@ export const ru: Translations = {
     pairTitle: "Запейрить новый ПК",
     pairScan: "Сканировать QR",
     pairScanHint: "Открой kekkeys на ПК и отсканируй QR.",
+    getDesktopHint: "Ещё нет десктопного приложения? Скачать для Windows →",
     manualTitle: "Ручной пейринг (dev)",
     manualHint: "QR появится позже. Пока скопируй host, порт и свежий токен из окна десктопа.",
     hostPlaceholder: "host (например, 192.168.1.42)",

@@ -32,6 +32,7 @@ export const en = {
     pairTitle: "Pair a new PC",
     pairScan: "Scan QR",
     pairScanHint: "Open kekkeys on your PC, scan the QR shown there.",
+    getDesktopHint: "Don't have the desktop app yet? Download for Windows →",
     manualTitle: "Manual pair (dev)",
     manualHint: "QR pairing comes in the next milestone. For now, copy host, port, and a fresh token from the desktop window.",
     hostPlaceholder: "host (e.g. 192.168.1.42)",

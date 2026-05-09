@@ -34,6 +34,7 @@ export const ja: Translations = {
     pairTitle: "新しいPCをペアリング",
     pairScan: "QRをスキャン",
     pairScanHint: "PCでkekkeysを開き、表示されたQRコードをスキャンしてください。",
+    getDesktopHint: "デスクトップ版をまだ持っていない? Windows版をダウンロード →",
     manualTitle: "手動ペアリング (dev)",
     manualHint: "QRペアリングは次のマイルストーンで提供予定です。今のところは、デスクトップウィンドウからホスト・ポート・新しいトークンをコピーしてください。",
     hostPlaceholder: "ホスト (例: 192.168.1.42)",

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  Linking,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -35,10 +36,14 @@ interface Props {
 }
 
 export function ConnectScreen({ onScanRequest }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const status = useConnectionStatus();
   const pairings = usePairings();
   const isPro = useIsPro();
+  // Landing only ships en + ru content; non-ru locales fall back to en so es/de/ja
+  // users still get a readable download page.
+  const landingLocale = i18n.language === "ru" ? "ru" : "en";
+  const desktopUrl = `https://kekkeys.online/${landingLocale}/download/`;
   const [host, setHost] = useState("");
   const [port, setPort] = useState("41234");
   const [token, setToken] = useState("");
@@ -160,6 +165,9 @@ export function ConnectScreen({ onScanRequest }: Props) {
               <Text style={styles.buttonText}>{t("connect.pairScan")}</Text>
             </Pressable>
             <Text style={styles.muted}>{t("connect.pairScanHint")}</Text>
+            <Pressable onPress={() => void Linking.openURL(desktopUrl)} style={styles.linkRow}>
+              <Text style={styles.linkText}>{t("connect.getDesktopHint")}</Text>
+            </Pressable>
           </View>
 
           {__DEV__ && (
@@ -251,6 +259,8 @@ const styles = StyleSheet.create({
   btnGhost: { backgroundColor: "#3a3a3a" },
   smallBtnText: { color: "#000", fontWeight: "600", fontSize: 13 },
   error: { color: "#e57373", fontSize: 13 },
+  linkRow: { paddingVertical: 6, marginTop: 4 },
+  linkText: { color: "#fadc50", fontSize: 13, fontWeight: "600" },
   proHint: {
     backgroundColor: "#2d2820",
     padding: 12,
