@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
+import { JsonLd } from "./JsonLd";
 import type { LandingContent, Locale } from "../_lib/content";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 export function Home({ locale, content }: Props) {
   return (
     <>
+      <JsonLd locale={locale} description={content.hero.lead} />
       <Header locale={locale} content={content} />
       <main>
         <section className="hero">

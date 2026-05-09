@@ -7,6 +7,7 @@ export const metadata = {
     languages: {
       "en-US": "/en/",
       "ru-RU": "/ru/",
+      "x-default": "/en/",
     },
   },
 };
