@@ -21,6 +21,7 @@ import {
   upsertButton,
   useBoard,
 } from "../boards";
+import { DEFAULT_FG } from "../colors-palette";
 import { IconView } from "../components/IconView";
 import { useBackHandler } from "../hooks";
 import { formatCombo } from "../keys-display";
@@ -476,14 +477,23 @@ function DraggableCell({
         style={[
           styles.cellInner,
           styles.cellFilled,
+          btn.bgColor ? { backgroundColor: btn.bgColor, borderColor: btn.bgColor } : null,
           isHovered && styles.cellHovered,
         ]}
       >
-        {btn.iconName && (
-          <IconView name={btn.iconName} size={Math.min(cellW, cellH) * 0.35} color="#e8e8e8" />
+        {(btn.customIcon || btn.iconName) && (
+          <IconView
+            name={btn.iconName}
+            customIcon={btn.customIcon}
+            size={Math.min(cellW, cellH) * 0.35}
+            color={btn.iconColor ?? DEFAULT_FG}
+          />
         )}
         {btn.label ? (
-          <Text style={styles.cellLabel} numberOfLines={2}>
+          <Text
+            style={[styles.cellLabel, btn.textColor ? { color: btn.textColor } : null]}
+            numberOfLines={2}
+          >
             {btn.label}
           </Text>
         ) : null}

@@ -2,10 +2,19 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { UpgradeCta } from "../components/UpgradeCta";
 import { activatePairing } from "../connection";
 import { useBackHandler } from "../hooks";
 import { staticPair } from "../net";
-import { getOrCreateIdentity, setSharedSecret, upsertPairing } from "../storage";
+import {
+  canPairAnother,
+  getOrCreateIdentity,
+  listPairings,
+  setSharedSecret,
+  upsertPairing,
+} from "../storage";
+import { loadIsPro } from "../tier";
+import { UpgradeScreen } from "./UpgradeScreen";
 
 interface Props {
   onClose: () => void;
@@ -16,8 +25,28 @@ export function ScanScreen({ onClose }: Props) {
   const [permission, requestPermission] = useCameraPermissions();
   const [pairing, setPairing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Set when the scanned QR would push the free tier over the pairing cap.
+  // Surfaces a dedicated Upgrade CTA in the overlay instead of the generic
+  // error string so the user has a clear path forward.
+  const [capBlocked, setCapBlocked] = useState(false);
+  const [upgrading, setUpgrading] = useState(false);
   const handledRef = useRef(false);
-  useBackHandler(onClose);
+  useBackHandler(upgrading ? () => undefined : onClose);
+
+  if (upgrading) {
+    return (
+      <UpgradeScreen
+        onClose={() => {
+          setUpgrading(false);
+          // After the user comes back from Upgrade, drop the cap-blocked
+          // state so they can re-scan straight away. If they upgraded the
+          // next scan succeeds; if they backed out it'll re-block correctly.
+          setCapBlocked(false);
+          handledRef.current = false;
+        }}
+      />
+    );
+  }
 
   if (!permission) {
     return (
@@ -46,11 +75,20 @@ export function ScanScreen({ onClose }: Props) {
     if (handledRef.current || pairing) return;
     handledRef.current = true;
     setError(null);
+    setCapBlocked(false);
     setPairing(true);
 
     try {
       const parsed = parseQrPayload(payload);
       if (!parsed) throw new Error("not a kekkeys QR");
+      // Free-tier gate. Re-pair of a known pcDeviceId is always allowed
+      // (token rotation / secret refresh); only a truly-new device blocks.
+      const [pairings, isPro] = await Promise.all([listPairings(), loadIsPro()]);
+      if (!canPairAnother(pairings, isPro, parsed.pcId)) {
+        setCapBlocked(true);
+        setPairing(false);
+        return;
+      }
       const id = await getOrCreateIdentity("kekkeys phone");
       console.log(`[scan] my phoneDeviceId=${id.phoneDeviceId.slice(0, 16)}… pubKey=${id.phonePubKey.slice(0, 10)}…`);
       const res = await staticPair({
@@ -95,10 +133,20 @@ export function ScanScreen({ onClose }: Props) {
         </View>
         <View style={styles.frame} />
         <View style={styles.overlayBottom}>
-          {pairing && <Text style={styles.statusText}>{t("scan.pairing")}</Text>}
-          {error && <Text style={styles.errorText}>{error}</Text>}
-          {!pairing && !error && (
-            <Text style={styles.hintText}>{t("scan.hint")}</Text>
+          {capBlocked ? (
+            <>
+              <Text style={styles.errorText}>{t("scan.atCapTitle")}</Text>
+              <Text style={styles.hintText}>{t("scan.atCapBody")}</Text>
+              <UpgradeCta onPress={() => setUpgrading(true)} style={styles.capCta} />
+            </>
+          ) : (
+            <>
+              {pairing && <Text style={styles.statusText}>{t("scan.pairing")}</Text>}
+              {error && <Text style={styles.errorText}>{error}</Text>}
+              {!pairing && !error && (
+                <Text style={styles.hintText}>{t("scan.hint")}</Text>
+              )}
+            </>
           )}
         </View>
       </View>
@@ -160,7 +208,8 @@ const styles = StyleSheet.create({
   },
   statusText: { color: "#fadc50", fontSize: 15 },
   errorText: { color: "#e57373", fontSize: 14, textAlign: "center" },
-  hintText: { color: "#bbb", fontSize: 13 },
+  hintText: { color: "#bbb", fontSize: 13, textAlign: "center" },
+  capCta: { marginTop: 8 },
   center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24, gap: 12, backgroundColor: "#1a1a1a" },
   h1: { color: "#fadc50", fontSize: 22, fontWeight: "700" },
   body: { color: "#bbb", fontSize: 14, textAlign: "center" },

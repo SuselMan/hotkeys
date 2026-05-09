@@ -39,8 +39,8 @@ export function useTier(): Tier {
   const [tier, setT] = useState<Tier>(cache);
   useEffect(() => {
     let cancelled = false;
-    void loadTier().then((t) => {
-      if (!cancelled) setT(t);
+    void loadTier().then(() => {
+      if (!cancelled) setT(cache);
     });
     const fn = (): void => setT(cache);
     listeners.add(fn);

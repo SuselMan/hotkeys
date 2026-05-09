@@ -5,17 +5,22 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ColorSwatchPicker } from "../components/ColorSwatchPicker";
 import { IconView } from "../components/IconView";
+import { UpgradeCta } from "../components/UpgradeCta";
 import { useBackHandler } from "../hooks";
 import { formatCombo } from "../keys-display";
+import { useIsPro } from "../tier";
 import type { BoardButton } from "../types";
 import { ComboBuilderScreen } from "./ComboBuilderScreen";
 import { IconPickerScreen } from "./IconPickerScreen";
+import { UpgradeScreen } from "./UpgradeScreen";
 
 interface Props {
   initial: BoardButton;
@@ -29,14 +34,21 @@ interface Props {
 export function ButtonEditorScreen({ initial, isNew, onCancel, onSave, onDelete }: Props) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const isPro = useIsPro();
   const [label, setLabel] = useState(initial.label ?? "");
   const [keys, setKeys] = useState(initial.keys);
   const [iconName, setIconName] = useState<string | undefined>(initial.iconName);
+  const [customIcon, setCustomIcon] = useState<string | undefined>(initial.customIcon);
+  const [bgColor, setBgColor] = useState<string | undefined>(initial.bgColor);
+  const [iconColor, setIconColor] = useState<string | undefined>(initial.iconColor);
+  const [textColor, setTextColor] = useState<string | undefined>(initial.textColor);
+  const [sticky, setSticky] = useState<boolean>(initial.sticky ?? false);
   const [building, setBuilding] = useState(false);
   const [pickingIcon, setPickingIcon] = useState(false);
+  const [upgrading, setUpgrading] = useState(false);
 
   // Only handle back at the top level; nested screens have their own handlers.
-  useBackHandler(building || pickingIcon ? () => undefined : onCancel);
+  useBackHandler(building || pickingIcon || upgrading ? () => undefined : onCancel);
 
   function confirmDelete() {
     if (!onDelete) return;
@@ -51,8 +63,17 @@ export function ButtonEditorScreen({ initial, isNew, onCancel, onSave, onDelete 
       ...initial,
       label: label.trim() || undefined,
       iconName,
+      customIcon,
       keys,
+      bgColor,
+      iconColor,
+      textColor,
+      sticky: sticky ? true : undefined,
     });
+  }
+
+  if (upgrading) {
+    return <UpgradeScreen onClose={() => setUpgrading(false)} />;
   }
 
   if (building) {
@@ -71,10 +92,11 @@ export function ButtonEditorScreen({ initial, isNew, onCancel, onSave, onDelete 
   if (pickingIcon) {
     return (
       <IconPickerScreen
-        initial={iconName ?? null}
+        initial={{ iconName, customIcon }}
         onCancel={() => setPickingIcon(false)}
-        onPick={(name) => {
-          setIconName(name ?? undefined);
+        onPick={(result) => {
+          setIconName(result?.iconName);
+          setCustomIcon(result?.customIcon);
           setPickingIcon(false);
         }}
       />
@@ -121,6 +143,19 @@ export function ButtonEditorScreen({ initial, isNew, onCancel, onSave, onDelete 
           </Pressable>
         </Field>
 
+        <View style={styles.stickyRow}>
+          <View style={styles.stickyText}>
+            <Text style={styles.stickyTitle}>{t("buttonEditor.stickyLabel")}</Text>
+            <Text style={styles.stickyHint}>{t("buttonEditor.stickyHint")}</Text>
+          </View>
+          <Switch
+            value={sticky}
+            onValueChange={setSticky}
+            trackColor={{ false: "#3a3a3a", true: "#fadc50" }}
+            thumbColor={sticky ? "#1a1a1a" : "#888"}
+          />
+        </View>
+
         <Field label={t("buttonEditor.positionField")}>
           <Text style={styles.muted}>
             {t("buttonEditor.positionHint", { x: initial.x, y: initial.y })}
@@ -129,7 +164,12 @@ export function ButtonEditorScreen({ initial, isNew, onCancel, onSave, onDelete 
 
         <Field label={t("buttonEditor.iconField")}>
           <Pressable style={styles.iconBox} onPress={() => setPickingIcon(true)}>
-            {iconName ? (
+            {customIcon ? (
+              <>
+                <IconView customIcon={customIcon} size={28} color="#e8e8e8" />
+                <Text style={styles.iconBoxText}>{t("buttonEditor.iconCustom")}</Text>
+              </>
+            ) : iconName ? (
               <>
                 <IconView name={iconName} size={28} color="#e8e8e8" />
                 <Text style={styles.iconBoxText}>{iconName}</Text>
@@ -140,6 +180,43 @@ export function ButtonEditorScreen({ initial, isNew, onCancel, onSave, onDelete 
               </Text>
             )}
           </Pressable>
+        </Field>
+
+        <Field label={t("buttonEditor.colorsLabel")}>
+          {isPro ? (
+            <View style={styles.colorsBlock}>
+              <View style={styles.colorRow}>
+                <Text style={styles.colorRowLabel}>{t("buttonEditor.bgColor")}</Text>
+                <ColorSwatchPicker
+                  value={bgColor}
+                  onChange={setBgColor}
+                  resetA11yLabel={t("buttonEditor.colorReset")}
+                />
+              </View>
+              <View style={styles.colorRow}>
+                <Text style={styles.colorRowLabel}>{t("buttonEditor.iconColor")}</Text>
+                <ColorSwatchPicker
+                  value={iconColor}
+                  onChange={setIconColor}
+                  resetA11yLabel={t("buttonEditor.colorReset")}
+                />
+              </View>
+              <View style={styles.colorRow}>
+                <Text style={styles.colorRowLabel}>{t("buttonEditor.textColor")}</Text>
+                <ColorSwatchPicker
+                  value={textColor}
+                  onChange={setTextColor}
+                  resetA11yLabel={t("buttonEditor.colorReset")}
+                />
+              </View>
+            </View>
+          ) : (
+            <View style={styles.proLock}>
+              <Text style={styles.proLockTitle}>{t("buttonEditor.colorsProLockTitle")}</Text>
+              <Text style={styles.proLockBody}>{t("buttonEditor.colorsProLockBody")}</Text>
+              <UpgradeCta onPress={() => setUpgrading(true)} style={styles.proLockCta} />
+            </View>
+          )}
         </Field>
 
         {onDelete && (
@@ -204,6 +281,19 @@ const styles = StyleSheet.create({
   },
   comboText: { color: "#e8e8e8", fontSize: 16, fontWeight: "600" },
   comboPlaceholder: { color: "#666", fontWeight: "400" },
+  stickyRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "#242424",
+    borderRadius: 8,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: "#333",
+  },
+  stickyText: { flex: 1, gap: 2 },
+  stickyTitle: { color: "#e8e8e8", fontSize: 15, fontWeight: "600" },
+  stickyHint: { color: "#888", fontSize: 12, lineHeight: 16 },
   iconBox: {
     flexDirection: "row",
     alignItems: "center",
@@ -217,6 +307,27 @@ const styles = StyleSheet.create({
   iconBoxText: { color: "#e8e8e8", fontSize: 15 },
   iconBoxPlaceholder: { color: "#666" },
   muted: { color: "#888", fontSize: 13, lineHeight: 18 },
+
+  colorsBlock: {
+    backgroundColor: "#242424",
+    borderRadius: 8,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#333",
+    gap: 14,
+  },
+  colorRow: { gap: 8 },
+  colorRowLabel: { color: "#888", fontSize: 12, fontWeight: "600" },
+  proLock: {
+    backgroundColor: "#2d2820",
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#5a4a20",
+  },
+  proLockTitle: { color: "#fadc50", fontWeight: "700", marginBottom: 4 },
+  proLockBody: { color: "#bba", fontSize: 13, lineHeight: 18 },
+  proLockCta: { marginTop: 10 },
 
   deleteBtn: {
     backgroundColor: "#3a2222",

@@ -8,11 +8,15 @@
 import * as SecureStore from "expo-secure-store";
 import * as Crypto from "expo-crypto";
 import { sha256 } from "js-sha256";
+import { useEffect, useState } from "react";
 
 const KEY_IDENTITY = "kekkeys.identity";
 const KEY_PAIRINGS = "kekkeys.pairings";
 const KEY_ACTIVE = "kekkeys.activePairingId";
 const KEY_SECRET_PREFIX = "kekkeys.secret."; // + pcDeviceId
+
+/** Free tier supports a single paired PC; PRO is uncapped. */
+export const MAX_FREE_PAIRINGS = 1;
 
 export interface PhoneIdentity {
   phoneDeviceId: string;
@@ -47,7 +51,7 @@ export async function getOrCreateIdentity(defaultName: string): Promise<PhoneIde
       // keyed by the old id and unreachable now).
       parsed.phoneDeviceId = expected;
       await SecureStore.setItemAsync(KEY_IDENTITY, JSON.stringify(parsed));
-      await SecureStore.setItemAsync(KEY_PAIRINGS, JSON.stringify([]));
+      await savePairings([]);
       await SecureStore.deleteItemAsync(KEY_ACTIVE);
     }
     return parsed;
@@ -72,14 +76,66 @@ export async function setPhoneName(name: string): Promise<void> {
   await SecureStore.setItemAsync(KEY_IDENTITY, JSON.stringify(parsed));
 }
 
+let pairingsCache: Pairing[] | null = null;
+let pairingsHydrated: Promise<Pairing[]> | null = null;
+const pairingListeners = new Set<() => void>();
+
 export async function listPairings(): Promise<Pairing[]> {
-  const raw = await SecureStore.getItemAsync(KEY_PAIRINGS);
-  if (!raw) return [];
-  return JSON.parse(raw) as Pairing[];
+  if (pairingsCache) return pairingsCache;
+  if (!pairingsHydrated) {
+    pairingsHydrated = (async () => {
+      const raw = await SecureStore.getItemAsync(KEY_PAIRINGS);
+      pairingsCache = raw ? (JSON.parse(raw) as Pairing[]) : [];
+      return pairingsCache;
+    })();
+  }
+  return pairingsHydrated;
 }
 
 async function savePairings(list: Pairing[]): Promise<void> {
-  await SecureStore.setItemAsync(KEY_PAIRINGS, JSON.stringify(list));
+  // Fresh array ref — `upsertPairing` / `touchPairing` mutate the live cache
+  // in place, so without a clone React listeners would see the same reference
+  // and bail out of re-rendering.
+  pairingsCache = list.slice();
+  await SecureStore.setItemAsync(KEY_PAIRINGS, JSON.stringify(pairingsCache));
+  for (const fn of pairingListeners) fn();
+}
+
+/**
+ * Reactive view of the pairing list — mirrors `useBoards` / `useTier`.
+ * Consumers re-render on `upsertPairing` / `removePairing` / `touchPairing`.
+ */
+export function usePairings(): Pairing[] {
+  const [pairings, setP] = useState<Pairing[]>(pairingsCache ?? []);
+  useEffect(() => {
+    let cancelled = false;
+    void listPairings().then((ps) => {
+      if (!cancelled) setP(ps);
+    });
+    const fn = (): void => setP(pairingsCache ?? []);
+    pairingListeners.add(fn);
+    return () => {
+      cancelled = true;
+      pairingListeners.delete(fn);
+    };
+  }, []);
+  return pairings;
+}
+
+/**
+ * Single source of truth for the pairing-creation gate. Re-pairing an
+ * already-known `pcDeviceId` is always allowed (it's an update — token
+ * rotated on the desktop, secret refreshed on the phone), so only a truly
+ * new device counts against the free-tier cap.
+ */
+export function canPairAnother(
+  current: Pairing[],
+  isPro: boolean,
+  newPcDeviceId: string,
+): boolean {
+  if (isPro) return true;
+  if (current.some((p) => p.pcDeviceId === newPcDeviceId)) return true;
+  return current.length < MAX_FREE_PAIRINGS;
 }
 
 export async function upsertPairing(p: Pairing): Promise<void> {

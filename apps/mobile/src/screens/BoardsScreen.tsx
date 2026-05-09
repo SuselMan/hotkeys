@@ -9,8 +9,10 @@ import {
   View,
 } from "react-native";
 import { createBoard, deleteBoard, useBoards } from "../boards";
+import { UpgradeCta } from "../components/UpgradeCta";
 import { useIsPro } from "../tier";
 import type { Board } from "../types";
+import { UpgradeScreen } from "./UpgradeScreen";
 
 const FREE_TIER_BOARD_LIMIT = 1;
 
@@ -28,6 +30,7 @@ export function BoardsScreen({ onRun, onEdit, onPickTemplate }: Props) {
   const isPro = useIsPro();
   const [creating, setCreating] = useState<CreateState>("off");
   const [newName, setNewName] = useState("");
+  const [upgrading, setUpgrading] = useState(false);
 
   const canCreate = isPro || boards.length < FREE_TIER_BOARD_LIMIT;
 
@@ -43,6 +46,10 @@ export function BoardsScreen({ onRun, onEdit, onPickTemplate }: Props) {
   function startFromTemplate() {
     setCreating("off");
     onPickTemplate();
+  }
+
+  if (upgrading) {
+    return <UpgradeScreen onClose={() => setUpgrading(false)} />;
   }
 
   function confirmDelete(b: Board) {
@@ -130,6 +137,7 @@ export function BoardsScreen({ onRun, onEdit, onPickTemplate }: Props) {
         <View style={styles.proHint}>
           <Text style={styles.proHintTitle}>{t("boards.proLockTitle")}</Text>
           <Text style={styles.proHintBody}>{t("boards.proLockBody")}</Text>
+          <UpgradeCta onPress={() => setUpgrading(true)} style={styles.proHintCta} />
         </View>
       )}
     </View>
@@ -167,6 +175,7 @@ const styles = StyleSheet.create({
   proHint: { backgroundColor: "#2d2820", padding: 12, borderRadius: 8, borderWidth: 1, borderColor: "#5a4a20" },
   proHintTitle: { color: "#fadc50", fontWeight: "700", marginBottom: 4 },
   proHintBody: { color: "#bba", fontSize: 13, lineHeight: 18 },
+  proHintCta: { marginTop: 10 },
   emptyState: { backgroundColor: "#242424", borderRadius: 8, padding: 16, borderWidth: 1, borderColor: "#333", gap: 6 },
   emptyTitle: { color: "#e8e8e8", fontSize: 15, fontWeight: "700" },
   emptyBody: { color: "#888", fontSize: 13, lineHeight: 18 },

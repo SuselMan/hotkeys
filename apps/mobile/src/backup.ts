@@ -8,24 +8,43 @@ import * as Sharing from "expo-sharing";
 import { loadBoards } from "./boards";
 import { getLogPath, getLogSize } from "./logger";
 import type { Board } from "./types";
+import { extOf, readUserIconBase64, writeUserIconBase64 } from "./user-icons";
 
 const FORMAT_TAG = "kekkeys-boards-export";
-const FORMAT_VERSION = 1;
+const FORMAT_VERSION = 2;
 
 interface ExportEnvelope {
   format: typeof FORMAT_TAG;
   version: number;
   exportedAt: string;
   boards: Board[];
+  /** v2+: basename → base64 of file bytes for every customIcon referenced by `boards`. */
+  userIcons?: Record<string, string>;
 }
 
 export async function exportBoards(): Promise<{ uri: string; shared: boolean }> {
   const boards = await loadBoards();
+  // Inline every referenced custom icon as base64 so the export is one
+  // self-contained file. Hash-based basenames mean duplicates across buttons
+  // collapse to a single entry.
+  const referenced = new Set<string>();
+  for (const b of boards) {
+    for (const btn of b.buttons) {
+      if (btn.customIcon && extOf(btn.customIcon)) referenced.add(btn.customIcon);
+    }
+  }
+  const userIcons: Record<string, string> = {};
+  for (const basename of referenced) {
+    const data = await readUserIconBase64(basename);
+    if (data !== null) userIcons[basename] = data;
+  }
+
   const envelope: ExportEnvelope = {
     format: FORMAT_TAG,
     version: FORMAT_VERSION,
     exportedAt: new Date().toISOString(),
     boards,
+    ...(Object.keys(userIcons).length > 0 ? { userIcons } : {}),
   };
   const json = JSON.stringify(envelope, null, 2);
   const filename = `kekkeys-boards-${new Date().toISOString().slice(0, 10)}.json`;
@@ -76,10 +95,28 @@ export async function pickAndImport(): Promise<{ ok: true; boards: Board[] } | {
   } catch (e) {
     return { ok: false, reason: `read failed: ${(e as Error).message}` };
   }
-  return validateBoardsJson(raw);
+  const validated = validateBoardsJson(raw);
+  if (!validated.ok) return validated;
+  // v2 envelopes may carry user-uploaded icon bytes — restore them to the
+  // user-icons dir before returning so the boards' customIcon refs resolve.
+  if (validated.userIcons) {
+    for (const [basename, dataBase64] of Object.entries(validated.userIcons)) {
+      if (!extOf(basename)) continue;
+      try {
+        await writeUserIconBase64(basename, dataBase64);
+      } catch {
+        // Skip a single bad entry; the button will render as a placeholder.
+      }
+    }
+  }
+  return { ok: true, boards: validated.boards };
 }
 
-export function validateBoardsJson(raw: string): { ok: true; boards: Board[] } | { ok: false; reason: string } {
+export function validateBoardsJson(
+  raw: string,
+):
+  | { ok: true; boards: Board[]; userIcons?: Record<string, string> }
+  | { ok: false; reason: string } {
   let data: unknown;
   try {
     data = JSON.parse(raw);
@@ -96,7 +133,17 @@ export function validateBoardsJson(raw: string): { ok: true; boards: Board[] } |
   for (const b of env.boards) {
     if (!isValidBoard(b)) return { ok: false, reason: "invalid board entry" };
   }
-  return { ok: true, boards: env.boards };
+  let userIcons: Record<string, string> | undefined;
+  if (env.userIcons !== undefined) {
+    if (!env.userIcons || typeof env.userIcons !== "object" || Array.isArray(env.userIcons)) {
+      return { ok: false, reason: "userIcons is not an object" };
+    }
+    for (const [k, v] of Object.entries(env.userIcons)) {
+      if (typeof v !== "string") return { ok: false, reason: `userIcons[${k}] not a string` };
+    }
+    userIcons = env.userIcons as Record<string, string>;
+  }
+  return { ok: true, boards: env.boards, ...(userIcons ? { userIcons } : {}) };
 }
 
 function isValidBoard(b: unknown): b is Board {

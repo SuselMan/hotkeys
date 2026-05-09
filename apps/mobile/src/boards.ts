@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { loadTemplate } from "./templates";
 import type { Board, BoardButton } from "./types";
+import { cleanupUnreferenced } from "./user-icons";
 
 const KEY = "kekkeys.boards";
 
@@ -20,6 +21,15 @@ export async function loadBoards(): Promise<Board[]> {
     hydrated = (async () => {
       const raw = await AsyncStorage.getItem(KEY);
       cache = raw ? (JSON.parse(raw) as Board[]) : [];
+      // First-load reconcile of the user-icons dir — sweeps anything left over
+      // from uploads that were never attached (editor cancelled mid-flow).
+      const referenced = new Set<string>();
+      for (const b of cache) {
+        for (const btn of b.buttons) {
+          if (btn.customIcon) referenced.add(btn.customIcon);
+        }
+      }
+      void cleanupUnreferenced(referenced).catch(() => undefined);
       return cache;
     })();
   }
@@ -30,6 +40,15 @@ async function persist(next: Board[]): Promise<void> {
   cache = next;
   await AsyncStorage.setItem(KEY, JSON.stringify(next));
   for (const fn of listeners) fn();
+  // Sweep custom-icon files no longer referenced by any button. Best-effort —
+  // a missed cleanup just leaves orphan bytes on disk, never breaks state.
+  const referenced = new Set<string>();
+  for (const b of next) {
+    for (const btn of b.buttons) {
+      if (btn.customIcon) referenced.add(btn.customIcon);
+    }
+  }
+  void cleanupUnreferenced(referenced).catch(() => undefined);
 }
 
 /** Replace the entire board list — used by JSON import. */

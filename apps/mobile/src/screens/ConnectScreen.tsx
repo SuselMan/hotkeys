@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { UpgradeCta } from "../components/UpgradeCta";
 import {
   activatePairing,
   disconnect,
@@ -17,13 +18,17 @@ import {
 } from "../connection";
 import { staticPair } from "../net";
 import {
+  canPairAnother,
   getOrCreateIdentity,
-  listPairings,
+  MAX_FREE_PAIRINGS,
   removePairing,
   setSharedSecret,
   upsertPairing,
+  usePairings,
   type Pairing,
 } from "../storage";
+import { useIsPro } from "../tier";
+import { UpgradeScreen } from "./UpgradeScreen";
 
 interface Props {
   onScanRequest: () => void;
@@ -32,21 +37,23 @@ interface Props {
 export function ConnectScreen({ onScanRequest }: Props) {
   const { t } = useTranslation();
   const status = useConnectionStatus();
-  const [pairings, setPairings] = useState<Pairing[]>([]);
+  const pairings = usePairings();
+  const isPro = useIsPro();
   const [host, setHost] = useState("");
   const [port, setPort] = useState("41234");
   const [token, setToken] = useState("");
   const [pairing, setPairing] = useState(false);
   const [pairError, setPairError] = useState<string | null>(null);
+  const [upgrading, setUpgrading] = useState(false);
 
   useEffect(() => {
-    void refresh();
     void tryResume();
   }, []);
 
-  async function refresh() {
-    setPairings(await listPairings());
-  }
+  // Free-tier gate: hide "Pair a new PC" when at the cap. The reactive
+  // `pairings` + `isPro` mean the section flips back the moment the user
+  // forgets a PC or upgrades.
+  const atCap = !isPro && pairings.length >= MAX_FREE_PAIRINGS;
 
   async function onPair() {
     setPairError(null);
@@ -62,6 +69,12 @@ export function ConnectScreen({ onScanRequest }: Props) {
         phoneName: id.phoneName,
         phonePubKey: id.phonePubKey,
       });
+      // Defense-in-depth: the UI hides this whole section at the cap, but
+      // gate the actual write too in case state drifted between render and
+      // the network round-trip.
+      if (!canPairAnother(pairings, isPro, res.pcDeviceId)) {
+        throw new Error(t("connect.atCapError"));
+      }
       await upsertPairing({
         pcDeviceId: res.pcDeviceId,
         pcName: res.pcName,
@@ -72,7 +85,6 @@ export function ConnectScreen({ onScanRequest }: Props) {
       await setSharedSecret(res.pcDeviceId, res.sharedSecret);
       await activatePairing(res.pcDeviceId, host, portNum);
       setToken("");
-      await refresh();
     } catch (e) {
       setPairError((e as Error).message);
     } finally {
@@ -94,8 +106,11 @@ export function ConnectScreen({ onScanRequest }: Props) {
 
   async function onForget(p: Pairing) {
     await removePairing(p.pcDeviceId);
-    await refresh();
     if (status.kind !== "idle") disconnect();
+  }
+
+  if (upgrading) {
+    return <UpgradeScreen onClose={() => setUpgrading(false)} />;
   }
 
   return (
@@ -131,50 +146,60 @@ export function ConnectScreen({ onScanRequest }: Props) {
         ))}
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.h2}>{t("connect.pairTitle")}</Text>
-        <Pressable style={styles.button} onPress={onScanRequest}>
-          <Text style={styles.buttonText}>{t("connect.pairScan")}</Text>
-        </Pressable>
-        <Text style={styles.muted}>{t("connect.pairScanHint")}</Text>
-      </View>
-
-      {__DEV__ && (
-        <View style={styles.section}>
-          <Text style={styles.h2}>{t("connect.manualTitle")}</Text>
-          <Text style={styles.muted}>{t("connect.manualHint")}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={t("connect.hostPlaceholder")}
-            placeholderTextColor="#666"
-            autoCapitalize="none"
-            value={host}
-            onChangeText={setHost}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder={t("connect.portPlaceholder")}
-            placeholderTextColor="#666"
-            keyboardType="numeric"
-            value={port}
-            onChangeText={setPort}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder={t("connect.tokenPlaceholder")}
-            placeholderTextColor="#666"
-            autoCapitalize="none"
-            value={token}
-            onChangeText={setToken}
-          />
-          <Pressable
-            style={[styles.button, pairing && styles.buttonDisabled]}
-            disabled={pairing}
-            onPress={onPair}
-          >
-            {pairing ? <ActivityIndicator /> : <Text style={styles.buttonText}>{t("connect.pair")}</Text>}
-          </Pressable>
+      {atCap ? (
+        <View style={styles.proHint}>
+          <Text style={styles.proHintTitle}>{t("connect.proLockTitle")}</Text>
+          <Text style={styles.proHintBody}>{t("connect.proLockBody")}</Text>
+          <UpgradeCta onPress={() => setUpgrading(true)} style={styles.proHintCta} />
         </View>
+      ) : (
+        <>
+          <View style={styles.section}>
+            <Text style={styles.h2}>{t("connect.pairTitle")}</Text>
+            <Pressable style={styles.button} onPress={onScanRequest}>
+              <Text style={styles.buttonText}>{t("connect.pairScan")}</Text>
+            </Pressable>
+            <Text style={styles.muted}>{t("connect.pairScanHint")}</Text>
+          </View>
+
+          {__DEV__ && (
+            <View style={styles.section}>
+              <Text style={styles.h2}>{t("connect.manualTitle")}</Text>
+              <Text style={styles.muted}>{t("connect.manualHint")}</Text>
+              <TextInput
+                style={styles.input}
+                placeholder={t("connect.hostPlaceholder")}
+                placeholderTextColor="#666"
+                autoCapitalize="none"
+                value={host}
+                onChangeText={setHost}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder={t("connect.portPlaceholder")}
+                placeholderTextColor="#666"
+                keyboardType="numeric"
+                value={port}
+                onChangeText={setPort}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder={t("connect.tokenPlaceholder")}
+                placeholderTextColor="#666"
+                autoCapitalize="none"
+                value={token}
+                onChangeText={setToken}
+              />
+              <Pressable
+                style={[styles.button, pairing && styles.buttonDisabled]}
+                disabled={pairing}
+                onPress={onPair}
+              >
+                {pairing ? <ActivityIndicator /> : <Text style={styles.buttonText}>{t("connect.pair")}</Text>}
+              </Pressable>
+            </View>
+          )}
+        </>
       )}
     </ScrollView>
   );
@@ -226,4 +251,14 @@ const styles = StyleSheet.create({
   btnGhost: { backgroundColor: "#3a3a3a" },
   smallBtnText: { color: "#000", fontWeight: "600", fontSize: 13 },
   error: { color: "#e57373", fontSize: 13 },
+  proHint: {
+    backgroundColor: "#2d2820",
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#5a4a20",
+  },
+  proHintTitle: { color: "#fadc50", fontWeight: "700", marginBottom: 4 },
+  proHintBody: { color: "#bba", fontSize: 13, lineHeight: 18 },
+  proHintCta: { marginTop: 10 },
 });
