@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Home } from "../_components/Home";
-import { content } from "../_lib/content";
+import { altLanguages, content } from "../_lib/content";
 
 export const metadata: Metadata = {
   description:
     "Phone-controlled programmable hotkey deck for your PC. Free, local, no cloud. Built for digital artists, animators, video editors, 3D modellers, streamers — any shortcut-heavy workflow.",
   alternates: {
     canonical: "/en/",
-    languages: { "en-US": "/en/", "ru-RU": "/ru/", "x-default": "/en/" },
+    languages: altLanguages("/"),
   },
 };
 

@@ -3,15 +3,19 @@
 import { useEffect } from "react";
 
 /**
- * Static-export-safe locale router.
- * The site ships HTML for /en and /ru only; this index page picks one based
- * on `navigator.language` and replaces history so back doesn't loop.
+ * Static-export-safe locale router. Picks the closest match from the user's
+ * `navigator.languages` chain against the locales we ship, with en as the
+ * fallback. Uses `replace` so the back button doesn't ping-pong here.
  */
+const SUPPORTED = ["en", "ru", "es", "de", "ja"] as const;
+
 export default function RootRedirect() {
   useEffect(() => {
-    const lang = (navigator.language || "").toLowerCase().startsWith("ru")
-      ? "ru"
-      : "en";
+    const candidates = (navigator.languages ?? [navigator.language ?? "en"]).map((l) =>
+      l.toLowerCase().split("-")[0],
+    );
+    const match = candidates.find((c) => (SUPPORTED as readonly string[]).includes(c));
+    const lang = match ?? "en";
     window.location.replace(`/${lang}/`);
   }, []);
   return (
@@ -21,6 +25,12 @@ export default function RootRedirect() {
         <a href="/en/">English</a>
         {" · "}
         <a href="/ru/">Русский</a>
+        {" · "}
+        <a href="/es/">Español</a>
+        {" · "}
+        <a href="/de/">Deutsch</a>
+        {" · "}
+        <a href="/ja/">日本語</a>
       </p>
     </main>
   );

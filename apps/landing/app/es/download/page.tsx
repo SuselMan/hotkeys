@@ -3,15 +3,15 @@ import { DownloadPage } from "../../_components/DownloadPage";
 import { altLanguages, content } from "../../_lib/content";
 
 export const metadata: Metadata = {
-  title: "Download",
+  title: "Descargar",
   description:
-    "Get kekkeys for Windows (tray app, no install wizard) and Android (APK or Google Play). Pair via QR on your local WiFi — no account, no cloud.",
+    "Descarga kekkeys para Windows (app de bandeja, sin asistente) y Android (APK o Google Play). Emparejamiento por QR en tu WiFi local — sin cuenta, sin nube.",
   alternates: {
-    canonical: "/en/download/",
+    canonical: "/es/download/",
     languages: altLanguages("/download/"),
   },
 };
 
 export default function Page() {
-  return <DownloadPage locale="en" content={content.en} />;
+  return <DownloadPage locale="es" content={content.es} />;
 }

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Home } from "../_components/Home";
-import { content } from "../_lib/content";
+import { altLanguages, content } from "../_lib/content";
 
 export const metadata: Metadata = {
+  title: { absolute: "kekkeys — хоткей-дек на экране твоего телефона" },
   description:
     "Программируемый хоткей-дек на экране телефона. Бесплатный, локальный, без облака. Для художников, аниматоров, видеомонтажёров, 3D-моделлеров, стримеров — всех у кого работа на хоткеях.",
   alternates: {
     canonical: "/ru/",
-    languages: { "en-US": "/en/", "ru-RU": "/ru/", "x-default": "/en/" },
+    languages: altLanguages("/"),
   },
 };
 

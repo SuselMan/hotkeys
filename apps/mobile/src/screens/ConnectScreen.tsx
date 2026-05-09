@@ -40,9 +40,10 @@ export function ConnectScreen({ onScanRequest }: Props) {
   const status = useConnectionStatus();
   const pairings = usePairings();
   const isPro = useIsPro();
-  // Landing only ships en + ru content; non-ru locales fall back to en so es/de/ja
-  // users still get a readable download page.
-  const landingLocale = i18n.language === "ru" ? "ru" : "en";
+  // Landing ships the same five locales as the mobile app; fall back to en for
+  // anything else (e.g. system locales we don't translate).
+  const LANDING_LOCALES = ["en", "ru", "es", "de", "ja"];
+  const landingLocale = LANDING_LOCALES.includes(i18n.language) ? i18n.language : "en";
   const desktopUrl = `https://kekkeys.online/${landingLocale}/download/`;
   const [host, setHost] = useState("");
   const [port, setPort] = useState("41234");

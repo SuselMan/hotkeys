@@ -3,15 +3,15 @@ import { PrivacyPage } from "../../_components/PrivacyPage";
 import { altLanguages, content } from "../../_lib/content";
 
 export const metadata: Metadata = {
-  title: "Privacy",
+  title: "Datenschutz",
   description:
-    "kekkeys collects nothing. No accounts, no servers, no telemetry. Pairing happens locally over your WiFi; secrets stay in OS keystores.",
+    "kekkeys sammelt nichts. Keine Konten, keine Server, keine Telemetrie. Die Kopplung passiert lokal über dein WiFi; Secrets bleiben in OS-Keystores.",
   alternates: {
-    canonical: "/en/privacy/",
+    canonical: "/de/privacy/",
     languages: altLanguages("/privacy/"),
   },
 };
 
 export default function Page() {
-  return <PrivacyPage locale="en" content={content.en} />;
+  return <PrivacyPage locale="de" content={content.de} />;
 }

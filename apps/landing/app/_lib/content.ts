@@ -227,7 +227,289 @@ export const ru: LandingContent = {
   },
 };
 
-export const locales = ["en", "ru"] as const;
+export const es: LandingContent = {
+  nav: { home: "Inicio", download: "Descargar", privacy: "Privacidad" },
+  hero: {
+    headline: "Tu teléfono es tu deck de hotkeys.",
+    lead:
+      "kekkeys convierte tu teléfono en un deck programable de atajos para las apps en las que vives. Configura tableros desde el móvil, pulsa botones, las teclas reales se disparan en tu PC por WiFi local. Hecho para artistas digitales, animadores, editores de video, modeladores 3D, streamers — cualquiera cuyo flujo dependa de los atajos de teclado.",
+    ctaWindows: "Descargar para Windows",
+    ctaWindowsSub: "App en bandeja, sin asistente de instalación",
+    ctaApk: "Descargar APK",
+    ctaApkSub: "Android · Google Play pronto",
+  },
+  features: {
+    eyebrow: "Por qué kekkeys",
+    title: "Un deck de hotkeys programable para cada app en la que vives.",
+    items: [
+      {
+        title: "Configurado por completo desde el móvil",
+        body:
+          "Elige el tamaño de la cuadrícula, arrastra botones a las celdas, escoge entre 3866 iconos de Material Symbols, asigna combinaciones con un editor visual. El escritorio solo escucha y pulsa.",
+      },
+      {
+        title: "Pulsaciones reales, no entrada de texto",
+        body:
+          "Mantén un botón pulsado — las teclas reales quedan presionadas en el PC. Combos, modificadores, herramientas de mano, multitouch. Funciona sin importar la distribución del teclado.",
+      },
+      {
+        title: "Local primero, cero nube",
+        body:
+          "El emparejamiento ocurre por tu WiFi vía QR. Sin cuenta, sin telemetría, tus secretos nunca salen de la LAN. La app de escritorio queda en la bandeja del sistema.",
+      },
+    ],
+  },
+  steps: {
+    eyebrow: "Cómo funciona",
+    title: "Tres pasos. Sin cuentas, sin nube.",
+    items: [
+      {
+        body: "Instala kekkeys en tu PC y en tu móvil.",
+        sub: "Gratis, sin cuenta. Ambos dispositivos en la misma red WiFi — esa es toda la configuración.",
+      },
+      {
+        body: "Abre kekkeys en el escritorio y escanea el QR con tu móvil.",
+        sub: "El emparejamiento ocurre por tu WiFi local. Nada sale de la LAN.",
+      },
+      {
+        body: "Crea un tablero en el móvil, pulsa un botón — las teclas reales se disparan en tu PC.",
+        sub: "Pulsa o mantén. El multitouch envía acordes. Tantos tableros como quieras, uno por app.",
+      },
+    ],
+  },
+  download: {
+    title: "Descargar",
+    intro:
+      "kekkeys son dos apps: una de bandeja en Windows que dispara teclas, y una app de móvil donde construyes tableros. Necesitas las dos.",
+    windowsTitle: "Windows",
+    windows: [
+      "Descarga el último instalador desde el enlace de abajo.",
+      "Ejecútalo. SmartScreen advertirá — pulsa «Más información» → «Ejecutar de todas formas».",
+      "kekkeys aparecerá en la bandeja del sistema. Pulsa el icono para abrir el QR.",
+    ],
+    windowsCallout:
+      "La firma de código está en el roadmap. Hasta entonces, la advertencia de SmartScreen es esperada.",
+    androidTitle: "Android",
+    android: [
+      "Descarga el APK desde el enlace de abajo.",
+      "Si tu móvil bloquea fuentes desconocidas, permítelo para el explorador de archivos que uses.",
+      "Abre kekkeys, pulsa Escanear QR, apunta a la pantalla del PC. Listo.",
+    ],
+    androidCallout:
+      "Lanzamiento en Google Play pendiente de validación. El APK actual está firmado con una clave estable, las actualizaciones futuras se instalan encima.",
+  },
+  privacy: {
+    title: "Política de privacidad",
+    body: [
+      "kekkeys no recopila nada. No hay servidores. No hay telemetría.",
+      "Tus tableros se guardan en tu móvil. Los secretos de emparejamiento se guardan en el keystore del SO en el móvil y vía DPAPI en Windows. Ambos quedan locales — nunca viajan más allá de tu WiFi.",
+      "Datos de emparejamiento intercambiados entre móvil y PC: nombre del móvil, combinaciones de teclas pulsadas, marcas de tiempo. Nada de eso se registra ni se transmite fuera de la LAN.",
+      "No hay cuenta. No hay flujo de «recuperar contraseña» porque no hay contraseñas.",
+      "No usamos cookies ni analítica en este sitio. Tu visita aquí no se rastrea.",
+      "Los iconos de Material Symbols son © Google, distribuidos bajo Apache 2.0.",
+      "Si cambiamos algo que afecte a esta política, esta página es la fuente de verdad y llevará la fecha en la parte superior.",
+    ],
+  },
+  footer: {
+    copy: "© kekkeys",
+    privacy: "Privacidad",
+    download: "Descargar",
+  },
+};
+
+export const de: LandingContent = {
+  nav: { home: "Startseite", download: "Download", privacy: "Datenschutz" },
+  hero: {
+    headline: "Dein Handy ist dein Hotkey-Deck.",
+    lead:
+      "kekkeys macht aus deinem Handy ein programmierbares Hotkey-Deck für die Apps, in denen du lebst. Boards am Handy konfigurieren, Buttons drücken, echte Tastendrücke landen auf deinem PC über lokales WiFi. Gebaut für digitale Künstler, Animatoren, Videoeditoren, 3D-Modellierer, Streamer — alle, deren Workflow auf Tastenkürzeln läuft.",
+    ctaWindows: "Für Windows herunterladen",
+    ctaWindowsSub: "Tray-App, kein Installationsassistent",
+    ctaApk: "APK herunterladen",
+    ctaApkSub: "Android · Google Play bald",
+  },
+  features: {
+    eyebrow: "Warum kekkeys",
+    title: "Ein programmierbares Hotkey-Deck für jede App, in der du lebst.",
+    items: [
+      {
+        title: "Komplett am Handy konfiguriert",
+        body:
+          "Wähle die Rastergröße, ziehe Buttons in die Zellen, wähle aus 3866 Material-Symbols-Icons, weise Kombinationen mit einem visuellen Builder zu. Der Desktop hört nur zu und drückt.",
+      },
+      {
+        title: "Echte Tastendrücke, keine Texteingabe",
+        body:
+          "Halte einen Button — die echten Tasten bleiben am PC gedrückt. Kombinationen, Modifikatoren, Hand-Tools, Multi-Touch. Funktioniert unabhängig vom Tastaturlayout.",
+      },
+      {
+        title: "Local-first, keine Cloud",
+        body:
+          "Die Kopplung passiert über dein WiFi per QR. Kein Konto, keine Telemetrie, deine Secrets verlassen das LAN nie. Die Desktop-App bleibt in deiner Tray.",
+      },
+    ],
+  },
+  steps: {
+    eyebrow: "So funktioniert es",
+    title: "Drei Schritte. Keine Konten, keine Cloud.",
+    items: [
+      {
+        body: "Installiere kekkeys auf deinem PC und deinem Handy.",
+        sub: "Kostenlos, kein Konto. Beide Geräte im selben WiFi — das ist die komplette Einrichtung.",
+      },
+      {
+        body: "Öffne kekkeys auf dem Desktop und scanne den QR mit deinem Handy.",
+        sub: "Die Kopplung läuft über dein lokales WiFi. Nichts verlässt das LAN.",
+      },
+      {
+        body: "Erstelle ein Board am Handy, tippe einen Button — echte Tastendrücke landen auf deinem PC.",
+        sub: "Tippen oder halten. Multi-Touch sendet Akkorde. So viele Boards wie du willst, eins pro App.",
+      },
+    ],
+  },
+  download: {
+    title: "Herunterladen",
+    intro:
+      "kekkeys sind zwei Apps: eine Tray-App auf Windows, die Tasten auslöst, und eine Handy-App, in der du Boards baust. Hol dir beide.",
+    windowsTitle: "Windows",
+    windows: [
+      "Lade den aktuellen Installer über den Link unten herunter.",
+      "Starte ihn. SmartScreen warnt — klicke „Weitere Informationen\" → „Trotzdem ausführen\".",
+      "kekkeys erscheint in deiner Tray. Klicke das Icon, um den QR zu öffnen.",
+    ],
+    windowsCallout:
+      "Code-Signierung steht auf der Roadmap. Bis dahin ist die SmartScreen-Warnung zu erwarten.",
+    androidTitle: "Android",
+    android: [
+      "Lade das APK über den Link unten herunter.",
+      "Wenn dein Handy unbekannte Quellen blockiert, erlaube den Datei-Manager, mit dem du es geladen hast.",
+      "Öffne kekkeys, tippe „QR scannen\", richte es auf den Desktop-Bildschirm. Fertig.",
+    ],
+    androidCallout:
+      "Google-Play-Release ausstehend für die Validierung. Das aktuelle APK ist mit einem stabilen Schlüssel signiert, künftige Updates lassen sich darüber installieren.",
+  },
+  privacy: {
+    title: "Datenschutzerklärung",
+    body: [
+      "kekkeys sammelt nichts. Es gibt keine Server. Es gibt keine Telemetrie.",
+      "Deine Boards werden auf deinem Handy gespeichert. Kopplungs-Secrets werden im OS-Keystore am Handy und per DPAPI auf Windows abgelegt. Beides bleibt lokal — nichts reist über dein WiFi hinaus.",
+      "Kopplungsdaten zwischen Handy und PC: Handyname, gedrückte Tastenkombinationen, Zeitstempel. Nichts davon wird protokolliert oder über das LAN hinaus übertragen.",
+      "Es gibt kein Konto. Es gibt keinen „Passwort vergessen\"-Ablauf, weil es keine Passwörter gibt.",
+      "Wir verwenden auf dieser Seite keine Cookies oder Analyse-Tools. Dein Besuch hier wird nicht getrackt.",
+      "Material-Symbols-Icons sind © Google, lizenziert unter Apache 2.0.",
+      "Wenn wir etwas ändern, das diese Richtlinie betrifft, ist diese Seite die Quelle der Wahrheit und wird oben datiert.",
+    ],
+  },
+  footer: {
+    copy: "© kekkeys",
+    privacy: "Datenschutz",
+    download: "Download",
+  },
+};
+
+export const ja: LandingContent = {
+  nav: { home: "ホーム", download: "ダウンロード", privacy: "プライバシー" },
+  hero: {
+    headline: "あなたのスマホがホットキーデック。",
+    lead:
+      "kekkeysはあなたのスマホを、よく使うアプリのためのプログラマブル・ホットキーデックに変えます。スマホでボードを設定し、ボタンを押すと、本物のキー入力がローカルWiFi経由でPCで実行されます。デジタルアーティスト、アニメーター、動画編集者、3Dモデラー、配信者 — キーボードショートカットに依存するすべてのワークフローのために。",
+    ctaWindows: "Windows版をダウンロード",
+    ctaWindowsSub: "トレイアプリ、インストーラなし",
+    ctaApk: "APKをダウンロード",
+    ctaApkSub: "Android · Google Play近日",
+  },
+  features: {
+    eyebrow: "なぜkekkeys",
+    title: "あなたが使うすべてのアプリのためのプログラマブル・ホットキーデック。",
+    items: [
+      {
+        title: "スマホですべて設定",
+        body:
+          "好きなグリッドサイズを選び、ボタンをセルにドラッグ、3866個のMaterial Symbolsアイコンから選択、ビジュアルビルダーでキーコンボを設定。デスクトップは聞いて押すだけ。",
+      },
+      {
+        title: "本物のキー入力、テキストではない",
+        body:
+          "ボタンを長押しすると、本物のキーがPC上で押されたままになります。コンボ、修飾キー、ハンドツール、マルチタッチ。キーボードレイアウトに関係なく動作。",
+      },
+      {
+        title: "ローカル優先、クラウドなし",
+        body:
+          "ペアリングはWiFi経由のQRで行われます。アカウント不要、テレメトリーなし、シークレットがLANを離れることはありません。デスクトップアプリはトレイに常駐。",
+      },
+    ],
+  },
+  steps: {
+    eyebrow: "使い方",
+    title: "3ステップ。アカウント不要、クラウド不要。",
+    items: [
+      {
+        body: "kekkeysをPCとスマホにインストール。",
+        sub: "無料、アカウント不要。両方の端末を同じWiFiネットワークに接続 — それだけ。",
+      },
+      {
+        body: "デスクトップでkekkeysを開き、スマホでQRをスキャン。",
+        sub: "ペアリングはローカルWiFi経由。LANを離れるものはありません。",
+      },
+      {
+        body: "スマホでボードを作成し、ボタンをタップ — PCで本物のキー入力が走ります。",
+        sub: "タップまたは長押し。マルチタッチでコード入力。アプリごとにボードを好きなだけ。",
+      },
+    ],
+  },
+  download: {
+    title: "ダウンロード",
+    intro:
+      "kekkeysは2つのアプリで構成されます: キーを押すWindowsトレイアプリと、ボードを作るスマホアプリ。両方が必要です。",
+    windowsTitle: "Windows",
+    windows: [
+      "下のリンクから最新のインストーラをダウンロード。",
+      "実行してください。SmartScreenが警告を表示します — 「詳細情報」→「実行」をクリック。",
+      "kekkeysがシステムトレイに表示されます。アイコンをクリックしてQRを開きます。",
+    ],
+    windowsCallout:
+      "コード署名はロードマップ上にあります。それまではSmartScreenの警告は想定通りです。",
+    androidTitle: "Android",
+    android: [
+      "下のリンクからAPKをダウンロード。",
+      "スマホが提供元不明をブロックする場合は、使用したファイルマネージャーに対して許可してください。",
+      "kekkeysを開き、QRスキャンをタップ、PCの画面にかざします。完了。",
+    ],
+    androidCallout:
+      "Google Playリリースは検証待ち。現在のAPKは安定鍵で署名されているため、今後のアップデートはその上にインストールできます。",
+  },
+  privacy: {
+    title: "プライバシーポリシー",
+    body: [
+      "kekkeysは何も収集しません。サーバーはありません。テレメトリーもありません。",
+      "ボードはスマホに保存されます。ペアリングのシークレットはスマホのOSキーストアとWindowsのDPAPIに保管されます。どちらもローカルに留まり、WiFiを超えて移動することはありません。",
+      "スマホとPC間でやり取りされるペアリングデータ: スマホ名、ユーザーが押したキーコンボ、タイムスタンプ。これらはログに記録されず、LANの外には送信されません。",
+      "アカウントはありません。パスワードがないので「パスワードを忘れた」フローもありません。",
+      "このサイトでCookieや解析ツールは使用していません。あなたの訪問はトラッキングされません。",
+      "Material SymbolsアイコンはGoogle © です。Apache 2.0で配布されています。",
+      "このポリシーに影響する変更があれば、このページが信頼できる情報源となり、ページの上部に日付が記載されます。",
+    ],
+  },
+  footer: {
+    copy: "© kekkeys",
+    privacy: "プライバシー",
+    download: "ダウンロード",
+  },
+};
+
+export const locales = ["en", "ru", "es", "de", "ja"] as const;
 export type Locale = (typeof locales)[number];
 
-export const content: Record<Locale, LandingContent> = { en, ru };
+export const content: Record<Locale, LandingContent> = { en, ru, es, de, ja };
+
+/** hreflang map for `metadata.alternates.languages`. `path` is e.g. `/` or `/download/`. */
+export function altLanguages(path: string): Record<string, string> {
+  return {
+    "en-US": `/en${path}`,
+    "ru-RU": `/ru${path}`,
+    "es-ES": `/es${path}`,
+    "de-DE": `/de${path}`,
+    "ja-JP": `/ja${path}`,
+    "x-default": `/en${path}`,
+  };
+}

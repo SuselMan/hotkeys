@@ -1,13 +1,20 @@
 import Link from "next/link";
-import type { LandingContent, Locale } from "../_lib/content";
+import { locales, type LandingContent, type Locale } from "../_lib/content";
 
 interface Props {
   locale: Locale;
   content: LandingContent;
 }
 
+const LOCALE_LABEL: Record<Locale, string> = {
+  en: "EN",
+  ru: "RU",
+  es: "ES",
+  de: "DE",
+  ja: "JA",
+};
+
 export function Header({ locale, content }: Props) {
-  const other: Locale = locale === "en" ? "ru" : "en";
   return (
     <header className="header">
       <div className="container header-inner">
@@ -32,12 +39,11 @@ export function Header({ locale, content }: Props) {
             {content.nav.privacy}
           </Link>
           <span className="lang-switch">
-            <Link href={`/en/`} className={locale === "en" ? "active" : ""}>
-              EN
-            </Link>
-            <Link href={`/ru/`} className={locale === "ru" ? "active" : ""}>
-              RU
-            </Link>
+            {locales.map((l) => (
+              <Link key={l} href={`/${l}/`} className={locale === l ? "active" : ""}>
+                {LOCALE_LABEL[l]}
+              </Link>
+            ))}
           </span>
         </nav>
       </div>
