@@ -14,7 +14,7 @@
       "backgroundColor": "#000000"
     },
     "android": {
-      "package": "com.kekkeys.app",
+      "package": "online.kekkeys.app",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -33,7 +33,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kekkeys.app",
+      "bundleIdentifier": "online.kekkeys.app",
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSAllowsLocalNetworking": true
