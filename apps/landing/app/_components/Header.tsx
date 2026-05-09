@@ -12,7 +12,14 @@ export function Header({ locale, content }: Props) {
     <header className="header">
       <div className="container header-inner">
         <Link href={`/${locale}/`} className="logo">
-          kekkeys
+          <img
+            src="/android-chrome-192x192.png"
+            alt=""
+            width={28}
+            height={28}
+            className="logo-mark"
+          />
+          <span>kekkeys</span>
         </Link>
         <nav className="nav">
           <Link href={`/${locale}/`} className="nav-link">

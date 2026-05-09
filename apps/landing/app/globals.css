@@ -86,9 +86,21 @@ p {
   padding: 14px 0;
 }
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 700;
   font-size: 18px;
   color: var(--accent);
+}
+.logo:hover {
+  text-decoration: none;
+}
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: block;
 }
 .nav {
   display: flex;
