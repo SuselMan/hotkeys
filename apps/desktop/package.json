@@ -59,7 +59,7 @@
           "arch": ["x64"]
         }
       ],
-      "icon": "icons/favicon.ico",
+      "icon": "icons/web-app-manifest-512x512.png",
       "artifactName": "${productName}-setup.${ext}"
     },
     "nsis": {
