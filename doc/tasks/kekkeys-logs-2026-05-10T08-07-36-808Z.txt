@@ -1,0 +1,14 @@
+---- session start 2026-05-10T08:00:23.039Z ----
+2026-05-10T08:00:23.039Z [LOG] Running "main"
+2026-05-10T08:00:45.556Z [WARN] [iap] purchase error: sku-not-found SKU not found
+2026-05-10T08:00:49.815Z [WARN] [iap] purchase error: sku-not-found SKU not found
+2026-05-10T08:00:51.315Z [WARN] [iap] purchase error: sku-not-found SKU not found
+---- session start 2026-05-10T08:01:02.945Z ----
+2026-05-10T08:01:02.946Z [LOG] Running "main"
+2026-05-10T08:01:11.392Z [WARN] [iap] purchase error: sku-not-found SKU not found
+2026-05-10T08:01:14.952Z [WARN] [iap] purchase error: sku-not-found SKU not found
+2026-05-10T08:02:40.305Z [WARN] [iap] purchase error: sku-not-found SKU not found
+---- session start 2026-05-10T08:05:30.611Z ----
+2026-05-10T08:05:30.612Z [LOG] Running "main"
+2026-05-10T08:07:32.701Z [WARN] [iap] purchase error: sku-not-found SKU not found
+2026-05-10T08:07:35.137Z [WARN] [iap] purchase error: sku-not-found SKU not found

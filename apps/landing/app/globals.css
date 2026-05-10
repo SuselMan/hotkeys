@@ -412,3 +412,105 @@ p {
 .footer-links a {
   color: var(--fg-muted);
 }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 12px 0;
+  }
+  .nav {
+    width: 100%;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .nav-link {
+    font-size: 13px;
+  }
+  .lang-switch {
+    margin-left: auto;
+  }
+  .lang-switch a {
+    padding: 3px 6px;
+  }
+
+  .hero {
+    padding: 40px 0 32px;
+    text-align: left;
+  }
+  .hero .lead {
+    margin: 0 0 24px;
+  }
+  .cta-row {
+    justify-content: stretch;
+  }
+  .cta-row .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+    padding: 14px 18px;
+  }
+
+  .features,
+  .steps,
+  .faq {
+    padding: 32px 0;
+  }
+  .feature-grid {
+    grid-template-columns: 1fr;
+    margin-top: 20px;
+  }
+
+  .steps li {
+    padding: 14px 0 14px 44px;
+  }
+  .steps li::before {
+    width: 30px;
+    height: 30px;
+    top: 14px;
+    font-size: 14px;
+  }
+
+  .doc {
+    padding: 32px 0 64px;
+  }
+  .doc h2 {
+    margin: 28px 0 10px;
+  }
+  .doc li {
+    margin-left: 18px;
+  }
+
+  .article h2 {
+    margin-top: 32px;
+    padding-top: 24px;
+  }
+  /* Tables don't reflow — let them scroll horizontally */
+  .article-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+  .article-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .article-cta-row .btn {
+    justify-content: center;
+  }
+
+  .footer {
+    padding: 24px 0;
+    margin-top: 32px;
+  }
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
