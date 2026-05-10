@@ -266,6 +266,35 @@ p {
   margin-top: 4px;
 }
 
+/* FAQ */
+.faq {
+  padding: 48px 0;
+  border-top: 1px solid var(--border);
+}
+.faq-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.faq-item h3 {
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+.faq-item p {
+  color: var(--fg-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 /* Section heading */
 .section-eyebrow {
   color: var(--fg-muted);

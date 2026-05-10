@@ -11,10 +11,11 @@ const SITE_URL = "https://kekkeys.online";
 interface Props {
   locale: Locale;
   description: string;
+  faq?: ReadonlyArray<{ q: string; a: string }>;
 }
 
-export function JsonLd({ locale, description }: Props) {
-  const data = {
+export function JsonLd({ locale, description, faq }: Props) {
+  const softwareApp = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "kekkeys",
@@ -44,10 +45,31 @@ export function JsonLd({ locale, description }: Props) {
     publisher: { "@type": "Organization", name: "kekkeys" },
   };
 
+  const faqPage = faq && faq.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        inLanguage: locale,
+        mainEntity: faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      }
+    : null;
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApp) }}
+      />
+      {faqPage && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
+        />
+      )}
+    </>
   );
 }

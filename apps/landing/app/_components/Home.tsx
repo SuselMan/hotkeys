@@ -12,7 +12,7 @@ interface Props {
 export function Home({ locale, content }: Props) {
   return (
     <>
-      <JsonLd locale={locale} description={content.hero.lead} />
+      <JsonLd locale={locale} description={content.hero.lead} faq={content.faq.items} />
       <Header locale={locale} content={content} />
       <main>
         <section className="hero">
@@ -63,6 +63,21 @@ export function Home({ locale, content }: Props) {
                 </li>
               ))}
             </ol>
+          </div>
+        </section>
+
+        <section className="faq">
+          <div className="container">
+            <p className="section-eyebrow">{content.faq.eyebrow}</p>
+            <h2>{content.faq.title}</h2>
+            <div className="faq-list">
+              {content.faq.items.map((item) => (
+                <div className="faq-item" key={item.q}>
+                  <h3>{item.q}</h3>
+                  <p>{item.a}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </main>

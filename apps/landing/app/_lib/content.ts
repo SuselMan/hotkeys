@@ -26,6 +26,11 @@ export interface LandingContent {
     title: string;
     items: Array<{ body: string; sub: string }>;
   };
+  faq: {
+    eyebrow: string;
+    title: string;
+    items: Array<{ q: string; a: string }>;
+  };
   download: {
     title: string;
     intro: string;
@@ -94,6 +99,44 @@ export const en: LandingContent = {
       {
         body: "Build a board on the phone, tap a button — real keystrokes fire on your PC.",
         sub: "Tap or hold. Multi-touch sends chords. As many boards as you want, one per app.",
+      },
+    ],
+  },
+  faq: {
+    eyebrow: "FAQ",
+    title: "Frequently asked questions",
+    items: [
+      {
+        q: "Is kekkeys a free Stream Deck alternative?",
+        a: "Yes. Free supports one board on one paired PC with all core features — drag-drop builder, key combos, multi-touch, sticky modifiers. PRO is a one-time $9.99 purchase that unlocks unlimited boards, custom button colors, custom uploaded icons, and multi-PC pairing. There is no subscription.",
+      },
+      {
+        q: "Do I need a Stream Deck device or any other hardware?",
+        a: "No. kekkeys runs entirely on your phone and your Windows PC — no Elgato hardware, no USB peripheral, no extra device. Your phone screen is the deck.",
+      },
+      {
+        q: "Which apps does it work with?",
+        a: "Any Windows app that uses keyboard shortcuts. We've tested with Photoshop, Animate, Blender, DaVinci Resolve, OBS, Figma, Premiere, After Effects, Krita, Lightroom, ToonBoom, and many more. If the app responds to a hotkey on your physical keyboard, kekkeys can fire it.",
+      },
+      {
+        q: "Do my keystrokes go through the cloud?",
+        a: "No. kekkeys uses a direct connection between your phone and PC over your local WiFi. Pairing is done with a QR code; secrets are stored in the OS keystore (Android Keystore on the phone, DPAPI on Windows). Nothing leaves your LAN.",
+      },
+      {
+        q: "Can I send chords or held modifiers?",
+        a: "Yes. Two fingers on the phone send chords like Ctrl+Shift+Z. There's also a Sticky toggle: tap once to press and hold a modifier (e.g. Shift), tap again to release. Works for any combination.",
+      },
+      {
+        q: "Is there a Mac or Linux desktop version? Or iOS?",
+        a: "Not for v1.0 — desktop is Windows 10/11 only, phone is Android only. macOS, Linux, and iOS are on the roadmap for future releases.",
+      },
+      {
+        q: "Does kekkeys collect any data or telemetry?",
+        a: "No. There are no servers, no analytics, no telemetry, no tracking. We don't have a backend at all — boards and keystrokes never leave your local network. The privacy page on this site spells out the full picture.",
+      },
+      {
+        q: "What happens if I lose my phone or reinstall the app?",
+        a: "Boards are stored on the phone, so a fresh install starts empty. Use Export to JSON in Settings for periodic backups. PRO entitlement is tied to your Google account — tap Restore purchases on the Upgrade screen and PRO comes back without paying again.",
       },
     ],
   },
@@ -187,6 +230,44 @@ export const ru: LandingContent = {
       },
     ],
   },
+  faq: {
+    eyebrow: "FAQ",
+    title: "Частые вопросы",
+    items: [
+      {
+        q: "kekkeys — это бесплатный аналог Stream Deck?",
+        a: "Да. Free поддерживает одну доску на одном спаренном ПК со всеми основными возможностями — drag-drop билдер, комбинации клавиш, мульти-тач, sticky-модификаторы. PRO — разовая покупка $9.99, снимает ограничения: безлимитные доски, кастомные цвета кнопок, свои иконки, мульти-ПК пейринг. Подписки нет.",
+      },
+      {
+        q: "Нужно ли покупать Stream Deck или какое-то железо?",
+        a: "Нет. kekkeys работает только на твоём телефоне и Windows-ПК — никакого железа от Elgato, никакого USB-устройства. Экран телефона и есть дек.",
+      },
+      {
+        q: "С какими приложениями работает?",
+        a: "С любыми Windows-приложениями, которые используют горячие клавиши. Тестировали с Photoshop, Animate, Blender, DaVinci Resolve, OBS, Figma, Premiere, After Effects, Krita, Lightroom, ToonBoom и многими другими. Если приложение реагирует на хоткей с физической клавиатуры — kekkeys его пошлёт.",
+      },
+      {
+        q: "Идут ли нажатия через облако?",
+        a: "Нет. kekkeys использует прямое соединение телефон-ПК по локальной WiFi. Пейринг через QR-код, секреты в OS keystore (Android Keystore на телефоне, DPAPI на Windows). Ничего не покидает LAN.",
+      },
+      {
+        q: "Можно ли слать аккорды или удерживать модификаторы?",
+        a: "Да. Два пальца на телефоне шлют аккорды типа Ctrl+Shift+Z. Также есть Sticky-тоггл: один тап нажать и удерживать модификатор (например Shift), повторный тап — отпустить. Работает для любых комбинаций.",
+      },
+      {
+        q: "Есть версия для Mac или Linux? А iOS?",
+        a: "На v1.0 — десктоп только Windows 10/11, мобильное только Android. macOS, Linux и iOS в дорожной карте на будущие релизы.",
+      },
+      {
+        q: "Собирает ли kekkeys какие-то данные или телеметрию?",
+        a: "Нет. Серверов нет, аналитики нет, телеметрии нет, трекинга нет. У нас вообще нет бэкенда — доски и нажатия никогда не покидают локальную сеть. Полная картина — на странице приватности.",
+      },
+      {
+        q: "Что если я потеряю телефон или переустановлю приложение?",
+        a: "Доски хранятся на телефоне, после переустановки начнётся пусто. В Settings есть Export в JSON для периодического бэкапа. PRO привязан к Google-аккаунту — тапни «Восстановить покупки» на экране Upgrade и PRO вернётся без повторной оплаты.",
+      },
+    ],
+  },
   download: {
     title: "Скачать",
     intro:
@@ -274,6 +355,44 @@ export const es: LandingContent = {
       {
         body: "Crea un tablero en el móvil, pulsa un botón — las teclas reales se disparan en tu PC.",
         sub: "Pulsa o mantén. El multitouch envía acordes. Tantos tableros como quieras, uno por app.",
+      },
+    ],
+  },
+  faq: {
+    eyebrow: "FAQ",
+    title: "Preguntas frecuentes",
+    items: [
+      {
+        q: "¿kekkeys es una alternativa gratis a Stream Deck?",
+        a: "Sí. Free admite un tablero en un PC emparejado con todas las funciones principales — editor visual, combinaciones de teclas, multitouch, modificadores sticky. PRO es una compra única de $9.99 que desbloquea tableros ilimitados, colores personalizados de botones, iconos propios y emparejamiento multi-PC. No hay suscripción.",
+      },
+      {
+        q: "¿Necesito un Stream Deck u otro hardware?",
+        a: "No. kekkeys funciona enteramente en tu teléfono y tu PC con Windows — sin hardware de Elgato, sin periféricos USB, sin dispositivo adicional. La pantalla de tu teléfono es el deck.",
+      },
+      {
+        q: "¿Con qué apps funciona?",
+        a: "Con cualquier app de Windows que use atajos de teclado. Probado con Photoshop, Animate, Blender, DaVinci Resolve, OBS, Figma, Premiere, After Effects, Krita, Lightroom, ToonBoom y muchas más. Si la app responde a un atajo desde tu teclado físico, kekkeys puede dispararlo.",
+      },
+      {
+        q: "¿Las pulsaciones pasan por la nube?",
+        a: "No. kekkeys usa una conexión directa entre tu teléfono y tu PC por tu WiFi local. El emparejamiento se hace con QR; los secretos se guardan en el keystore del SO (Android Keystore en el teléfono, DPAPI en Windows). Nada sale de tu LAN.",
+      },
+      {
+        q: "¿Puedo enviar acordes o mantener modificadores pulsados?",
+        a: "Sí. Dos dedos en el teléfono envían acordes tipo Ctrl+Shift+Z. También hay un toggle Sticky: pulsa una vez para mantener un modificador (ej. Shift), pulsa de nuevo para soltar. Funciona para cualquier combinación.",
+      },
+      {
+        q: "¿Hay versión para Mac, Linux o iOS?",
+        a: "No en v1.0 — escritorio solo Windows 10/11, móvil solo Android. macOS, Linux e iOS están en el roadmap para versiones futuras.",
+      },
+      {
+        q: "¿kekkeys recopila datos o telemetría?",
+        a: "No. No hay servidores, no hay analítica, no hay telemetría, no hay tracking. No tenemos backend — tableros y pulsaciones nunca salen de tu red local. La página de privacidad detalla todo.",
+      },
+      {
+        q: "¿Qué pasa si pierdo mi teléfono o reinstalo la app?",
+        a: "Los tableros se guardan en el teléfono, así que una reinstalación empieza vacía. Usa Exportar a JSON en Ajustes para hacer copia de seguridad. La compra PRO está ligada a tu cuenta de Google — pulsa Restaurar compras en la pantalla Upgrade y PRO vuelve sin pagar otra vez.",
       },
     ],
   },
@@ -367,6 +486,44 @@ export const de: LandingContent = {
       },
     ],
   },
+  faq: {
+    eyebrow: "FAQ",
+    title: "Häufige Fragen",
+    items: [
+      {
+        q: "Ist kekkeys eine kostenlose Stream-Deck-Alternative?",
+        a: "Ja. Free unterstützt ein Board auf einem gekoppelten PC mit allen Kernfunktionen — Drag-and-Drop-Builder, Tastenkombinationen, Multi-Touch, Sticky-Modifikatoren. PRO ist ein einmaliger Kauf für 9,99 $ und schaltet unbegrenzte Boards, eigene Button-Farben, eigene Icons und Multi-PC-Kopplung frei. Kein Abo.",
+      },
+      {
+        q: "Brauche ich ein Stream Deck oder andere Hardware?",
+        a: "Nein. kekkeys läuft komplett auf deinem Handy und deinem Windows-PC — keine Elgato-Hardware, kein USB-Peripheriegerät, kein Zusatzgerät. Der Bildschirm deines Handys ist das Deck.",
+      },
+      {
+        q: "Mit welchen Apps funktioniert es?",
+        a: "Mit jeder Windows-App, die Tastenkürzel verwendet. Getestet mit Photoshop, Animate, Blender, DaVinci Resolve, OBS, Figma, Premiere, After Effects, Krita, Lightroom, ToonBoom und vielen mehr. Wenn die App auf einen Hotkey von deiner physischen Tastatur reagiert, kann kekkeys ihn auslösen.",
+      },
+      {
+        q: "Gehen die Tastendrücke über die Cloud?",
+        a: "Nein. kekkeys nutzt eine direkte Verbindung zwischen Handy und PC über dein lokales WiFi. Die Kopplung erfolgt per QR-Code; Secrets werden im OS-Keystore gespeichert (Android Keystore am Handy, DPAPI unter Windows). Nichts verlässt dein LAN.",
+      },
+      {
+        q: "Kann ich Akkorde senden oder Modifikatoren halten?",
+        a: "Ja. Zwei Finger am Handy senden Akkorde wie Strg+Umschalt+Z. Außerdem gibt es einen Sticky-Toggle: einmal tippen, um einen Modifikator (z. B. Shift) gedrückt zu halten, erneut tippen zum Loslassen. Funktioniert für jede Kombination.",
+      },
+      {
+        q: "Gibt es eine Mac-, Linux- oder iOS-Version?",
+        a: "Nicht in v1.0 — Desktop nur Windows 10/11, Mobile nur Android. macOS, Linux und iOS sind für zukünftige Releases auf der Roadmap.",
+      },
+      {
+        q: "Sammelt kekkeys Daten oder Telemetrie?",
+        a: "Nein. Keine Server, keine Analyse, keine Telemetrie, kein Tracking. Wir haben überhaupt kein Backend — Boards und Tastendrücke verlassen dein lokales Netzwerk nie. Die Datenschutzseite erklärt das ausführlich.",
+      },
+      {
+        q: "Was passiert, wenn ich mein Handy verliere oder die App neu installiere?",
+        a: "Boards werden am Handy gespeichert, eine Neuinstallation startet leer. Nutze „Als JSON exportieren\" in den Einstellungen für regelmäßige Backups. Der PRO-Kauf ist mit deinem Google-Konto verknüpft — tippe „Käufe wiederherstellen\" auf dem Upgrade-Bildschirm und PRO ist wieder da, ohne nochmal zu zahlen.",
+      },
+    ],
+  },
   download: {
     title: "Herunterladen",
     intro:
@@ -454,6 +611,44 @@ export const ja: LandingContent = {
       {
         body: "スマホでボードを作成し、ボタンをタップ — PCで本物のキー入力が走ります。",
         sub: "タップまたは長押し。マルチタッチでコード入力。アプリごとにボードを好きなだけ。",
+      },
+    ],
+  },
+  faq: {
+    eyebrow: "FAQ",
+    title: "よくある質問",
+    items: [
+      {
+        q: "kekkeysは無料のStream Deck代替ですか?",
+        a: "はい。Freeは1台のペアリング済みPCで1つのボードに対応し、すべての主要機能(ドラッグ&ドロップビルダー、キーコンボ、マルチタッチ、Stickyモディファイア)を含みます。PROは$9.99の買い切りで、ボード無制限、カスタムボタンカラー、自前アイコン、マルチPCペアリングをアンロックします。サブスクリプションはありません。",
+      },
+      {
+        q: "Stream Deckなどのハードウェアは必要ですか?",
+        a: "いいえ。kekkeysはスマホとWindows PCだけで動作します — Elgatoのハードウェアも、USB周辺機器も、追加デバイスも不要。スマホの画面そのものがデックです。",
+      },
+      {
+        q: "どのアプリで使えますか?",
+        a: "キーボードショートカットを使うあらゆるWindowsアプリ。Photoshop、Animate、Blender、DaVinci Resolve、OBS、Figma、Premiere、After Effects、Krita、Lightroom、ToonBoomなどで動作確認済み。物理キーボードのホットキーに反応するアプリなら、kekkeysから送信できます。",
+      },
+      {
+        q: "キー入力はクラウド経由ですか?",
+        a: "いいえ。kekkeysはスマホとPCの間でローカルWiFi経由の直接接続を使用します。ペアリングはQRコード、シークレットはOSのキーストアに保管(スマホはAndroid Keystore、WindowsはDPAPI)。何もLANを離れません。",
+      },
+      {
+        q: "コードや修飾キーの保持はできますか?",
+        a: "はい。2本指でCtrl+Shift+Zのようなコードを送信できます。Stickyトグルもあります: 1回タップで修飾キー(Shiftなど)を押下保持、もう1回タップで解放。あらゆる組み合わせで動作します。",
+      },
+      {
+        q: "MacやLinux、iOS版はありますか?",
+        a: "v1.0はデスクトップがWindows 10/11のみ、モバイルがAndroidのみ。macOS、Linux、iOSは将来のリリースに向けてロードマップにあります。",
+      },
+      {
+        q: "kekkeysはデータやテレメトリーを収集しますか?",
+        a: "いいえ。サーバーなし、解析なし、テレメトリーなし、トラッキングなし。バックエンド自体がありません — ボードやキー入力がローカルネットワークを離れることはありません。プライバシーページで詳細を確認できます。",
+      },
+      {
+        q: "スマホを失くしたりアプリを再インストールしたら?",
+        a: "ボードはスマホに保存されているので、新規インストールでは空の状態で始まります。設定の「JSONにエクスポート」で定期的にバックアップを取りましょう。PRO購入はGoogleアカウントに紐づいているので、Upgrade画面で「購入を復元」をタップすれば再支払いなしでPROが戻ります。",
       },
     ],
   },
