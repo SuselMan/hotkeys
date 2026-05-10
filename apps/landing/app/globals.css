@@ -341,6 +341,55 @@ p {
   font-size: 14px;
 }
 
+/* Article (longer-form blog post) */
+.article {
+  max-width: 760px;
+}
+.article h2 {
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+}
+.article h3 {
+  margin: 24px 0 8px;
+  font-size: 17px;
+  color: var(--accent);
+}
+.article-meta {
+  color: var(--fg-dim);
+  font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.article-back {
+  color: var(--accent);
+}
+.article-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 24px;
+  font-size: 14px;
+}
+.article-table th,
+.article-table td {
+  border-bottom: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.article-table th {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--bg-card);
+}
+.article-cta-row {
+  display: flex;
+  gap: 12px;
+  margin: 32px 0;
+}
+
 /* Footer */
 .footer {
   border-top: 1px solid var(--border);

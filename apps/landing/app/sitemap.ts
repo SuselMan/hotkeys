@@ -24,5 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
   }
+  // RU-only blog articles (no parallel translations on EN/DE/JA, that's per audit data).
+  routes.push({
+    url: `${BASE}/ru/blog/sdelat-strim-dek-iz-telefona/`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  });
   return routes;
 }
