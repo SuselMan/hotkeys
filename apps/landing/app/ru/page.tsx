@@ -3,9 +3,9 @@ import { Home } from "../_components/Home";
 import { altLanguages, content } from "../_lib/content";
 
 export const metadata: Metadata = {
-  title: { absolute: "kekkeys — стрим дек на телефоне, бесплатный макропад для Windows" },
+  title: { absolute: "kekkeys — Stream Deck на телефоне · бесплатная программируемая клавиатура для Windows" },
   description:
-    "Бесплатный аналог Stream Deck на телефоне. Программируемый макропад для Windows — Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Figma. Локальный пейринг через QR, без облака.",
+    "Сделай из телефона аналог Stream Deck. Программируемая клавиатура для OBS, Photoshop, Blender, DaVinci, Premiere. Бесплатно, локально, без облака и аккаунта.",
   alternates: {
     canonical: "/ru/",
     languages: altLanguages("/"),

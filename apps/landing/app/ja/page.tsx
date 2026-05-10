@@ -3,9 +3,9 @@ import { Home } from "../_components/Home";
 import { altLanguages, content } from "../_lib/content";
 
 export const metadata: Metadata = {
-  title: { absolute: "kekkeys — スマホでStream Deck · Windows用無料マクロパッド" },
+  title: { absolute: "kekkeys — Stream Deck（ストリームデック）アプリ · スマホがホットキーデックに" },
   description:
-    "スマホで使えるStream Deckの無料代替。Windows向けプログラマブル・マクロパッド — Photoshop、Blender、DaVinci Resolve、OBS、Premiere、After Effects、Figma対応。QRでローカルペアリング、クラウド不要。",
+    "あなたのスマホをStream Deckに。OBS、Blender、Photoshop用のプログラマブルなホットキーデック。ローカルで動作、クラウド不要、アカウント不要、無料。",
   alternates: {
     canonical: "/ja/",
     languages: altLanguages("/"),

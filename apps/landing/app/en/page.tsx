@@ -3,9 +3,9 @@ import { Home } from "../_components/Home";
 import { altLanguages, content } from "../_lib/content";
 
 export const metadata: Metadata = {
-  title: { absolute: "kekkeys — phone Stream Deck alternative · free macropad for Windows" },
+  title: { absolute: "kekkeys — free Stream Deck app for Android · turn your phone into a programmable deck" },
   description:
-    "Free Stream Deck alternative on your phone. Programmable macropad for Windows — Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Figma. Local pairing via QR, no cloud, no telemetry.",
+    "Free Stream Deck app for your phone. Programmable deck for OBS, Blender, Premiere, Animate. Local pairing via QR, no cloud, no account. Open the app, scan a QR.",
   alternates: {
     canonical: "/en/",
     languages: altLanguages("/"),
