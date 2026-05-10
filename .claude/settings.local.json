@@ -18,7 +18,8 @@
       "mcp__sentry__search_issue_events",
       "PowerShell(Set-Location \"C:\\\\projects\\\\hotkeys\\\\apps\\\\mobile\"; npx tsc --noEmit 2>&1 | Select-Object -First 80; \"exit=$LASTEXITCODE\")",
       "PowerShell(Set-Location \"C:\\\\projects\\\\hotkeys\\\\apps\\\\mobile\"; npx tsc --noEmit 2>&1; \"exit=$LASTEXITCODE\")",
-      "PowerShell(Move-Item *)"
+      "PowerShell(Move-Item *)",
+      "PowerShell(Test-Path *)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -34,8 +34,8 @@ eas build --profile preview --platform android      # APK для теста на
 eas build --profile production --platform android   # AAB для Play Console (~20 мин)
 ```
 
-- [ ] Preview APK build started
-- [ ] Production AAB build started
+- [x] Preview APK build готов
+- [x] Production AAB build готов
 
 **Что выбрать если только один:** для теста IAP — `preview`. Для Play Console — `production` (AAB обязателен для Play).
 
@@ -44,29 +44,29 @@ eas build --profile production --platform android   # AAB для Play Console (~
 Текст всех полей готов в `doc/marketing/play-store-listing.md`. Просто копи-пейст.
 
 ### 2.1. Main store listing (en-US — default)
-- [ ] App name: `kekkeys`
-- [ ] Short description (80c) — копи из доки
-- [ ] Full description (4000c) — копи из доки
-- [ ] App icon: `apps/mobile/assets/icons/playstore.png` (512×512)
-- [ ] Feature graphic: `apps/mobile/assets/icons/1024x500.png`
-- [ ] 8 phone screenshots (уже загружено)
-- [ ] Promo video URL: пропустить пока (добавить после релиза)
+- [x] App name: `kekkeys`
+- [x] Short description (80c) — копи из доки
+- [x] Full description (4000c) — копи из доки
+- [x] App icon: `apps/mobile/assets/icons/playstore.png` (512×512)
+- [x] Feature graphic: `apps/mobile/assets/icons/1024x500.png`
+- [x] 8 phone screenshots (уже загружено)
+- [x] Promo video URL: пропустить пока (добавить после релиза)
 
 ### 2.2. Custom store listings (опционально, но повышает конверсию в локалях)
-- [ ] ru-RU — копи из доки
-- [ ] es-ES — копи из доки
-- [ ] de-DE — копи из доки
-- [ ] ja-JP — копи из доки
+- [x] ru-RU — копи из доки
+- [x] es-ES — копи из доки
+- [x] de-DE — копи из доки
+- [x] ja-JP — копи из доки
 
 ### 2.3. Обязательные мета-поля
-- [ ] Privacy Policy URL: `https://kekkeys.online/en/privacy/`
-- [ ] Website: `https://kekkeys.online/`
-- [ ] Support email: твой email
-- [ ] Content rating questionnaire — все ответы NO → должно получиться Everyone / PEGI 3
-- [ ] Data Safety: Data collected = None, Data shared = None
-- [ ] Ads: No ads
-- [ ] Target audience: 13–15, 16–17, 18+ (3 старшие группы)
-- [ ] App access: «All app functionality is available without restrictions» + опциональная заметка про desktop companion
+- [x] Privacy Policy URL: `https://kekkeys.online/en/privacy/`
+- [x] Website: `https://kekkeys.online/`
+- [x] Support email: твой email
+- [x] Content rating questionnaire — все ответы NO → должно получиться Everyone / PEGI 3
+- [x] Data Safety: Data collected = None, Data shared = None
+- [x] Ads: No ads
+- [x] Target audience: 13–15, 16–17, 18+ (3 старшие группы)
+- [x] App access: «All app functionality is available without restrictions» + опциональная заметка про desktop companion
 
 ## Шаг 3 — Когда production AAB готов: Internal Testing track
 
