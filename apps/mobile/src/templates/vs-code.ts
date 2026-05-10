@@ -9,6 +9,7 @@
  *   Row 6: clipboard + format    (Cut · Copy · Paste · Format doc)
  *   Row 7: code intelligence     (Comment · Quick fix · Go to def · Rename)
  *   Row 8: utilities             (Save · Undo · Redo · Close tab)
+ *   Row 9: input + window        (Trigger Suggest · Param Hints · Split Editor · New File)
  *
  * Notes:
  *  - VS Code "Save All" (Ctrl+K, S) is a chord — kekkeys protocol can't
@@ -16,6 +17,8 @@
  *  - Defaults assume Windows / Linux keymap.
  *  - Multi-cursor "Add next" (Ctrl+D) selects the next match of the
  *    current selection.
+ *  - Trigger Suggest (Ctrl+Space) re-opens the autocomplete popup when
+ *    you've dismissed it — used constantly while typing.
  */
 import type { BoardTemplate } from "./types";
 
@@ -26,7 +29,7 @@ const vsCodeTemplate: BoardTemplate = {
   description: "Code editor board (Windows / Linux keymap)",
   hint: "Windows / Linux keymap. Mac users: re-bind Ctrl- combos to Cmd in their kekkeys buttons (Cmd = Meta in W3C).",
   gridCols: 4,
-  gridRows: 8,
+  gridRows: 9,
   buttons: [
     // Row 1 — navigation
     { x: 0, y: 0, label: "Quick open", iconName: "search",                 keys: ["ControlLeft", "KeyP"] },
@@ -75,6 +78,12 @@ const vsCodeTemplate: BoardTemplate = {
     { x: 1, y: 7, label: "Undo",       iconName: "undo",                   keys: ["ControlLeft", "KeyZ"] },
     { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "ShiftLeft", "KeyZ"] },
     { x: 3, y: 7, label: "Close tab",  iconName: "tab_close",              keys: ["ControlLeft", "KeyW"] },
+
+    // Row 9 — input helpers + window
+    { x: 0, y: 8, label: "Suggest",    iconName: "psychology",             keys: ["ControlLeft", "Space"] },
+    { x: 1, y: 8, label: "Param hints",iconName: "info",                   keys: ["ControlLeft", "ShiftLeft", "Space"] },
+    { x: 2, y: 8, label: "Split",      iconName: "splitscreen_right",      keys: ["ControlLeft", "Backslash"] },
+    { x: 3, y: 8, label: "New file",   iconName: "note_add",               keys: ["ControlLeft", "KeyN"] },
   ],
 };
 

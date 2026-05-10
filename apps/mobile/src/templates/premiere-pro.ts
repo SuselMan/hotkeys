@@ -9,12 +9,19 @@
  *   Row 6: clipboard             (Cut · Copy · Paste · Ripple delete)
  *   Row 7: edit ops              (Add edit · All-tracks edit · Insert · Overwrite)
  *   Row 8: utilities             (Save · Undo · Redo · Fit timeline)
+ *   Row 9: in/out + export       (Lift · Extract · Match Frame · Export)
  *
  * Notes:
  *  - "Add edit" (Ctrl+K) splits the clip at the playhead.
  *  - "All-tracks edit" (Ctrl+Shift+K) splits across all targeted tracks.
  *  - "Ripple delete" (Shift+Delete) removes the clip and closes the gap.
  *  - "Fit timeline" is single-key Backslash in the timeline panel.
+ *  - "Lift" (Semicolon) removes between in/out and leaves a gap.
+ *    "Extract" (Quote / Apostrophe) removes between in/out and ripples
+ *    the gap closed. They mirror Insert/Overwrite for in/out points.
+ *  - "Match Frame" (KeyF) loads the source clip at playhead position into
+ *    the source monitor — essential for finding "where did this come from?"
+ *  - "Export" (Ctrl+M) opens the Export panel.
  */
 import type { BoardTemplate } from "./types";
 
@@ -24,7 +31,7 @@ const premiereTemplate: BoardTemplate = {
   iconName: "video_settings",
   description: "Video editing board with J/K/L transport and edit ops",
   gridCols: 4,
-  gridRows: 8,
+  gridRows: 9,
   buttons: [
     // Row 1 — JKL transport
     { x: 0, y: 0, label: "J (rewind)", iconName: "fast_rewind",            keys: ["KeyJ"] },
@@ -73,6 +80,12 @@ const premiereTemplate: BoardTemplate = {
     { x: 1, y: 7, label: "Undo",       iconName: "undo",                   keys: ["ControlLeft", "KeyZ"] },
     { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "ShiftLeft", "KeyZ"] },
     { x: 3, y: 7, label: "Fit time",   iconName: "fit_screen",             keys: ["Backslash"] },
+
+    // Row 9 — in/out + export
+    { x: 0, y: 8, label: "Lift",        iconName: "arrow_upward",          keys: ["Semicolon"] },
+    { x: 1, y: 8, label: "Extract",     iconName: "compress",              keys: ["Quote"] },
+    { x: 2, y: 8, label: "Match frame", iconName: "pageview",              keys: ["KeyF"] },
+    { x: 3, y: 8, label: "Export",      iconName: "output",                keys: ["ControlLeft", "KeyM"] },
   ],
 };
 

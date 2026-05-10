@@ -9,6 +9,7 @@
  *   Row 6: clipboard             (Cut · Copy · Paste · Paste over selection)
  *   Row 7: view                  (Zoom − · Zoom + · Fit screen · 100%)
  *   Row 8: utilities             (Duplicate · Undo · Redo · Lock)
+ *   Row 9: select + stack        (Select All · Delete · To Front · To Back)
  *
  * Notes:
  *  - "Paste over selection" = Ctrl+Shift+V (pastes at the same coords as
@@ -16,6 +17,9 @@
  *  - Auto Layout is Figma's killer responsive feature — Shift+A on
  *    a selection.
  *  - "100%" zoom is Ctrl+1 in newer Figma; Ctrl+0 is "Fit to screen".
+ *  - Forward / Backward (row 3) move one step at a time. "To Front" /
+ *    "To Back" (row 9) jump to the top / bottom of the stacking order
+ *    in one go (Ctrl+Shift+] / Ctrl+Shift+[).
  */
 import type { BoardTemplate } from "./types";
 
@@ -25,7 +29,7 @@ const figmaTemplate: BoardTemplate = {
   iconName: "design_services",
   description: "UI/UX design board for tablet workflows",
   gridCols: 4,
-  gridRows: 8,
+  gridRows: 9,
   buttons: [
     // Row 1 — tools primary
     { x: 0, y: 0, label: "Move",       iconName: "arrow_selector_tool",    keys: ["KeyV"] },
@@ -74,6 +78,12 @@ const figmaTemplate: BoardTemplate = {
     { x: 1, y: 7, label: "Undo",       iconName: "undo",                   keys: ["ControlLeft", "KeyZ"] },
     { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "ShiftLeft", "KeyZ"] },
     { x: 3, y: 7, label: "Lock",       iconName: "lock",                   keys: ["ControlLeft", "ShiftLeft", "KeyL"] },
+
+    // Row 9 — select + stack extremes
+    { x: 0, y: 8, label: "Select all", iconName: "select_all",                keys: ["ControlLeft", "KeyA"] },
+    { x: 1, y: 8, label: "Delete",     iconName: "delete",                    keys: ["Delete"] },
+    { x: 2, y: 8, label: "To front",   iconName: "keyboard_double_arrow_up",  keys: ["ControlLeft", "ShiftLeft", "BracketRight"] },
+    { x: 3, y: 8, label: "To back",    iconName: "keyboard_double_arrow_down",keys: ["ControlLeft", "ShiftLeft", "BracketLeft"] },
   ],
 };
 

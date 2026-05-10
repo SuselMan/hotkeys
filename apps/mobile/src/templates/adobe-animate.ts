@@ -2,14 +2,16 @@
  * Adobe Animate — designed for tablet+phone animators with no keyboard at all.
  * Layout follows the rhythm of traditional frame-by-frame animation:
  *
- *   Row 1: drawing primary tools  (Brush · Pencil · Eraser · Select)
- *   Row 2: drawing secondary      (Subselect · Transform · Lasso · Hand)
- *   Row 3: size + zoom            (Brush − · Brush + · Zoom − · Zoom +)
- *   Row 4: modifiers + escape     (Shift · Ctrl · Alt · Esc)
- *   Row 5: clipboard              (Cut · Copy · Paste · Paste in Place)
- *   Row 6: timeline keyframes     (F5 · F6 · F7 · F8)
- *   Row 7: timeline navigation    (Prev · Play · Next · Test movie)
- *   Row 8: edit utilities         (Pan-hold · Undo · Redo · Save)
+ *   Row  1: drawing primary       (Brush · Pencil · Eraser · Select)
+ *   Row  2: drawing secondary     (Subselect · Transform · Lasso · Hand)
+ *   Row  3: size + zoom           (Brush − · Brush + · Zoom − · Zoom +)
+ *   Row  4: modifiers + escape    (Shift · Ctrl · Alt · Esc)
+ *   Row  5: clipboard             (Cut · Copy · Paste · Paste in Place)
+ *   Row  6: timeline keyframes    (F5 · F6 · F7 · F8)
+ *   Row  7: timeline navigation   (Prev · Play · Next · Test movie)
+ *   Row  8: edit utilities        (Pan-hold · Undo · Redo · Save)
+ *   Row  9: selection / object    (Select All · Group · Break Apart · Delete)
+ *   Row 10: drawing tools (extra) (Eyedropper · Paint Bucket · _ · _)
  *
  * Notable choices:
  *  - F6 / F7 use the radio_button_checked / radio_button_unchecked icons —
@@ -20,6 +22,9 @@
  *  - Brush size uses `[` / `]` (BracketLeft / BracketRight) — Animate's
  *    standard while a brush-like tool is active. Same convention as
  *    Photoshop.
+ *  - Redo is `Ctrl+Y` — Animate's documented default. (`Ctrl+Shift+Z` is
+ *    the universal-ish alt that other Adobe apps use, but Animate ships
+ *    with Ctrl+Y bound and that's what users expect.)
  *  - Standalone modifier buttons (Shift / Ctrl / Alt) leverage kekkeys
  *    hold semantics: hold one on the phone, then press another button to
  *    compose ad-hoc combos. Hold Shift while drawing = constrained line;
@@ -37,7 +42,7 @@ const adobeAnimateTemplate: BoardTemplate = {
   description: "Frame-by-frame animation board for tablet workflows",
   hint: "Onion skin has no default Animate shortcut — bind one in Edit → Keyboard Shortcuts and add the button.",
   gridCols: 4,
-  gridRows: 8,
+  gridRows: 10,
   buttons: [
     // Row 1 — drawing primary
     { x: 0, y: 0, label: "Brush",      iconName: "brush",                  keys: ["KeyB"] },
@@ -84,8 +89,18 @@ const adobeAnimateTemplate: BoardTemplate = {
     // Row 8 — edit utilities
     { x: 0, y: 7, label: "Pan",        iconName: "open_with",              keys: ["Space"] },
     { x: 1, y: 7, label: "Undo",       iconName: "undo",                   keys: ["ControlLeft", "KeyZ"] },
-    { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "ShiftLeft", "KeyZ"] },
+    { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "KeyY"] },
     { x: 3, y: 7, label: "Save",       iconName: "save",                   keys: ["ControlLeft", "KeyS"] },
+
+    // Row 9 — selection / object operations
+    { x: 0, y: 8, label: "Select All", iconName: "select_all",             keys: ["ControlLeft", "KeyA"] },
+    { x: 1, y: 8, label: "Group",      iconName: "group_work",             keys: ["ControlLeft", "KeyG"] },
+    { x: 2, y: 8, label: "Break apart",iconName: "call_split",             keys: ["ControlLeft", "KeyB"] },
+    { x: 3, y: 8, label: "Delete",     iconName: "delete",                 keys: ["Delete"] },
+
+    // Row 10 — drawing tools (extra)
+    { x: 0, y: 9, label: "Eyedropper",  iconName: "colorize",              keys: ["KeyI"] },
+    { x: 1, y: 9, label: "Paint bucket", iconName: "format_color_fill",    keys: ["KeyK"] },
   ],
 };
 

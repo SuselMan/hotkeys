@@ -9,6 +9,7 @@
  *   Row 6: clipboard + dup       (Copy · Paste · Duplicate · Linked dup)
  *   Row 7: timeline              (Prev frame · Play · Next frame · Frame selected)
  *   Row 8: utilities             (Save · Undo · Redo · Render F12)
+ *   Row 9: visibility + view     (Hide · Unhide · Frame all · Snap toggle)
  *
  * Notes:
  *  - View shortcuts use the Numpad (Numpad 1/3/7/0). Some users with
@@ -19,6 +20,10 @@
  *    mode.
  *  - Default keymap assumed (Blender 3.x+); Industry Compatible keymap
  *    will need user re-binds.
+ *  - "Hide" (H) hides selected; "Unhide" (Alt+H) brings everything back.
+ *    Used heavily during modeling to clean up the viewport.
+ *  - "Frame all" (Home) zooms the viewport to fit every visible object.
+ *  - "Snap toggle" (Shift+Tab) flips snapping on/off globally.
  */
 import type { BoardTemplate } from "./types";
 
@@ -29,7 +34,7 @@ const blenderTemplate: BoardTemplate = {
   description: "3D modeling board (default keymap)",
   hint: "Default keymap assumed. Numpad view shortcuts (1/3/7/0) require a numpad — laptop users may need to re-bind.",
   gridCols: 4,
-  gridRows: 8,
+  gridRows: 9,
   buttons: [
     // Row 1 — transform
     { x: 0, y: 0, label: "Move",       iconName: "open_with",              keys: ["KeyG"] },
@@ -78,6 +83,12 @@ const blenderTemplate: BoardTemplate = {
     { x: 1, y: 7, label: "Undo",       iconName: "undo",                   keys: ["ControlLeft", "KeyZ"] },
     { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "ShiftLeft", "KeyZ"] },
     { x: 3, y: 7, label: "Render",     iconName: "image",                  keys: ["F12"] },
+
+    // Row 9 — visibility + view
+    { x: 0, y: 8, label: "Hide",       iconName: "visibility_off",         keys: ["KeyH"] },
+    { x: 1, y: 8, label: "Unhide",     iconName: "visibility",             keys: ["AltLeft", "KeyH"] },
+    { x: 2, y: 8, label: "Frame all",  iconName: "crop_free",              keys: ["Home"] },
+    { x: 3, y: 8, label: "Snap",       iconName: "vertical_align_center",  keys: ["ShiftLeft", "Tab"] },
   ],
 };
 

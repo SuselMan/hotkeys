@@ -9,6 +9,7 @@
  *   Row 6: clipboard             (Cut · Copy · Paste · Paste in Place)
  *   Row 7: color + select        (Switch FG/BG · Default colors · Fill FG · Deselect)
  *   Row 8: utilities             (Save · Undo · Redo · New layer)
+ *   Row 9: pan + layer ops       (Pan-hold · Select All · Group layers · Merge layers)
  *
  * Notes:
  *  - "Hardness ±" uses Shift+[ / Shift+] (Photoshop standard for brush
@@ -25,7 +26,7 @@ const photoshopTemplate: BoardTemplate = {
   iconName: "palette",
   description: "Digital painting & retouching board for Wacom / iPad workflows",
   gridCols: 4,
-  gridRows: 8,
+  gridRows: 9,
   buttons: [
     // Row 1 — drawing primary
     { x: 0, y: 0, label: "Brush",      iconName: "brush",                  keys: ["KeyB"] },
@@ -74,6 +75,12 @@ const photoshopTemplate: BoardTemplate = {
     { x: 1, y: 7, label: "Undo",       iconName: "undo",                   keys: ["ControlLeft", "KeyZ"] },
     { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "ShiftLeft", "KeyZ"] },
     { x: 3, y: 7, label: "New layer",  iconName: "add_box",                keys: ["ControlLeft", "ShiftLeft", "KeyN"] },
+
+    // Row 9 — pan + layer ops
+    { x: 0, y: 8, label: "Pan",          iconName: "open_with",            keys: ["Space"] },
+    { x: 1, y: 8, label: "Select all",   iconName: "select_all",           keys: ["ControlLeft", "KeyA"] },
+    { x: 2, y: 8, label: "Group layers", iconName: "group_work",           keys: ["ControlLeft", "KeyG"] },
+    { x: 3, y: 8, label: "Merge layers", iconName: "merge",                keys: ["ControlLeft", "KeyE"] },
   ],
 };
 

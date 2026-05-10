@@ -9,6 +9,7 @@
  *   Row 6: comp ops              (Pre-compose · New solid · Split layer · Adjustment)
  *   Row 7: timeline              (Prev frame · Play · Next frame · RAM preview)
  *   Row 8: utilities             (Save · Undo · Redo · Render queue)
+ *   Row 9: keyframe interpolation (Easy Ease · Easy Ease In · Easy Ease Out · Hold)
  *
  * Notes:
  *  - Row 3 buttons (P/A/R/S) reveal the matching property on the
@@ -18,6 +19,11 @@
  *    in AE reveals the Opacity property of a selected layer.
  *  - "RAM preview" = Numpad 0 (renders an in-RAM preview of the comp).
  *  - "Adjustment layer" = Ctrl+Shift+Alt+Y.
+ *  - Easy Ease (F9) is the motion designer's bread-and-butter — applied
+ *    to selected keyframes to smooth in/out tangents. Shift+F9 eases
+ *    only the in-handle, Ctrl+Shift+F9 only the out-handle.
+ *  - "Hold" (Ctrl+Alt+H) toggles the selected keyframe to a step/hold
+ *    interpolation (no animation between this keyframe and the next).
  */
 import type { BoardTemplate } from "./types";
 
@@ -27,7 +33,7 @@ const afterEffectsTemplate: BoardTemplate = {
   iconName: "auto_awesome_motion",
   description: "Motion graphics & VFX board for tablet workflows",
   gridCols: 4,
-  gridRows: 8,
+  gridRows: 9,
   buttons: [
     // Row 1 — tools
     { x: 0, y: 0, label: "Select",     iconName: "arrow_selector_tool",    keys: ["KeyV"] },
@@ -76,6 +82,12 @@ const afterEffectsTemplate: BoardTemplate = {
     { x: 1, y: 7, label: "Undo",       iconName: "undo",                   keys: ["ControlLeft", "KeyZ"] },
     { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "ShiftLeft", "KeyZ"] },
     { x: 3, y: 7, label: "Render Q",   iconName: "queue_play_next",        keys: ["ControlLeft", "KeyM"] },
+
+    // Row 9 — keyframe interpolation (animation core)
+    { x: 0, y: 8, label: "Easy ease",   iconName: "query_stats",           keys: ["F9"] },
+    { x: 1, y: 8, label: "Ease in",     iconName: "trending_up",           keys: ["ShiftLeft", "F9"] },
+    { x: 2, y: 8, label: "Ease out",    iconName: "trending_flat",         keys: ["ControlLeft", "ShiftLeft", "F9"] },
+    { x: 3, y: 8, label: "Hold KF",     iconName: "square",                keys: ["ControlLeft", "AltLeft", "KeyH"] },
   ],
 };
 

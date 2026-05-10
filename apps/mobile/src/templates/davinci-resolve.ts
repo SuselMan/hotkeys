@@ -9,6 +9,7 @@
  *   Row 6: clipboard             (Cut · Copy · Paste · Delete clip)
  *   Row 7: edit ops              (Blade @ playhead · Add edit · Insert · Overwrite)
  *   Row 8: utilities             (Save · Undo · Redo · Fit timeline)
+ *   Row 9: more edit ops         (Append · Replace · Match Frame · Src/TL toggle)
  *
  * Notes:
  *  - Targets the Edit page (default keymap). Cut / Color / Fairlight pages
@@ -16,6 +17,14 @@
  *  - "Delete clip" uses Backspace which ripple-deletes by default in
  *    Resolve.
  *  - "Fit timeline" = Shift+Z (zoom timeline to fit window).
+ *  - "Append" (Shift+F12) drops the source clip at the very end of the
+ *    timeline regardless of playhead — handy for assembling B-roll.
+ *  - "Replace" (F11) drops the source clip into the target track at the
+ *    playhead, replacing whatever is there for the source's duration.
+ *  - "Match Frame" (KeyF) loads the source clip at playhead position
+ *    into the source viewer.
+ *  - "Src/TL toggle" (KeyQ) cycles focus between source and timeline
+ *    viewers — essential when navigating with JKL.
  */
 import type { BoardTemplate } from "./types";
 
@@ -26,7 +35,7 @@ const davinciTemplate: BoardTemplate = {
   description: "Edit page board with J/K/L transport and mark/edit ops",
   hint: "Shortcuts target the Edit page (default keymap). Cut, Color, Fairlight, and Deliver pages have their own shortcut sets.",
   gridCols: 4,
-  gridRows: 8,
+  gridRows: 9,
   buttons: [
     // Row 1 — JKL transport
     { x: 0, y: 0, label: "J (rewind)", iconName: "fast_rewind",            keys: ["KeyJ"] },
@@ -75,6 +84,12 @@ const davinciTemplate: BoardTemplate = {
     { x: 1, y: 7, label: "Undo",       iconName: "undo",                   keys: ["ControlLeft", "KeyZ"] },
     { x: 2, y: 7, label: "Redo",       iconName: "redo",                   keys: ["ControlLeft", "ShiftLeft", "KeyZ"] },
     { x: 3, y: 7, label: "Fit time",   iconName: "fit_screen",             keys: ["ShiftLeft", "KeyZ"] },
+
+    // Row 9 — more edit ops
+    { x: 0, y: 8, label: "Append",      iconName: "arrow_outward",         keys: ["ShiftLeft", "F12"] },
+    { x: 1, y: 8, label: "Replace",     iconName: "swap_horiz",            keys: ["F11"] },
+    { x: 2, y: 8, label: "Match frame", iconName: "pageview",              keys: ["KeyF"] },
+    { x: 3, y: 8, label: "Src/TL",      iconName: "compare_arrows",        keys: ["KeyQ"] },
   ],
 };
 
