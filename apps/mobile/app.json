@@ -62,7 +62,8 @@
             "usesCleartextTraffic": true
           }
         }
-      ]
+      ],
+      "react-native-iap"
     ],
     "extra": {
       "eas": {

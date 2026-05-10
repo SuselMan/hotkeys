@@ -31,9 +31,9 @@
 import * as SecureStore from "expo-secure-store";
 import {
   endConnection,
+  fetchProducts,
   finishTransaction,
   getAvailablePurchases,
-  getProducts,
   initConnection,
   purchaseErrorListener,
   purchaseUpdatedListener,
@@ -54,6 +54,7 @@ interface ProductLike {
   productId?: string;
   localizedPrice?: string;
   price?: string;
+  displayPrice?: string;
 }
 
 let initialized = false;
@@ -70,11 +71,7 @@ export type RestoreResult =
 export async function initIap(): Promise<void> {
   if (initialized) return;
   try {
-    const ok = await initConnection();
-    if (!ok) {
-      console.warn("[iap] initConnection returned false");
-      return;
-    }
+    await initConnection();
     purchaseUpdateSub = purchaseUpdatedListener((purchase: unknown) => {
       void handlePurchaseUpdate(purchase as PurchaseLike);
     });
@@ -119,21 +116,27 @@ export function subscribePriceUpdates(fn: (price: string | null) => void): () =>
 async function primePrice(): Promise<void> {
   if (!initialized) return;
   try {
-    const products = (await getProducts({ skus: [SKU] })) as ProductLike[];
+    const products = (await fetchProducts({ skus: [SKU], type: "in-app" })) as ProductLike[];
     const p = products[0];
     if (p) {
-      cachedPriceLine = p.localizedPrice ?? p.price ?? null;
+      cachedPriceLine = p.displayPrice ?? p.localizedPrice ?? p.price ?? null;
       for (const fn of priceListeners) fn(cachedPriceLine);
     }
   } catch (e) {
-    console.warn(`[iap] getProducts failed: ${(e as Error).message}`);
+    console.warn(`[iap] fetchProducts failed: ${(e as Error).message}`);
   }
 }
 
 export async function purchasePro(): Promise<IapResult> {
   if (!initialized) return { ok: false, reason: "iap_not_initialized" };
   try {
-    await requestPurchase({ skus: [SKU] });
+    await requestPurchase({
+      request: {
+        android: { skus: [SKU] },
+        ios: { sku: SKU },
+      },
+      type: "in-app",
+    });
     // The actual outcome lands in `purchaseUpdatedListener` — don't try to
     // resolve the entitlement state from here, just confirm the dispatch.
     return { ok: true };
