@@ -52,7 +52,7 @@ export const en: LandingContent = {
   hero: {
     headline: "Your phone is your hotkey deck.",
     lead:
-      "kekkeys turns your phone into a programmable hotkey deck for the apps you live in. Configure boards on the phone, press buttons, real keystrokes fire on your PC over local WiFi. Built for digital artists, animators, video editors, 3D modellers, streamers — anyone whose workflow runs on keyboard shortcuts.",
+      "kekkeys is a free Stream Deck alternative on your phone — a programmable macropad for the Windows apps you live in. Configure boards on the phone, press buttons, real keystrokes fire on your PC over local WiFi. Built for Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Animate, Figma — and any keyboard-shortcut workflow.",
     ctaWindows: "Download for Windows",
     ctaWindowsSub: "Tray app, no install wizard",
     ctaApk: "Download APK",
@@ -60,7 +60,7 @@ export const en: LandingContent = {
   },
   features: {
     eyebrow: "Why kekkeys",
-    title: "A programmable hotkey deck for every app you live in.",
+    title: "A free Stream Deck alternative — programmable from your phone.",
     items: [
       {
         title: "Configured entirely on your phone",
@@ -142,7 +142,7 @@ export const ru: LandingContent = {
   hero: {
     headline: "Твой телефон — это твой хоткей-дек.",
     lead:
-      "kekkeys превращает твой телефон в программируемый хоткей-дек для тех приложений, в которых ты живёшь. Настраиваешь доски с телефона, жмёшь кнопки — на ПК фигачат настоящие клавиши через твой WiFi. Сделан для художников, аниматоров, видеомонтажёров, 3D-моделлеров, стримеров — всех у кого работа на хоткеях.",
+      "kekkeys — бесплатный аналог Stream Deck на твоём телефоне, программируемый макропад для Windows-приложений, в которых ты живёшь. Настраиваешь доски с телефона, жмёшь кнопки — на ПК фигачат настоящие клавиши через твой WiFi. Сделан для Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Animate, Figma — и любого хоткей-сценария.",
     ctaWindows: "Скачать для Windows",
     ctaWindowsSub: "Tray-приложение, без визарда",
     ctaApk: "Скачать APK",
@@ -150,7 +150,7 @@ export const ru: LandingContent = {
   },
   features: {
     eyebrow: "Зачем kekkeys",
-    title: "Программируемый хоткей-дек для каждого приложения.",
+    title: "Бесплатный аналог Stream Deck — программируется с телефона.",
     items: [
       {
         title: "Полностью настраивается с телефона",
@@ -232,7 +232,7 @@ export const es: LandingContent = {
   hero: {
     headline: "Tu teléfono es tu deck de hotkeys.",
     lead:
-      "kekkeys convierte tu teléfono en un deck programable de atajos para las apps en las que vives. Configura tableros desde el móvil, pulsa botones, las teclas reales se disparan en tu PC por WiFi local. Hecho para artistas digitales, animadores, editores de video, modeladores 3D, streamers — cualquiera cuyo flujo dependa de los atajos de teclado.",
+      "kekkeys es una alternativa gratis a Stream Deck en tu teléfono — un macropad programable para las apps de Windows en las que vives. Configura tableros desde el móvil, pulsa botones, las teclas reales se disparan en tu PC por WiFi local. Hecho para Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Animate, Figma — y cualquier flujo basado en atajos de teclado.",
     ctaWindows: "Descargar para Windows",
     ctaWindowsSub: "App en bandeja, sin asistente de instalación",
     ctaApk: "Descargar APK",
@@ -240,7 +240,7 @@ export const es: LandingContent = {
   },
   features: {
     eyebrow: "Por qué kekkeys",
-    title: "Un deck de hotkeys programable para cada app en la que vives.",
+    title: "Una alternativa gratis a Stream Deck — programable desde tu teléfono.",
     items: [
       {
         title: "Configurado por completo desde el móvil",
@@ -322,7 +322,7 @@ export const de: LandingContent = {
   hero: {
     headline: "Dein Handy ist dein Hotkey-Deck.",
     lead:
-      "kekkeys macht aus deinem Handy ein programmierbares Hotkey-Deck für die Apps, in denen du lebst. Boards am Handy konfigurieren, Buttons drücken, echte Tastendrücke landen auf deinem PC über lokales WiFi. Gebaut für digitale Künstler, Animatoren, Videoeditoren, 3D-Modellierer, Streamer — alle, deren Workflow auf Tastenkürzeln läuft.",
+      "kekkeys ist eine kostenlose Stream-Deck-Alternative auf deinem Handy — ein programmierbares Macropad für die Windows-Apps, in denen du lebst. Boards am Handy konfigurieren, Buttons drücken, echte Tastendrücke landen auf deinem PC über lokales WiFi. Gebaut für Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Animate, Figma — und jeden Workflow, der auf Tastenkürzeln läuft.",
     ctaWindows: "Für Windows herunterladen",
     ctaWindowsSub: "Tray-App, kein Installationsassistent",
     ctaApk: "APK herunterladen",
@@ -330,7 +330,7 @@ export const de: LandingContent = {
   },
   features: {
     eyebrow: "Warum kekkeys",
-    title: "Ein programmierbares Hotkey-Deck für jede App, in der du lebst.",
+    title: "Eine kostenlose Stream-Deck-Alternative — programmierbar vom Handy.",
     items: [
       {
         title: "Komplett am Handy konfiguriert",
@@ -412,7 +412,7 @@ export const ja: LandingContent = {
   hero: {
     headline: "あなたのスマホがホットキーデック。",
     lead:
-      "kekkeysはあなたのスマホを、よく使うアプリのためのプログラマブル・ホットキーデックに変えます。スマホでボードを設定し、ボタンを押すと、本物のキー入力がローカルWiFi経由でPCで実行されます。デジタルアーティスト、アニメーター、動画編集者、3Dモデラー、配信者 — キーボードショートカットに依存するすべてのワークフローのために。",
+      "kekkeysはスマホで使える無料のStream Deck代替 — Photoshop、Blender、DaVinci Resolve、OBS、Premiere、After Effects、Animate、Figmaなど、よく使うWindowsアプリのためのプログラマブル・マクロパッドです。スマホでボードを設定し、ボタンを押すと、本物のキー入力がローカルWiFi経由でPCで実行されます。キーボードショートカットに依存するあらゆるワークフローに対応。",
     ctaWindows: "Windows版をダウンロード",
     ctaWindowsSub: "トレイアプリ、インストーラなし",
     ctaApk: "APKをダウンロード",
@@ -420,7 +420,7 @@ export const ja: LandingContent = {
   },
   features: {
     eyebrow: "なぜkekkeys",
-    title: "あなたが使うすべてのアプリのためのプログラマブル・ホットキーデック。",
+    title: "無料のStream Deck代替 — スマホでプログラム可能。",
     items: [
       {
         title: "スマホですべて設定",

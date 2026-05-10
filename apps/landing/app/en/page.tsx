@@ -3,8 +3,9 @@ import { Home } from "../_components/Home";
 import { altLanguages, content } from "../_lib/content";
 
 export const metadata: Metadata = {
+  title: { absolute: "kekkeys — phone Stream Deck alternative · free macropad for Windows" },
   description:
-    "Phone-controlled programmable hotkey deck for your PC. Free, local, no cloud. Built for digital artists, animators, video editors, 3D modellers, streamers — any shortcut-heavy workflow.",
+    "Free Stream Deck alternative on your phone. Programmable macropad for Windows — Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Figma. Local pairing via QR, no cloud, no telemetry.",
   alternates: {
     canonical: "/en/",
     languages: altLanguages("/"),

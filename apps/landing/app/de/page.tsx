@@ -3,9 +3,9 @@ import { Home } from "../_components/Home";
 import { altLanguages, content } from "../_lib/content";
 
 export const metadata: Metadata = {
-  title: { absolute: "kekkeys — das Hotkey-Deck deines Handys" },
+  title: { absolute: "kekkeys — Stream-Deck-Alternative fürs Handy · Macropad für Windows" },
   description:
-    "Programmierbares Hotkey-Deck für deinen PC, am Handy konfiguriert. Kostenlos, lokal, ohne Cloud. Für digitale Künstler, Animatoren, Videoeditoren, 3D-Modellierer, Streamer — alle, deren Workflow auf Tastenkürzeln läuft.",
+    "Kostenlose Stream-Deck-Alternative auf deinem Handy. Programmierbares Macropad für Windows — Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Figma. Lokale Kopplung per QR, keine Cloud.",
   alternates: {
     canonical: "/de/",
     languages: altLanguages("/"),

@@ -3,9 +3,9 @@ import { Home } from "../_components/Home";
 import { altLanguages, content } from "../_lib/content";
 
 export const metadata: Metadata = {
-  title: { absolute: "kekkeys — хоткей-дек на экране твоего телефона" },
+  title: { absolute: "kekkeys — стрим дек на телефоне, бесплатный макропад для Windows" },
   description:
-    "Программируемый хоткей-дек на экране телефона. Бесплатный, локальный, без облака. Для художников, аниматоров, видеомонтажёров, 3D-моделлеров, стримеров — всех у кого работа на хоткеях.",
+    "Бесплатный аналог Stream Deck на телефоне. Программируемый макропад для Windows — Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Figma. Локальный пейринг через QR, без облака.",
   alternates: {
     canonical: "/ru/",
     languages: altLanguages("/"),
