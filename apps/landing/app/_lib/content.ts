@@ -60,8 +60,8 @@ export const en: LandingContent = {
       "kekkeys is a free Stream Deck app for your phone — turns your Android device into a programmable deck for the Windows apps you live in. Configure boards on the phone, press buttons, real keystrokes fire on your PC over local WiFi. Built for OBS, Blender, Premiere, Animate, Figma, After Effects — and any keyboard-shortcut workflow.",
     ctaWindows: "Download for Windows",
     ctaWindowsSub: "Tray app, no install wizard",
-    ctaApk: "Download APK",
-    ctaApkSub: "Android · Google Play soon",
+    ctaApk: "Coming to Google Play",
+    ctaApkSub: "Android · review pending",
   },
   features: {
     eyebrow: "Why kekkeys",
@@ -154,12 +154,12 @@ export const en: LandingContent = {
       "Code-signing is on the roadmap. Until then, the SmartScreen warning is expected.",
     androidTitle: "Android",
     android: [
-      "Download the APK from the link below.",
-      "If your phone blocks unknown sources, allow it for the file manager you used.",
+      "Submitted to Google Play. Approval pending.",
+      "Once live, install kekkeys from Google Play.",
       "Open kekkeys, tap Scan QR, point at the desktop screen. Done.",
     ],
     androidCallout:
-      "Google Play release pending validation. The APK is signed with a stable key, future updates can install over it.",
+      "We'll publish the Google Play link here as soon as the app is approved.",
   },
   privacy: {
     title: "Privacy policy",
@@ -188,8 +188,8 @@ export const ru: LandingContent = {
       "kekkeys — бесплатный Stream Deck на телефоне, программируемая клавиатура для Windows-приложений, в которых ты живёшь. Настраиваешь доски с телефона, жмёшь кнопки — на ПК фигачат настоящие клавиши через твой WiFi. Сделан для OBS, Photoshop, Blender, DaVinci, Premiere, After Effects, Animate, Figma — и любого хоткей-сценария. Аналог Stream Deck без покупки железа.",
     ctaWindows: "Скачать для Windows",
     ctaWindowsSub: "Tray-приложение, без визарда",
-    ctaApk: "Скачать APK",
-    ctaApkSub: "Android · Google Play скоро",
+    ctaApk: "Скоро в Google Play",
+    ctaApkSub: "Android · на проверке",
   },
   features: {
     eyebrow: "Зачем kekkeys",
@@ -282,12 +282,12 @@ export const ru: LandingContent = {
       "Подпись кода — в роадмапе. Пока что предупреждение SmartScreen ожидаемо.",
     androidTitle: "Android",
     android: [
-      "Скачай APK по ссылке ниже.",
-      "Если телефон блокирует неизвестные источники — разреши для файлового менеджера откуда ставишь.",
+      "Отправлено на проверку в Google Play.",
+      "Как только приложение одобрят, поставь его из Google Play.",
       "Открой kekkeys, тап Scan QR, наведи на экран ПК. Готово.",
     ],
     androidCallout:
-      "Релиз в Google Play — после валидации UX. Текущий APK подписан стабильным ключом, апдейты накатываются поверх.",
+      "Опубликуем ссылку на Google Play здесь как только приложение пройдёт проверку.",
   },
   privacy: {
     title: "Политика приватности",
@@ -316,8 +316,8 @@ export const es: LandingContent = {
       "kekkeys es una alternativa gratis a Stream Deck en tu teléfono — un macropad programable para las apps de Windows en las que vives. Configura tableros desde el móvil, pulsa botones, las teclas reales se disparan en tu PC por WiFi local. Hecho para Photoshop, Blender, DaVinci Resolve, OBS, Premiere, After Effects, Animate, Figma — y cualquier flujo basado en atajos de teclado.",
     ctaWindows: "Descargar para Windows",
     ctaWindowsSub: "App en bandeja, sin asistente de instalación",
-    ctaApk: "Descargar APK",
-    ctaApkSub: "Android · Google Play pronto",
+    ctaApk: "Próximamente en Google Play",
+    ctaApkSub: "Android · revisión pendiente",
   },
   features: {
     eyebrow: "Por qué kekkeys",
@@ -410,12 +410,12 @@ export const es: LandingContent = {
       "La firma de código está en el roadmap. Hasta entonces, la advertencia de SmartScreen es esperada.",
     androidTitle: "Android",
     android: [
-      "Descarga el APK desde el enlace de abajo.",
-      "Si tu móvil bloquea fuentes desconocidas, permítelo para el explorador de archivos que uses.",
+      "Enviado a Google Play. Revisión pendiente.",
+      "Cuando esté disponible, instala kekkeys desde Google Play.",
       "Abre kekkeys, pulsa Escanear QR, apunta a la pantalla del PC. Listo.",
     ],
     androidCallout:
-      "Lanzamiento en Google Play pendiente de validación. El APK actual está firmado con una clave estable, las actualizaciones futuras se instalan encima.",
+      "Publicaremos el enlace de Google Play aquí en cuanto la app sea aprobada.",
   },
   privacy: {
     title: "Política de privacidad",
@@ -444,8 +444,8 @@ export const de: LandingContent = {
       "kekkeys ist eine kostenlose Stream Deck App für dein Handy — verwandelt dein Android-Gerät in ein programmierbares Hotkey-Deck für die Windows-Apps, in denen du lebst. Boards am Handy konfigurieren, Buttons drücken, echte Tastendrücke landen auf deinem PC über lokales WiFi. Gebaut für OBS, Blender, Photoshop, DaVinci, Premiere — und jeden Workflow, der auf Tastenkürzeln läuft.",
     ctaWindows: "Für Windows herunterladen",
     ctaWindowsSub: "Tray-App, kein Installationsassistent",
-    ctaApk: "APK herunterladen",
-    ctaApkSub: "Android · Google Play bald",
+    ctaApk: "Bald bei Google Play",
+    ctaApkSub: "Android · Prüfung läuft",
   },
   features: {
     eyebrow: "Warum kekkeys",
@@ -538,12 +538,12 @@ export const de: LandingContent = {
       "Code-Signierung steht auf der Roadmap. Bis dahin ist die SmartScreen-Warnung zu erwarten.",
     androidTitle: "Android",
     android: [
-      "Lade das APK über den Link unten herunter.",
-      "Wenn dein Handy unbekannte Quellen blockiert, erlaube den Datei-Manager, mit dem du es geladen hast.",
+      "Bei Google Play eingereicht. Prüfung läuft.",
+      "Sobald verfügbar, kekkeys aus Google Play installieren.",
       "Öffne kekkeys, tippe „QR scannen\", richte es auf den Desktop-Bildschirm. Fertig.",
     ],
     androidCallout:
-      "Google-Play-Release ausstehend für die Validierung. Das aktuelle APK ist mit einem stabilen Schlüssel signiert, künftige Updates lassen sich darüber installieren.",
+      "Wir veröffentlichen den Google-Play-Link hier, sobald die App genehmigt ist.",
   },
   privacy: {
     title: "Datenschutzerklärung",
@@ -572,8 +572,8 @@ export const ja: LandingContent = {
       "kekkeysはスマホで使える無料のStream Deck（ストリームデック）アプリ — Android端末をプログラマブルなホットキーデックに変えます。OBS、Blender、Photoshop、DaVinci、Premiere、After Effects、Animate、Figmaなど、よく使うWindowsアプリ向けに。スマホでボードを設定し、ボタンを押すと、本物のキー入力がローカルWiFi経由でPCで実行されます。",
     ctaWindows: "Windows版をダウンロード",
     ctaWindowsSub: "トレイアプリ、インストーラなし",
-    ctaApk: "APKをダウンロード",
-    ctaApkSub: "Android · Google Play近日",
+    ctaApk: "Google Play近日公開",
+    ctaApkSub: "Android · 審査中",
   },
   features: {
     eyebrow: "なぜkekkeys",
@@ -666,12 +666,12 @@ export const ja: LandingContent = {
       "コード署名はロードマップ上にあります。それまではSmartScreenの警告は想定通りです。",
     androidTitle: "Android",
     android: [
-      "下のリンクからAPKをダウンロード。",
-      "スマホが提供元不明をブロックする場合は、使用したファイルマネージャーに対して許可してください。",
+      "Google Playに申請済み。審査中。",
+      "公開され次第、Google Playからkekkeysをインストールしてください。",
       "kekkeysを開き、QRスキャンをタップ、PCの画面にかざします。完了。",
     ],
     androidCallout:
-      "Google Playリリースは検証待ち。現在のAPKは安定鍵で署名されているため、今後のアップデートはその上にインストールできます。",
+      "アプリの承認後、ここにGoogle Playのリンクを掲載します。",
   },
   privacy: {
     title: "プライバシーポリシー",

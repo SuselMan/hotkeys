@@ -3,7 +3,6 @@ import { Header } from "./Header";
 import type { LandingContent, Locale } from "../_lib/content";
 
 const WINDOWS_URL = "https://github.com/SuselMan/hotkeys/releases/latest/download/kekkeys-setup.exe";
-const ANDROID_URL = "https://github.com/SuselMan/hotkeys/releases/latest/download/kekkeys.apk";
 
 interface Props {
   locale: Locale;
@@ -37,7 +36,7 @@ export function DownloadPage({ locale, content }: Props) {
           ))}
         </ol>
         <p>
-          <a href={ANDROID_URL} className="btn btn-secondary">{content.hero.ctaApk}</a>
+          <button type="button" className="btn btn-secondary btn-disabled" disabled>{content.hero.ctaApk}</button>
         </p>
         <div className="callout">{c.androidCallout}</div>
       </main>

@@ -185,6 +185,13 @@ p {
   background: #2a2a2a;
   text-decoration: none;
 }
+.btn-disabled,
+.btn-disabled:hover {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: var(--bg-card);
+  text-decoration: none;
+}
 .btn small {
   display: block;
   font-size: 11px;

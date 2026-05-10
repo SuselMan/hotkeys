@@ -26,12 +26,12 @@ export function Home({ locale, content }: Props) {
                   <small>{content.hero.ctaWindowsSub}</small>
                 </span>
               </Link>
-              <Link href={`/${locale}/download/`} className="btn btn-secondary">
+              <button type="button" className="btn btn-secondary btn-disabled" disabled>
                 <span>
                   {content.hero.ctaApk}
                   <small>{content.hero.ctaApkSub}</small>
                 </span>
-              </Link>
+              </button>
             </div>
           </div>
         </section>
